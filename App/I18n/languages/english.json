@@ -11,8 +11,6 @@
    "igniteGenerated": "Ignite Generate Screens",
    "forgotPassword": "Forgot Password",
    "username": "Username",
-   "password": "Password",
-   "cancel": "Cancel",
    "welcome": "Welcome",
    "login": "Login",
    "tempIndicator": "F",
@@ -22,5 +20,14 @@
    "themeSettings": "Theme Settings",
    "deviceDetails": "Device Details",
    "noItems": "No Items",
-   "search": "Search"
+   "search": "Search",
+  
+   "firstName":"First Name",
+   "lastName":"Last Name",
+   "email":"Email",
+   "password":"Password",
+   "confirmPassword":"Confirm Password",
+   "cancel":"Cancel",
+   "register":"Register"
+
 }
