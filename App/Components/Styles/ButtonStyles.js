@@ -4,7 +4,7 @@ const { style: fontStyles } = Fonts
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.aquaBlue70,
+    backgroundColor: '#33cd5d',
     borderRadius: Metrics.buttons.borderRadius,
     minWidth: Metrics.buttons.regularWidth,
     height: Metrics.buttons.regularHeight
@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     paddingVertical: Metrics.spacing.small,
     paddingHorizontal: Metrics.spacing.tiny,
     marginTop: Metrics.spacing.superMicro,
-    color: Colors.white,
+    color: '#2a2a2a',
     textAlign: 'center'
   },
   smallButtonText: {
     paddingVertical: Metrics.spacing.small,
     paddingHorizontal: Metrics.spacing.tiny,
-    color: Colors.white,
+    color: '#2a2a2a',
     textAlign: 'center'
   },
   imageLeft: {

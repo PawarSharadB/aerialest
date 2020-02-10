@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Fonts, Colors } from '../../Themes/'
+import { Fonts, Colors, Metrics } from '../../Themes/'
 const { style: fontStyles } = Fonts
 
 export default StyleSheet.create({
@@ -12,5 +12,21 @@ export default StyleSheet.create({
   },
   commonTextStyle: {
     ...fontStyles.buttonM
+  },
+  commonButton: {
+    height: 56,
+    flex: 1,
+    justifyContent: 'center',
+    borderRadius: 4
+  },
+  contentScrollView: {
+    flex: 1
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  cancelBtn: {
+    backgroundColor: '#f8f8f8'
   }
 })

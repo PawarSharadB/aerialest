@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types'
 
-export const checkPatternWithExpressionAndString = (regexPattern, { name }) => {
+export const checkPatternWithExpressionAndString = (
+  regexPattern,
+  { firstName, lastName, email, password }
+) => {
   const regex = new RegExp(regexPattern)
-  const isValidRegex = name.match(regex)
+  const isValidRegex =
+    firstName.match(regex) &&
+    lastName.match(regex) &&
+    email.match(regex) &&
+    password.match(regex)
   return isValidRegex
 }
 checkPatternWithExpressionAndString.propTypes = {
