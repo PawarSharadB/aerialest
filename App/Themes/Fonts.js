@@ -1,17 +1,11 @@
 const type = {
   base: 'Avenir-Book',
   bold: 'Avenir-Black',
-  emphasis: 'HelveticaNeue-Italic'
+  emphasis: 'HelveticaNeue-Italic',
+  natoSans: 'NotoSans-Regular'
 }
 
 const size = {
-  h1: 38,
-  h2: 34,
-  h3: 30,
-  h4: 26,
-  h5: 20,
-  h6: 19,
-  input: 18,
   regular: 17,
   medium: 14,
   small: 12,
@@ -19,37 +13,49 @@ const size = {
 }
 
 const style = {
-  h1: {
-    fontFamily: type.base,
-    fontSize: size.h1
+  titleLarge: {
+    fontFamily: type.natoSans,
+    fontStyle: 'normal',
+    fontWeight: '600',
+    fontSize: 20,
+    lineHeight: 28,
+    letterSpacing: 0.0018
   },
-  h2: {
-    fontWeight: 'bold',
-    fontSize: size.h2
+  buttonM: {
+    fontFamily: type.natoSans,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 16,
+    lineHeight: 16,
+    letterSpacing: -0.16
   },
-  h3: {
-    fontFamily: type.emphasis,
-    fontSize: size.h3
+  buttonS: {
+    fontFamily: type.natoSans,
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: 14,
+    lineHeight: 14,
+    letterSpacing: -0.016
   },
-  h4: {
-    fontFamily: type.base,
-    fontSize: size.h4
+  headLineL: {
+    fontFamily: type.natoSans,
+    fontSize: 28,
+    lineHeight: 37,
+    fontWeight: 'normal',
+    letterSpacing: 0.0018
   },
-  h5: {
-    fontFamily: type.base,
-    fontSize: size.h5
+  buttonN: {
+    fontFamily: type.natoSans,
+    fontWeight: '500',
+    fontSize: 16,
+    lineHeight: 16,
+    letterSpacing: -0.016
   },
-  h6: {
-    fontFamily: type.emphasis,
-    fontSize: size.h6
-  },
-  normal: {
-    fontFamily: type.base,
-    fontSize: size.regular
-  },
-  description: {
-    fontFamily: type.base,
-    fontSize: size.medium
+  captionS: {
+    fontFamily: type.natoSans,
+    fontSize: 12,
+    fontWeight: 'normal',
+    lineHeight: 15
   }
 }
 
