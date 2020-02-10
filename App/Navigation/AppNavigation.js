@@ -9,6 +9,7 @@ import ContactUs from '../Containers/ContactUs'
 import Orders from '../Containers/Orders'
 import Pricing from '../Containers/Pricing'
 import Profile from '../Containers/Profile'
+import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import Images from '../Images'
 import { View } from 'react-native'
@@ -69,6 +70,13 @@ const OrdersStack = createStackNavigator({
       getNavigationOptions(navigation, 'Orders')
   }
 })
+const RegisterStack = createStackNavigator({
+  Orders: {
+    screen: Register,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'Register')
+  }
+})
 const drawerNavigator = createDrawerNavigator({
   Home: {
     screen: HomeStack,
@@ -117,6 +125,13 @@ const drawerNavigator = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Orders',
       drawerIcon: <Icon name="like1" size={20} />
+    }
+  },
+  Register: {
+    screen: RegisterStack,
+    navigationOptions: {
+      drawerLabel: 'Register',
+      drawerIcon: <Icon name="user-plus" size={20} />
     }
   }
 })

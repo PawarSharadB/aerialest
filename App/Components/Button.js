@@ -44,9 +44,6 @@ const Button = ({
             showSmallText ? styles.smallButtonText : styles.buttonText,
             textStyle
           ]}
-          testID={`btnText_${id}`}
-          accessibilityLabel={`btnText_${id}`}
-          accessible
         >
           {text}
         </Text>
@@ -54,3 +51,5 @@ const Button = ({
     </TouchableOpacity>
   )
 }
+
+export default Button
