@@ -10,6 +10,7 @@ import { createReducer } from '../CreateReducer'
 const INITIAL_STATE = Immutable({
   loginData: {},
   isFetching: false,
+  success: false,
   error: null
 })
 
@@ -21,11 +22,16 @@ const reducers = {
     return Immutable.merge(state, {
       isFetching: false,
       loginData: action.loginData,
+      success: true,
       error: null
     })
   },
   [LOGIN_REQUEST_ERROR]: (state, { error }) => {
-    return Immutable.merge(state, { error, isFetching: false })
+    return Immutable.merge(state, {
+      error: error.response.data.message,
+      isFetching: false,
+      success: false
+    })
   }
 }
 

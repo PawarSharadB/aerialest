@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, ScrollView, Text, Alert } from 'react-native'
 import { TextField } from 'react-native-material-textfield'
 import { connect } from 'react-redux'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
@@ -14,6 +14,18 @@ export const Login = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [inputError, setInputError] = useState('')
+  const [responseError, setResponseError] = useState(null)
+  const { success, error } = props
+
+  useEffect(() => {
+    if (error) {
+      setResponseError(error)
+    }
+    if (success) {
+      Alert.alert('User Registered Successfully')
+    }
+  }, [success, error])
+
   const onSubmit = () => {
     const { navigation, loginRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
@@ -70,18 +82,30 @@ export const Login = props => {
           onPress={onForgotPassword}
           textStyle={styles.forgotPasswordText}
           style={styles.forgotPassword}
-          addShadow={true}
+          addShadow={false}
           showSmallText={true}
         />
+        {responseError ? (
+          <View>
+            <Text style={styles.responseError}>{responseError}</Text>
+          </View>
+        ) : null}
       </ScrollView>
     </View>
   )
 }
-
+const mapStateToProps = ({ login }) => {
+  const { loginData, success, error } = login
+  return {
+    loginData,
+    success,
+    error
+  }
+}
 const mapDispatchToProps = dispatch => ({
   loginRequest: args => {
     dispatch(loginRequest(args))
   }
 })
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

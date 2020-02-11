@@ -5,14 +5,16 @@ import * as LoginUser from '../login/Actions'
 import { URL } from '../../Assets/Constants'
 
 const loginApi = ({ loginData }) => {
+  const headerParams = {
+    'Content-Type': 'application/json'
+  }
   const requestUrl = `${URL}/integration/customer/token`
-  return axios.post(requestUrl, loginData)
+  return axios.post(requestUrl, loginData, headerParams)
 }
 
 export function* userLogin(action) {
   try {
     const response = yield call(loginApi, action)
-    console.log('data', response)
     yield put(LoginUser.loginRequestSuccess(response))
   } catch (error) {
     console.log(error)
