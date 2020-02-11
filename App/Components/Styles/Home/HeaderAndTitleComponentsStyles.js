@@ -10,7 +10,7 @@ export const headerStyles = StyleSheet.create({
     fontFamily: raleWay.semiBold,
     fontSize: 18,
     paddingVertical: Metrics.spacing.tiny,
-    textAlign: 'left'
+    textAlign: 'justify'
   }
 })
 export const titleStyles = StyleSheet.create({
@@ -20,6 +20,7 @@ export const titleStyles = StyleSheet.create({
   text: {
     fontFamily: raleWay.regular,
     fontSize: 14,
-    lineHeight: 20
+    lineHeight: 20,
+    textAlign: 'justify'
   }
 })

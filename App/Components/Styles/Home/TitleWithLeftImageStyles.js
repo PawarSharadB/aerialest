@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   text: {
-    textAlign: 'left',
+    textAlign: 'justify',
     fontFamily: Fonts.raleWay.regular,
     marginHorizontal: Metrics.spacing.xsmall,
     fontSize: 14,

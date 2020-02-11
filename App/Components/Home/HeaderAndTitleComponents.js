@@ -14,9 +14,9 @@ export const Header = props => {
   )
 }
 export const Title = props => {
-  const { title } = props
+  const { title, style } = props
   return (
-    <View style={titleStyles.mainView}>
+    <View style={[titleStyles.mainView, style]}>
       <Text style={titleStyles.text}>{title}</Text>
     </View>
   )
