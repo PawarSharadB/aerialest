@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Fonts, Colors, Metrics } from '../../Themes/'
+import { Metrics, Fonts, ApplicationStyles } from '../../Themes/'
 const { style: fontStyles } = Fonts
 
 export default StyleSheet.create({
@@ -15,18 +15,19 @@ export default StyleSheet.create({
   },
   commonButton: {
     height: 56,
-    flex: 1,
+    backgroundColor: '#0485B2',
     justifyContent: 'center',
     borderRadius: 4
   },
-  contentScrollView: {
-    flex: 1
+  forgotPassword: {
+    height: 56,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    borderRadius: 4
   },
-  buttonsContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  cancelBtn: {
-    backgroundColor: '#f8f8f8'
+  forgotPasswordText: {
+    ...fontStyles.buttonM,
+    textDecorationLine: 'underline',
+    color: '#517BCD'
   }
 })
