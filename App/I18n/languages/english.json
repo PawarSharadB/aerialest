@@ -1,6 +1,4 @@
 {
-   "signIn": "Sign In",
-   "logOut": "Log Out",
    "loginLogoutExampleTitle": "Login/Logout Redux + Sagas Example",
    "progressiveImageComponent": "Progressive Image Component",
    "api": "API",
@@ -9,7 +7,6 @@
    "loginWithFacebook": "Login with Facebook",
    "rni18n": "RN i18n",
    "igniteGenerated": "Ignite Generate Screens",
-   "forgotPassword": "Forgot Password",
    "username": "Username",
    "welcome": "Welcome",
    "login": "Login",
@@ -28,6 +25,10 @@
    "password":"Password",
    "confirmPassword":"Confirm Password",
    "cancel":"Cancel",
-   "register":"Register"
+   "register":"Register",
+   "signIn": "Sign In",
+   "logOut": "Log Out",
+   "forgotPassword": "Forgot Password",
+   "order":"Order"
 
 }

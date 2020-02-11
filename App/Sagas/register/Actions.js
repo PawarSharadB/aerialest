@@ -1,7 +1,8 @@
 import * as ActionTypes from '../ActionTypes'
 
-export const saveUserDataRequest = () => ({
-  type: ActionTypes.SAVE_USER_DATA_REQUEST
+export const saveUserDataRequest = userData => ({
+  type: ActionTypes.SAVE_USER_DATA_REQUEST,
+  userData
 })
 export const saveUserDataSuccess = userData => ({
   type: ActionTypes.SAVE_USER_DATA_SUCCESS,
@@ -10,4 +11,8 @@ export const saveUserDataSuccess = userData => ({
 export const saveUserDataError = error => ({
   type: ActionTypes.SAVE_USER_DATA_ERROR,
   error
+})
+
+export const clearData = () => ({
+  type: ActionTypes.CLEAR_DATA
 })
