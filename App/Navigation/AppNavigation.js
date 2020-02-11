@@ -9,6 +9,8 @@ import ContactUs from '../Containers/ContactUs'
 import Orders from '../Containers/Orders'
 import Pricing from '../Containers/Pricing'
 import Profile from '../Containers/Profile'
+import Login from '../Containers/Login'
+
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import Images from '../Images'
@@ -71,10 +73,17 @@ const OrdersStack = createStackNavigator({
   }
 })
 const RegisterStack = createStackNavigator({
-  Orders: {
+  RegisterInfo: {
     screen: Register,
     navigationOptions: ({ navigation }) =>
       getNavigationOptions(navigation, 'Register')
+  }
+})
+const LoginStack = createStackNavigator({
+  LoginInfo: {
+    screen: Login,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'Sign In')
   }
 })
 const drawerNavigator = createDrawerNavigator({
@@ -125,6 +134,13 @@ const drawerNavigator = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Orders',
       drawerIcon: <Icon name="like1" size={20} />
+    }
+  },
+  Login: {
+    screen: LoginStack,
+    navigationOptions: {
+      drawerLabel: 'Sign In',
+      drawerIcon: <Icon name="paper-plane-o" size={20} />
     }
   },
   Register: {

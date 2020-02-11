@@ -1,15 +1,17 @@
 import {
   SAVE_USER_DATA_REQUEST,
   SAVE_USER_DATA_SUCCESS,
-  SAVE_USER_DATA_ERROR
+  SAVE_USER_DATA_ERROR,
+  CLEAR_DATA
 } from '../ActionTypes'
 
 import Immutable from 'seamless-immutable'
 import { createReducer } from '../CreateReducer'
 
 const INITIAL_STATE = Immutable({
-  userData: '',
+  userData: {},
   isFetching: false,
+  success: false,
   error: null
 })
 
@@ -20,12 +22,21 @@ const reducers = {
   [SAVE_USER_DATA_SUCCESS]: (state, action) => {
     return Immutable.merge(state, {
       isFetching: false,
-      userData: action.userData,
+      userData: action.userData.data,
+      success: true,
       error: null
     })
   },
   [SAVE_USER_DATA_ERROR]: (state, { error }) => {
-    return Immutable.merge(state, { error, isFetching: false })
+    return Immutable.merge(state, {
+      error: error.response.data.message,
+      isFetching: false
+    })
+  },
+  [CLEAR_DATA]: state => {
+    return Immutable.merge(state, {
+      userData: {}
+    })
   }
 }
 

@@ -3,6 +3,8 @@ import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 import { saveUserdata } from './register/Sagas'
+import { userLogin } from './login/Sagas'
+
 import * as ActionTypes from './ActionTypes'
 
 /* ------------- Types ------------- */
@@ -27,7 +29,9 @@ export default function* root() {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(ActionTypes.SAVE_USER_DATA_SUCCESS, saveUserdata),
+    takeLatest(ActionTypes.SAVE_USER_DATA_REQUEST, saveUserdata),
+    takeLatest(ActionTypes.LOGIN_REQUEST, userLogin),
+
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])

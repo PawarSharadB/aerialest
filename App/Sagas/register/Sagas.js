@@ -4,21 +4,16 @@ import * as Actions from './Actions'
 import * as RegisterUser from '../register/Actions'
 import { URL } from '../../Assets/Constants'
 
-const registerApi = userData => {
-  return axios.request({
-    method: 'post',
-    url: `${URL}/customers`,
-    data: userData
-  })
+const registerApi = ({ userData }) => {
+  const requestUrl = `${URL}/customers`
+  return axios.post(requestUrl, userData)
 }
 
 export function* saveUserdata(action) {
   try {
-    yield put(Actions.saveUserDataRequest())
-    debugger
-    let { data } = yield call(registerApi, action.userData)
-    yield put(RegisterUser.saveUserDataSuccess(data))
-  } catch (e) {
-    yield put(Actions.saveUserDataError(e.message))
+    const response = yield call(registerApi, action)
+    yield put(RegisterUser.saveUserDataSuccess(response))
+  } catch (error) {
+    yield put(Actions.saveUserDataError(error))
   }
 }
