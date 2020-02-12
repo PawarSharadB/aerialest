@@ -8,17 +8,19 @@ import { PopUpDropDown } from '../Components/Contact/PopUpDropDown'
 import { styles } from './Styles/ContactStyles'
 import { PopUpOptions } from '../Components/Contact/PopUpOptions'
 import { getContactusList } from '../Utils/getContactUsList'
-
+import { validateContactUs } from '../Utils/validateContactUs'
 const contactUsResponse = require('../Utils/Resources.json').contactUsPage
+
 const ContactUs = props => {
-  const [firstName, onChangeFirstName] = useState('')
-  const [lastName, onChangeLastName] = useState('')
-  const [email, onChangeEmail] = useState('')
-  const [company, onChangeCompany] = useState('')
-  const [name, onChangeName] = useState('')
-  const [comment, onChangeComment] = useState('')
-  const [showModal, setShowModal] = useState(false)
-  const [popUpOptions, setPopUpOptions] = useState(getContactusList())
+  let [firstName, onChangeFirstName] = useState({ firstName: '', error: '' })
+  let [lastName, onChangeLastName] = useState({ lastName: '', error: '' })
+  let [email, onChangeEmail] = useState({ email: '', error: '' })
+  let [company, onChangeCompany] = useState({ company: '', error: '' })
+  let [phone, onChangePhone] = useState({ phone: '', error: '' })
+  let [comment, onChangeComment] = useState({ comment: '', error: '' })
+  let [showModal, setShowModal] = useState(false)
+  let [popUpOptions, setPopUpOptions] = useState(getContactusList())
+
   const renderItemForPopup = ({ item, index }) => {
     const { title, isSelected } = item
     return (
@@ -33,6 +35,23 @@ const ContactUs = props => {
         title={title}
       />
     )
+  }
+  const onPressButton = () => {
+    debugger
+    const result = validateContactUs({
+      firstName,
+      lastName,
+      phone,
+      comment,
+      company,
+      email
+    })
+    onChangeFirstName({ ...result.firstName })
+    onChangeLastName({ ...result.lastName })
+    onChangeEmail({ ...result.email })
+    onChangeCompany({ ...result.company })
+    onChangePhone({ ...result.phone })
+    onChangeComment({ ...result.comment })
   }
   return (
     <ScrollView>
@@ -114,33 +133,43 @@ const ContactUs = props => {
           <Text style={styles.contactUs}>Contact Us: </Text>
           <TextField
             placeholder="First Name"
-            onChangeText={text => onChangeFirstName(text)}
-            value={firstName}
+            onChangeText={text =>
+              onChangeFirstName({ firstName: text, error: '' })
+            }
+            value={firstName.firstName}
+            error={firstName.error}
           />
           <TextField
             placeholder="Last Name"
-            onChangeText={text => onChangeLastName(text)}
-            value={firstName}
+            onChangeText={text =>
+              onChangeLastName({ lastName: text, error: '' })
+            }
+            value={lastName.lastName}
+            error={lastName.error}
           />
           <TextField
             placeholder="Email"
-            onChangeText={text => onChangeEmail(text)}
-            value={firstName}
+            onChangeText={text => onChangeEmail({ email: text, error: '' })}
+            value={email.email}
+            error={email.error}
           />
           <TextField
             placeholder="Company"
-            onChangeText={text => onChangeCompany(text)}
-            value={firstName}
+            onChangeText={text => onChangeCompany({ company: text, error: '' })}
+            value={company.company}
+            error={company.error}
           />
           <TextField
-            placeholder="Name"
-            onChangeText={text => onChangeName(text)}
-            value={firstName}
+            placeholder="Phone"
+            onChangeText={text => onChangePhone({ phone: text, error: '' })}
+            value={phone.phone}
+            error={phone.error}
           />
           <TextField
             placeholder="Comment"
-            onChangeText={text => onChangeComment(text)}
-            value={firstName}
+            onChangeText={text => onChangeComment({ comment: text, error: '' })}
+            value={comment.comment}
+            error={comment.error}
           />
         </View>
         <PopUpDropDown
@@ -150,6 +179,7 @@ const ContactUs = props => {
         <Button
           title="Submit"
           style={{ width: '100%', position: 'absolute', bottom: 0 }}
+          onPress={onPressButton}
         />
       </View>
     </ScrollView>
