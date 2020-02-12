@@ -21,7 +21,8 @@ export function* getProfileData(action) {
   try {
     const token = yield AsyncStorage.getItem('token')
     const response = yield call(registerApi, JSON.parse(token))
-    yield put(Profile.profileRequestSuccess(response))
+    const responseJson = yield response.json()
+    yield put(Profile.profileRequestSuccess(responseJson))
   } catch (error) {
     yield put(Actions.profileRequestError(error))
   }

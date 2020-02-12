@@ -5,7 +5,7 @@ import * as Actions from '../Sagas/profile/Actions'
 
 const Profile = props => {
   const [responseError, setResponseError] = useState(null)
-  const { success, error } = props
+  const { success, error, profile } = props
   useEffect(() => {
     if (error) {
       setResponseError(error)
@@ -23,11 +23,9 @@ const Profile = props => {
   }, [])
   return (
     <View>
-      {responseError ? (
-        <View>
-          <Text>{responseError}</Text>
-        </View>
-      ) : null}
+      <View>
+        <Text>{JSON.stringify(profile)}</Text>
+      </View>
     </View>
   )
 }
