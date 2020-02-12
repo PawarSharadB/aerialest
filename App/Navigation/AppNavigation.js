@@ -10,7 +10,7 @@ import Orders from '../Containers/Orders'
 import Pricing from '../Containers/Pricing'
 import Profile from '../Containers/Profile'
 import Login from '../Containers/Login'
-
+import { SelectAddress } from '../Containers/SelectAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import Images from '../Images'
@@ -72,6 +72,13 @@ const OrdersStack = createStackNavigator({
       getNavigationOptions(navigation, 'Orders')
   }
 })
+const SelectAddressStack = createStackNavigator({
+  SelectAddress: {
+    screen: SelectAddress,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'SelectAddress')
+  }
+})
 const RegisterStack = createStackNavigator({
   RegisterInfo: {
     screen: Register,
@@ -112,6 +119,13 @@ const drawerNavigator = createDrawerNavigator({
     screen: ContactUsStack,
     navigationOptions: {
       drawerLabel: 'Contact',
+      drawerIcon: <Icon name="email" size={20} />
+    }
+  },
+  SelectAddressStack: {
+    screen: SelectAddressStack,
+    navigationOptions: {
+      drawerLabel: 'SelectAddress',
       drawerIcon: <Icon name="email" size={20} />
     }
   },
