@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { createAppContainer, createDrawerNavigator } from 'react-navigation'
+import AsyncStorage from '@react-native-community/async-storage'
+import {
+  createAppContainer,
+  createDrawerNavigator,
+  createSwitchNavigator
+} from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import HomePage from '../Containers/HomeScreen'
 import AboutUs from '../Containers/AboutUs'
@@ -9,11 +14,12 @@ import ContactUs from '../Containers/ContactUs'
 import Orders from '../Containers/Orders'
 import Pricing from '../Containers/Pricing'
 import Profile from '../Containers/Profile'
+import LaunchScreen from '../Containers/LaunchScreen'
+
 import Login from '../Containers/Login'
 
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
-import Images from '../Images'
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title) => ({
   title,
@@ -23,6 +29,17 @@ const getNavigationOptions = (navigation, title) => ({
   },
   headerTintColor: '#fff'
 })
+
+const SignoutScreen = props => {
+  useEffect(() => {
+    clear()
+  }, [])
+  const clear = async () => {
+    await AsyncStorage.clear()
+    props.navigation.navigate('Starter')
+  }
+  return <View />
+}
 const HomeStack = createStackNavigator({
   HomeScreen: {
     screen: HomePage,
@@ -86,7 +103,8 @@ const LoginStack = createStackNavigator({
       getNavigationOptions(navigation, 'Sign In')
   }
 })
-const drawerNavigator = createDrawerNavigator({
+
+const authNavigator = createDrawerNavigator({
   Home: {
     screen: HomeStack,
     navigationOptions: {
@@ -136,6 +154,43 @@ const drawerNavigator = createDrawerNavigator({
       drawerIcon: <Icon name="like1" size={20} />
     }
   },
+  Signout: {
+    screen: SignoutScreen,
+    navigationOptions: {
+      drawerLabel: 'Signout',
+      drawerIcon: <Icon name="sign-out" size={20} />
+    }
+  }
+})
+const nonAuthNavigator = createDrawerNavigator({
+  Home: {
+    screen: HomeStack,
+    navigationOptions: {
+      drawerLabel: 'Home',
+      drawerIcon: <Icon name="home" size={20} />
+    }
+  },
+  AboutUs: {
+    screen: AboutUsStack,
+    navigationOptions: {
+      drawerLabel: 'About Us',
+      drawerIcon: <Icon name="flag" size={20} />
+    }
+  },
+  Pricing: {
+    screen: PricingStack,
+    navigationOptions: {
+      drawerLabel: 'Pricing',
+      drawerIcon: <Icon name="tags" size={20} />
+    }
+  },
+  ContactUs: {
+    screen: ContactUsStack,
+    navigationOptions: {
+      drawerLabel: 'Contact',
+      drawerIcon: <Icon name="email" size={20} />
+    }
+  },
   Login: {
     screen: LoginStack,
     navigationOptions: {
@@ -152,4 +207,17 @@ const drawerNavigator = createDrawerNavigator({
   }
 })
 
-export default createAppContainer(drawerNavigator)
+//export default createAppContainer(drawerNavigator)
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      Starter: LaunchScreen,
+      App: nonAuthNavigator,
+      Auth: authNavigator
+    },
+    {
+      initialRouteName: 'Starter'
+    }
+  )
+)

@@ -6,21 +6,21 @@ import * as Actions from './Actions'
 import * as Profile from '../profile/Actions'
 import { URL } from '../../Assets/Constants'
 
-const registerApi = async action => {
+const registerApi = async token => {
   const requestUrl = `${URL}/customers/me`
-  const token = await AsyncStorage.getItem('token')
-  const parsedToked = JSON.parse(token).data
   // prettier-ignore
   const headerParams = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${parsedToked}`
+    'Authorization': `Bearer ${token}`
   }
-  return axios.get(requestUrl, headerParams)
+  return fetch(requestUrl, { method: 'GET', headers: headerParams })
+  //return axios.get(requestUrl, headerParams)
 }
 
 export function* getProfileData(action) {
   try {
-    const response = yield call(registerApi, action)
+    const token = yield AsyncStorage.getItem('token')
+    const response = yield call(registerApi, JSON.parse(token))
     yield put(Profile.profileRequestSuccess(response))
   } catch (error) {
     yield put(Actions.profileRequestError(error))
