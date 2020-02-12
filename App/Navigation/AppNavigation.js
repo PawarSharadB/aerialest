@@ -48,7 +48,7 @@ const ContactUsStack = createStackNavigator({
   ContactUs: {
     screen: ContactUs,
     navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'ContactUs')
+      getNavigationOptions(navigation, 'Contact')
   }
 })
 const ProfileStack = createStackNavigator({
@@ -111,7 +111,7 @@ const drawerNavigator = createDrawerNavigator({
   ContactUs: {
     screen: ContactUsStack,
     navigationOptions: {
-      drawerLabel: 'Contact Us',
+      drawerLabel: 'Contact',
       drawerIcon: <Icon name="email" size={20} />
     }
   },

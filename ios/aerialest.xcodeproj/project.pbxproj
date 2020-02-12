@@ -31,6 +31,9 @@
 		17E85D15137D44969EFBB394 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 59C0C070A26648D6ACE12980 /* Octicons.ttf */; };
 		3475482564DF46E5B42B3D37 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9D48F8100A445C085239691 /* SimpleLineIcons.ttf */; };
 		BBFABA2CABF4433191AC06C4 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 061347FE8608482A80AE11D9 /* Zocial.ttf */; };
+		1C6A2809A5BE4BA898B2CCB6 /* Raleway-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 839255EB834E495F9169A5A9 /* Raleway-Regular.ttf */; };
+		E08BC3E60D84430CAF3CD58F /* Raleway-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 617BB87D0D8F4F048FC20EAD /* Raleway-SemiBold.ttf */; };
+		F4949EB5A0054250A4683208 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8339F3DC9A794A689C99B33B /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,9 @@
 		59C0C070A26648D6ACE12980 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		F9D48F8100A445C085239691 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		061347FE8608482A80AE11D9 /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		839255EB834E495F9169A5A9 /* Raleway-Regular.ttf */ = {isa = PBXFileReference; name = "Raleway-Regular.ttf"; path = "../assets/fonts/Raleway-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		617BB87D0D8F4F048FC20EAD /* Raleway-SemiBold.ttf */ = {isa = PBXFileReference; name = "Raleway-SemiBold.ttf"; path = "../assets/fonts/Raleway-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8339F3DC9A794A689C99B33B /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +212,9 @@
 				59C0C070A26648D6ACE12980 /* Octicons.ttf */,
 				F9D48F8100A445C085239691 /* SimpleLineIcons.ttf */,
 				061347FE8608482A80AE11D9 /* Zocial.ttf */,
+				839255EB834E495F9169A5A9 /* Raleway-Regular.ttf */,
+				617BB87D0D8F4F048FC20EAD /* Raleway-SemiBold.ttf */,
+				8339F3DC9A794A689C99B33B /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -362,6 +371,9 @@
 				17E85D15137D44969EFBB394 /* Octicons.ttf in Resources */,
 				3475482564DF46E5B42B3D37 /* SimpleLineIcons.ttf in Resources */,
 				BBFABA2CABF4433191AC06C4 /* Zocial.ttf in Resources */,
+				1C6A2809A5BE4BA898B2CCB6 /* Raleway-Regular.ttf in Resources */,
+				E08BC3E60D84430CAF3CD58F /* Raleway-SemiBold.ttf in Resources */,
+				F4949EB5A0054250A4683208 /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

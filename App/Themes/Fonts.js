@@ -4,7 +4,10 @@ const type = {
   emphasis: 'HelveticaNeue-Italic',
   natoSans: 'NotoSans-Regular'
 }
-
+const raleWay = {
+  regular: 'Raleway-Regular',
+  semiBold: 'Raleway-SemiBold'
+}
 const size = {
   regular: 17,
   medium: 14,
@@ -62,5 +65,6 @@ const style = {
 export default {
   type,
   size,
-  style
+  style,
+  raleWay
 }
