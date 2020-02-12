@@ -4,8 +4,9 @@ import {
   LOGIN_REQUEST_ERROR
 } from '../ActionTypes'
 
-export const loginRequest = () => ({
-  type: LOGIN_REQUEST
+export const loginRequest = loginData => ({
+  type: LOGIN_REQUEST,
+  loginData
 })
 
 export const loginRequestSuccess = loginData => ({

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { UIActivityIndicator } from 'react-native-indicators'
 
 import { TextField } from 'react-native-material-textfield'
 import Button from './Button'
@@ -20,7 +21,7 @@ export const Register = props => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [inputError, setInputError] = useState('')
   const [responseError, setResponseError] = useState(null)
-  const { success, error } = props
+  const { isFetching, success, error } = props
   let firstNameField = null
   let lastNameField = null
   let emaiField = null
@@ -32,7 +33,9 @@ export const Register = props => {
       setResponseError(error)
     }
     if (success) {
-      Alert.alert('User Registered Successfully')
+      const { navigation } = props
+      setResponseError(error)
+      navigation.navigate('Sign In')
     }
   }, [success, error])
   useEffect(() => {
@@ -42,7 +45,7 @@ export const Register = props => {
     }
   }, [])
   const onRegister = () => {
-    const { navigation, saveUserDataRequest } = props
+    const { saveUserDataRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,
@@ -59,7 +62,6 @@ export const Register = props => {
     }
     if (isValidString && password === confirmPassword) {
       saveUserDataRequest(userDataRequest)
-      onCancel()
     } else {
       setInputError('Please fill all the fields')
     }
@@ -156,13 +158,19 @@ export const Register = props => {
             <Text style={{ color: 'red' }}>{responseError}</Text>
           </View>
         ) : null}
+        {isFetching && (
+          <View>
+            <UIActivityIndicator />
+          </View>
+        )}
       </ScrollView>
     </View>
   )
 }
 const mapStateToProps = ({ register }) => {
-  const { userData, error, success } = register
+  const { isFetching, userData, error, success } = register
   return {
+    isFetching,
     userData,
     error,
     success

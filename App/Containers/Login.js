@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, ScrollView, Text } from 'react-native'
 import { TextField } from 'react-native-material-textfield'
 import { connect } from 'react-redux'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
 import { loginRequest } from '../Sagas/login/Actions'
+import { UIActivityIndicator } from 'react-native-indicators'
 
 import Button from '../Components/Button'
 import I18n from '../I18n'
@@ -14,8 +15,21 @@ export const Login = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [inputError, setInputError] = useState('')
+  const [responseError, setResponseError] = useState(null)
+  const { success, error, isFetching } = props
+
+  useEffect(() => {
+    if (success) {
+      const { navigation } = props
+      setResponseError(error)
+      navigation.navigate('Home')
+    }
+    if (error) {
+      setResponseError(error)
+    }
+  }, [success, error])
   const onSubmit = () => {
-    const { navigation, loginRequest } = props
+    const { loginRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       email,
       password
@@ -26,8 +40,6 @@ export const Login = props => {
     }
     if (isValidString) {
       loginRequest(loginData)
-      console.log(loginData)
-      //navigation.navigate('ChooseGameMode')
     } else {
       setInputError('Please enter the valid details')
     }
@@ -70,18 +82,36 @@ export const Login = props => {
           onPress={onForgotPassword}
           textStyle={styles.forgotPasswordText}
           style={styles.forgotPassword}
-          addShadow={true}
+          addShadow={false}
           showSmallText={true}
         />
+        {responseError ? (
+          <View>
+            <Text style={styles.responseError}>{responseError}</Text>
+          </View>
+        ) : null}
+        {isFetching && (
+          <View>
+            <UIActivityIndicator />
+          </View>
+        )}
       </ScrollView>
     </View>
   )
 }
-
+const mapStateToProps = ({ login }) => {
+  const { isFetching, loginData, success, error } = login
+  return {
+    isFetching,
+    loginData,
+    success,
+    error
+  }
+}
 const mapDispatchToProps = dispatch => ({
   loginRequest: args => {
     dispatch(loginRequest(args))
   }
 })
 
-export default connect(null, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
