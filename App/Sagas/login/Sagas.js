@@ -18,7 +18,7 @@ export function* userLogin(action) {
   try {
     const response = yield call(loginApi, action)
     //Save the response.data in aysnc storage
-    yield AsyncStorage.setItem('token', JSON.stringify(response))
+    yield AsyncStorage.setItem('token', JSON.stringify(response.data))
 
     yield put(LoginUser.loginRequestSuccess(response))
   } catch (error) {

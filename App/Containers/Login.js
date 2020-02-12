@@ -22,7 +22,7 @@ export const Login = props => {
     if (success) {
       const { navigation } = props
       setResponseError(error)
-      navigation.navigate('Home')
+      navigation.navigate('Auth')
     }
     if (error) {
       setResponseError(error)
