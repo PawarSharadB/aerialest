@@ -1,0 +1,72 @@
+{
+	"homePage": {
+		"Aerial_header"   : "AERIAL ROOF MEASUREMENT SERVICES",
+		"Aerial_desc1"   : "Don't Hand Measure a Roof, Get A Roof Report Using Accurate Satellite Roof Measurements We're dedicated to saving your time, reducing your cost of business, improving your customer service, and profitability by providing your business with automated roof measurements. Our reports are unique because They are just as accurate as on-site measurements. Our valuable customers confirm this statement. Are you one of them? Try the technology that is saving your time, money and same day delivery. See how it's all posisible by signing up and ordering a roof report for yourself.",
+		"Aerial_sub1"	:	"OUR REPORTS",
+		"Aerial_sub1_desc"	:	"Our roof reports starting at under $16 and no set-up or membership fees. We are certain that once you see the benefits of our roof report and complete summary of each facet, you will never go back to old fashioned roof reports again. Aerial Estimation is the most complete source for all your satellite roof measurements. We know what contractors want.",
+		"Aerial_sub2"	:	"SATEELLITE ROOF MEASUREMENTS:",
+		"Aerial_sub2_feature_title"	:	"FEATURES OF A ROOF REPORT",
+		"Aerial_sub2_feature1"	:	"Accurate Roof Pitch Measurements",
+		"Aerial_sub2_feature2"	:	"Roof Measurements including Area, Rakes, Ridges, Hips and Valleys, and every edge is separately measured and identified.",
+		"Aerial_sub2_feature3"	:	"CAD style drawings with colored linkes identifying every type of root edge.",
+		"Aerial_sub2_feature4"	:	"Online access to your Roof Reports for your Employees, Subs and Suppliers with no software to install",
+		"Aerial_sub2_feature5"	:	"Multiple image providers for over 98% coverage of the USA",
+		"Aerial_sub2_feature6"	:	"Also supports file formats such as XML,RFX,DFX/DWG AND WRL"
+	},
+	"common":{
+		"submit":"Submit",
+		"aerialestimationurl":"www.aerialestimation.com"
+	},
+	"menuItems":{
+		"Header":"Aerial Estimation",
+		"home":"Home",
+		"about_us":"About Us",
+		"pricing":"Pricing",
+		"contact_us":"Contact Us",
+		"signin":"SignIn",
+		"register":"Register"
+	},
+	"aboutUsPage":{
+		"Aerialdesc":"Aerial Estimation is proud to offer satellite roofing measurement to the rofing industry. We use the latest in technology and highest quality aerial and satellite images to creae our roofing measuements. Using these images togetheer with our web based software. we are able to create a roof take-off that is just as accurate as on-site measurements.In fact, our roofing measuements have been proven accurate to within 2%-4%.",
+		"Aerial_sub1":"OUR GOAL && SPECIALIZATION",
+		"Aerial_sub1_desc":"Our goal at Aerial Estimation is to stremline your day to day operations by automating your employees and allowing theem to work more efficiently with the help of interactive Roof Report. When your roof report is ready, it is not just emailed to one person, or  available for downliad into a single desktop application, it is available to anyone in your company using a web based user account. All your reports saved on our database and you can view and download any time as per your convinence. Our 3D Roof reports include Aerial Images, rakes, flashing , valleys, ridges, multiple slopes areas,pitch , linear measurements, totalsquares, recommended waste etc., Our System can Export and import file formats such as XML,RFX,DFX/DWG and WRL."
+	},
+	"contactUsPage":{
+		"email_title":"Email Us",
+		"phone_label":"Phone Number: ",
+		"Fax_label":"Fax Number: ",
+		"working_hour_label":"Working hours: ",
+		"contact_title":"Contact :",
+		"reach_source":"How did your hear about us",
+		"reach_source1":"Google",
+		"reach_source2":"Magazin",
+		"reach_source3":"Word Of Mount",
+		"reach_source4":"other",
+	},
+	"fieldLabel":{
+		"firstName":"First Name",
+		"lastName":"Last Name",
+		"email":"Email",
+		"company":"Company",
+		"phone":"Phone",
+		"comment":"Comment"
+	},
+	"errors":{
+		"enterfirstname":"Please enter FirstName",
+		"enterlastname":"Please enter LastName",
+		"enteremail":"Please enter Email Address",
+		"entercompany":"Please enter Company",
+		"enterphone":"Please enter Phone Number",
+		"entercomment":"Please enter comments",
+		"enterpassword":"Please enter Password",
+		"enterconfirmpassword":"Please enter Confirm Password",
+		"pwdmissmatch":"Password MisMatch",
+		"Invalidemail":"Please Enter Valid EmailAddress"
+	},
+	"searchAddress":{
+		"newordertitle":"New to Orders ? See this "
+	},
+	"SignInPage":{
+		"forgotpswd":"Forgot Password"
+	}
+}
