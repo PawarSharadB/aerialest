@@ -17,7 +17,7 @@ import Profile from '../Containers/Profile'
 import LaunchScreen from '../Containers/LaunchScreen'
 
 import Login from '../Containers/Login'
-
+import { SelectAddress } from '../Containers/SelectAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import { View } from 'react-native'
@@ -89,6 +89,13 @@ const OrdersStack = createStackNavigator({
       getNavigationOptions(navigation, 'Orders')
   }
 })
+const SelectAddressStack = createStackNavigator({
+  SelectAddress: {
+    screen: SelectAddress,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'SelectAddress')
+  }
+})
 const RegisterStack = createStackNavigator({
   RegisterInfo: {
     screen: Register,
@@ -130,6 +137,13 @@ const authNavigator = createDrawerNavigator({
     screen: ContactUsStack,
     navigationOptions: {
       drawerLabel: 'Contact',
+      drawerIcon: <Icon name="email" size={20} />
+    }
+  },
+  SelectAddressStack: {
+    screen: SelectAddressStack,
+    navigationOptions: {
+      drawerLabel: 'SelectAddress',
       drawerIcon: <Icon name="email" size={20} />
     }
   },
