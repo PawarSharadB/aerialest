@@ -4,9 +4,8 @@ import {
   PROFILE_REQUEST_SUCCESS
 } from '../ActionTypes'
 
-export const profileRequest = profile => ({
-  type: PROFILE_REQUEST,
-  profile
+export const profileRequest = () => ({
+  type: PROFILE_REQUEST
 })
 
 export const profileRequestSuccess = profile => ({

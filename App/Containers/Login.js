@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, Text, Alert } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import { TextField } from 'react-native-material-textfield'
 import { connect } from 'react-redux'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
 import { loginRequest } from '../Sagas/login/Actions'
+import { UIActivityIndicator } from 'react-native-indicators'
 
 import Button from '../Components/Button'
 import I18n from '../I18n'
@@ -15,19 +16,20 @@ export const Login = props => {
   const [password, setPassword] = useState('')
   const [inputError, setInputError] = useState('')
   const [responseError, setResponseError] = useState(null)
-  const { success, error } = props
+  const { success, error, isFetching } = props
 
   useEffect(() => {
+    if (success) {
+      const { navigation } = props
+      setResponseError(error)
+      navigation.navigate('Home')
+    }
     if (error) {
       setResponseError(error)
     }
-    if (success) {
-      Alert.alert('User Registered Successfully')
-    }
   }, [success, error])
-
   const onSubmit = () => {
-    const { navigation, loginRequest } = props
+    const { loginRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       email,
       password
@@ -38,8 +40,6 @@ export const Login = props => {
     }
     if (isValidString) {
       loginRequest(loginData)
-      console.log(loginData)
-      //navigation.navigate('ChooseGameMode')
     } else {
       setInputError('Please enter the valid details')
     }
@@ -90,13 +90,19 @@ export const Login = props => {
             <Text style={styles.responseError}>{responseError}</Text>
           </View>
         ) : null}
+        {isFetching && (
+          <View>
+            <UIActivityIndicator />
+          </View>
+        )}
       </ScrollView>
     </View>
   )
 }
 const mapStateToProps = ({ login }) => {
-  const { loginData, success, error } = login
+  const { isFetching, loginData, success, error } = login
   return {
+    isFetching,
     loginData,
     success,
     error
