@@ -23,11 +23,17 @@ export default StyleSheet.create({
     height: 56,
     backgroundColor: '#fff',
     justifyContent: 'center',
-    borderRadius: 4
+    borderRadius: 4,
+    maxWidth: 150,
+    alignSelf: 'center'
   },
   forgotPasswordText: {
     ...fontStyles.buttonM,
     textDecorationLine: 'underline',
     color: '#517BCD'
+  },
+  responseError: {
+    color: 'red',
+    textAlign: 'center'
   }
 })
