@@ -11,7 +11,8 @@ export const reducers = combineReducers({
   search: require('./SearchRedux').reducer,
   register: require('../Sagas/register/Reducer').reducer,
   login: require('../Sagas/login/Reducer').reducer,
-  profileInfo: require('../Sagas/profile/Reducer').reducer
+  profileInfo: require('../Sagas/profile/Reducer').reducer,
+  forgotPassword: require('../Sagas/password/Reducer').reducer
 })
 
 export default () => {

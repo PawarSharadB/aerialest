@@ -44,7 +44,10 @@ export const Login = props => {
       setInputError('Please enter the valid details')
     }
   }
-  const onForgotPassword = () => {}
+  const onForgotPassword = () => {
+    const { navigation } = props
+    navigation.navigate('forgotPassword')
+  }
   return (
     <View style={styles.mainView}>
       <ScrollView

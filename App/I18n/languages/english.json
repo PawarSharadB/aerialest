@@ -29,6 +29,7 @@
    "signIn": "Sign In",
    "logOut": "Log Out",
    "forgotPassword": "Forgot Password",
-   "order":"Order"
+   "order":"Order",
+   "Reset":"Reset"
 
 }

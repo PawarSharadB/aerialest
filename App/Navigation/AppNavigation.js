@@ -17,13 +17,25 @@ import Profile from '../Containers/Profile'
 import LaunchScreen from '../Containers/LaunchScreen'
 
 import Login from '../Containers/Login'
+import ForgotPassword from '../Containers/ForgotPassword'
+
 import { SelectAddress } from '../Containers/SelectAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
+import NavBackButton from '../Components/NavBackButton'
+
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title) => ({
   title,
   headerLeft: <NavBar navigationProps={navigation} />,
+  headerStyle: {
+    backgroundColor: '#0485B2'
+  },
+  headerTintColor: '#fff'
+})
+const getNavigationOptionsWithBackButton = (navigation, title) => ({
+  title,
+  headerLeft: <NavBackButton navigationProps={navigation} />,
   headerStyle: {
     backgroundColor: '#0485B2'
   },
@@ -108,6 +120,11 @@ const LoginStack = createStackNavigator({
     screen: Login,
     navigationOptions: ({ navigation }) =>
       getNavigationOptions(navigation, 'Sign In')
+  },
+  forgotPassword: {
+    screen: ForgotPassword,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptionsWithBackButton(navigation, 'Reset Password')
   }
 })
 

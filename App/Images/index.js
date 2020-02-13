@@ -6,5 +6,6 @@ export default Images = {
   sun: require('./Home/sun.png'),
   select: require('./Contact/selected.png'),
   unSelect: require('./Contact/unSelected.png'),
-  dropdown: require('./Contact/dropDown.png')
+  dropdown: require('./Contact/dropDown.png'),
+  back: require('./Home/left.png')
 }

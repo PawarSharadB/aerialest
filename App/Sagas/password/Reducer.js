@@ -8,10 +8,10 @@ import Immutable from 'seamless-immutable'
 import { createReducer } from '../CreateReducer'
 
 const INITIAL_STATE = Immutable({
-  passwordData: {},
   isFetching: false,
-  success: false,
-  error: null
+  passwordData: {},
+  passwordSuccess: false,
+  passwordError: null
 })
 
 const reducers = {
@@ -21,16 +21,16 @@ const reducers = {
   [PASSWORD_REQUEST_SUCCESS]: (state, action) => {
     return Immutable.merge(state, {
       isFetching: false,
-      loginData: action.passwordData,
-      success: true,
-      error: null
+      passwordData: action.passwordData,
+      passwordSuccess: true,
+      passwordError: null
     })
   },
   [PASSWORD_REQUEST_ERROR]: (state, { error }) => {
     return Immutable.merge(state, {
-      error: error.response.data.message,
+      passwordError: error.response.data.message,
       isFetching: false,
-      success: false
+      passwordSuccess: false
     })
   }
 }
