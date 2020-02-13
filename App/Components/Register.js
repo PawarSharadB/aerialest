@@ -35,7 +35,7 @@ export const Register = props => {
     if (success) {
       const { navigation } = props
       setResponseError(error)
-      navigation.navigate('Sign In')
+      navigation.navigate('Login')
     }
   }, [success, error])
   useEffect(() => {

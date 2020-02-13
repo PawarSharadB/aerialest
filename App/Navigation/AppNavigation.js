@@ -93,7 +93,7 @@ const SelectAddressStack = createStackNavigator({
   SelectAddress: {
     screen: SelectAddress,
     navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'SelectAddress')
+      getNavigationOptions(navigation, 'Select Address')
   }
 })
 const RegisterStack = createStackNavigator({
@@ -143,7 +143,7 @@ const authNavigator = createDrawerNavigator({
   SelectAddressStack: {
     screen: SelectAddressStack,
     navigationOptions: {
-      drawerLabel: 'SelectAddress',
+      drawerLabel: 'Select Address',
       drawerIcon: <Icon name="email" size={20} />
     }
   },
