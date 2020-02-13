@@ -5,7 +5,10 @@ import SingleOrder from '../Components/SingleOrder'
 import styles from './Styles/PricingStyles'
 
 const Pricing = props => {
-  const onOrderSelect = () => {}
+  const onOrderSelect = () => {
+    const { navigation } = props
+    navigation.navigate('SelectAddress')
+  }
   const FlatListItemSeparator = () => {
     return (
       <View style={{ height: 1, width: '100%', backgroundColor: '#fff' }} />
