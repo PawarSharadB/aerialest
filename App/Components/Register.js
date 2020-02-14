@@ -5,7 +5,6 @@ import CardView from 'react-native-cardview'
 
 import { TextField } from 'react-native-material-textfield'
 import Button from './Button'
-import AlertCard from '../Components/AlertCard'
 
 import I18n from '../I18n'
 
