@@ -37,7 +37,6 @@ const ContactUs = props => {
     )
   }
   const onPressButton = () => {
-    debugger
     const result = validateContactUs({
       firstName,
       lastName,

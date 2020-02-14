@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { UIActivityIndicator } from 'react-native-indicators'
+import CardView from 'react-native-cardview'
 
 import { TextField } from 'react-native-material-textfield'
 import Button from './Button'
+import AlertCard from '../Components/AlertCard'
+
 import I18n from '../I18n'
 
 import { View, ScrollView, Alert, Text } from 'react-native'
@@ -34,8 +36,10 @@ export const Register = props => {
     }
     if (success) {
       const { navigation } = props
-      setResponseError(error)
-      navigation.navigate('Login')
+      setResponseError(I18n.t('registerMsg'))
+      setTimeout(() => {
+        navigation.navigate('Login')
+      }, 500)
     }
   }, [success, error])
   useEffect(() => {
@@ -60,7 +64,9 @@ export const Register = props => {
       },
       password
     }
-    if (isValidString && password === confirmPassword) {
+    if (password !== confirmPassword) {
+      setResponseError(I18n.t('passwordMismatch'))
+    } else if (isValidString && password === confirmPassword) {
       saveUserDataRequest(userDataRequest)
     } else {
       setInputError('Please fill all the fields')
@@ -69,6 +75,7 @@ export const Register = props => {
   const onCancel = () => {
     setFirstName('')
     setLastName('')
+    setResponseError('')
     setEmail(''), setPassword('')
     setConfirmPassword('')
     firstNameField.clear()
@@ -84,6 +91,20 @@ export const Register = props => {
         keyboardShouldPersistTaps={'handled'}
       >
         <View style={styles.contentScrollView}>
+          {responseError ? (
+            <View style={styles.cardView}>
+              <CardView
+                cardElevation={1}
+                cardMaxElevation={1}
+                cornerRadius={5}
+                style={styles.card}
+              >
+                <View>
+                  <Text style={styles.text}>{responseError}</Text>
+                </View>
+              </CardView>
+            </View>
+          ) : null}
           <TextField
             label={I18n.t('firstName')}
             ref={ref => (firstNameField = ref)}
@@ -153,11 +174,7 @@ export const Register = props => {
             />
           </View>
         </View>
-        {responseError ? (
-          <View>
-            <Text style={{ color: 'red' }}>{responseError}</Text>
-          </View>
-        ) : null}
+
         {isFetching && (
           <View>
             <UIActivityIndicator />

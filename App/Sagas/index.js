@@ -5,6 +5,7 @@ import DebugConfig from '../Config/DebugConfig'
 import { saveUserdata } from './register/Sagas'
 import { userLogin } from './login/Sagas'
 import { getProfileData } from './profile/Sagas'
+import { getPasswordData } from './password/Sagas'
 
 import * as ActionTypes from './ActionTypes'
 
@@ -33,6 +34,7 @@ export default function* root() {
     takeLatest(ActionTypes.SAVE_USER_DATA_REQUEST, saveUserdata),
     takeLatest(ActionTypes.LOGIN_REQUEST, userLogin),
     takeLatest(ActionTypes.PROFILE_REQUEST, getProfileData),
+    takeLatest(ActionTypes.PASSWORD_REQUEST, getPasswordData),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)

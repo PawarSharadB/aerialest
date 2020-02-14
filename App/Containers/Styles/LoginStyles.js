@@ -32,8 +32,18 @@ export default StyleSheet.create({
     textDecorationLine: 'underline',
     color: '#517BCD'
   },
-  responseError: {
-    color: 'red',
-    textAlign: 'center'
+  card: {
+    backgroundColor: '#f59c42',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10
+  },
+  text: {
+    textAlign: 'center',
+    color: '#fff'
+  },
+  cardView: {
+    marginTop: 40,
+    flex: 1
   }
 })
