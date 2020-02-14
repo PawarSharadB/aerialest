@@ -28,5 +28,20 @@ export default StyleSheet.create({
   },
   cancelBtn: {
     backgroundColor: '#f8f8f8'
+  },
+
+  card: {
+    backgroundColor: '#f59c42',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10
+  },
+  text: {
+    textAlign: 'center',
+    color: '#fff'
+  },
+  cardView: {
+    marginTop: 40,
+    flex: 1
   }
 })

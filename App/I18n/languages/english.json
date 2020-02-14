@@ -30,6 +30,8 @@
    "logOut": "Log Out",
    "forgotPassword": "Forgot Password",
    "order":"Order",
-   "Reset":"Reset"
-
+   "Reset":"Reset",
+   "registerMsg":"Registered Successfully!",
+   "logInMsg":"LoggedIn Successfully",
+   "passwordMismatch":"Password Mismatch! Please re-enter"
 }

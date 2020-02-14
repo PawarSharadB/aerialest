@@ -11,7 +11,6 @@ import HomePage from '../Containers/HomeScreen'
 import AboutUs from '../Containers/AboutUs'
 import BillingInfo from '../Containers/BillingInfo'
 import ContactUs from '../Containers/ContactUs'
-import Orders from '../Containers/Orders'
 import Pricing from '../Containers/Pricing'
 import Profile from '../Containers/Profile'
 import LaunchScreen from '../Containers/LaunchScreen'
@@ -80,6 +79,13 @@ const ContactUsStack = createStackNavigator({
       getNavigationOptions(navigation, 'Contact')
   }
 })
+const OrdersStack = createStackNavigator({
+  Orders: {
+    screen: SelectAddress,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'Contact')
+  }
+})
 const ProfileStack = createStackNavigator({
   Profile: {
     screen: Profile,
@@ -94,20 +100,7 @@ const BillingInfoStack = createStackNavigator({
       getNavigationOptions(navigation, 'BillingInfo')
   }
 })
-const OrdersStack = createStackNavigator({
-  Orders: {
-    screen: Orders,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'Orders')
-  }
-})
-const SelectAddressStack = createStackNavigator({
-  SelectAddress: {
-    screen: SelectAddress,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'Select Address')
-  }
-})
+
 const RegisterStack = createStackNavigator({
   RegisterInfo: {
     screen: Register,
@@ -153,15 +146,15 @@ const authNavigator = createDrawerNavigator({
   ContactUs: {
     screen: ContactUsStack,
     navigationOptions: {
-      drawerLabel: 'Contact',
-      drawerIcon: <Icon name="email" size={20} />
+      drawerLabel: 'Contact Us',
+      drawerIcon: <Icon name="envelope" size={20} />
     }
   },
-  SelectAddressStack: {
-    screen: SelectAddressStack,
+  OrdersStack: {
+    screen: OrdersStack,
     navigationOptions: {
-      drawerLabel: 'Select Address',
-      drawerIcon: <Icon name="email" size={20} />
+      drawerLabel: 'Orders',
+      drawerIcon: <Icon name="thumbs-o-up" size={20} />
     }
   },
   Profile: {
@@ -176,13 +169,6 @@ const authNavigator = createDrawerNavigator({
     navigationOptions: {
       drawerLabel: 'Billing Info',
       drawerIcon: <Icon name="gear" size={20} />
-    }
-  },
-  Orders: {
-    screen: OrdersStack,
-    navigationOptions: {
-      drawerLabel: 'Orders',
-      drawerIcon: <Icon name="like1" size={20} />
     }
   },
   Signout: {
@@ -218,8 +204,8 @@ const nonAuthNavigator = createDrawerNavigator({
   ContactUs: {
     screen: ContactUsStack,
     navigationOptions: {
-      drawerLabel: 'Contact',
-      drawerIcon: <Icon name="email" size={20} />
+      drawerLabel: 'Contact Us',
+      drawerIcon: <Icon name="envelope" size={20} />
     }
   },
   Login: {

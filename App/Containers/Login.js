@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
 import { loginRequest } from '../Sagas/login/Actions'
 import { UIActivityIndicator } from 'react-native-indicators'
+import CardView from 'react-native-cardview'
 
 import Button from '../Components/Button'
 import I18n from '../I18n'
@@ -17,12 +18,13 @@ export const Login = props => {
   const [inputError, setInputError] = useState('')
   const [responseError, setResponseError] = useState(null)
   const { success, error, isFetching } = props
-
   useEffect(() => {
     if (success) {
       const { navigation } = props
-      setResponseError(error)
-      navigation.navigate('Auth')
+      setResponseError(I18n.t('logInMsg'))
+      setTimeout(() => {
+        navigation.navigate('Auth')
+      }, 500)
     }
     if (error) {
       setResponseError(error)
@@ -41,7 +43,7 @@ export const Login = props => {
     if (isValidString) {
       loginRequest(loginData)
     } else {
-      setInputError('Please enter the valid details')
+      setResponseError('Please enter the valid details')
     }
   }
   const onForgotPassword = () => {
@@ -54,6 +56,20 @@ export const Login = props => {
         style={styles.scrollView}
         keyboardShouldPersistTaps={'handled'}
       >
+        {responseError ? (
+          <View style={styles.cardView}>
+            <CardView
+              cardElevation={4}
+              cardMaxElevation={4}
+              cornerRadius={10}
+              style={styles.card}
+            >
+              <View>
+                <Text style={styles.text}>{responseError}</Text>
+              </View>
+            </CardView>
+          </View>
+        ) : null}
         <TextField
           label={I18n.t('email')}
           value={email}
@@ -88,11 +104,6 @@ export const Login = props => {
           addShadow={false}
           showSmallText={true}
         />
-        {responseError ? (
-          <View>
-            <Text style={styles.responseError}>{responseError}</Text>
-          </View>
-        ) : null}
         {isFetching && (
           <View>
             <UIActivityIndicator />
