@@ -16,6 +16,14 @@ const registerApi = async token => {
   return fetch(requestUrl, { method: 'GET', headers: headerParams })
   //return axios.get(requestUrl, headerParams)
 }
+const profileUpdate = ({ profileData }, token) => {
+  const requestUrl = `${URL}/customers/me`
+  const headerParams = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
+  }
+  return axios.put(requestUrl, profileData, headerParams)
+}
 
 export function* getProfileData(action) {
   try {
@@ -23,6 +31,16 @@ export function* getProfileData(action) {
     const response = yield call(registerApi, JSON.parse(token))
     const responseJson = yield response.json()
     yield put(Profile.profileRequestSuccess(responseJson))
+  } catch (error) {
+    yield put(Actions.profileRequestError(error))
+  }
+}
+
+export function* updateProfileData(action) {
+  try {
+    const token = yield AsyncStorage.getItem('token')
+    const response = yield call(profileUpdate, action, JSON.parse(token))
+    yield put(Actions.profileUpdateSuccess(response))
   } catch (error) {
     yield put(Actions.profileRequestError(error))
   }
