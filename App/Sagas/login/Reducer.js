@@ -1,7 +1,8 @@
 import {
   LOGIN_REQUEST,
   LOGIN_REQUEST_SUCCESS,
-  LOGIN_REQUEST_ERROR
+  LOGIN_REQUEST_ERROR,
+  RESET
 } from '../ActionTypes'
 
 import Immutable from 'seamless-immutable'
@@ -32,6 +33,9 @@ const reducers = {
       isFetching: false,
       success: false
     })
+  },
+  [RESET]: state => {
+    return INITIAL_STATE
   }
 }
 

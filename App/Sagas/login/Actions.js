@@ -1,7 +1,8 @@
 import {
   LOGIN_REQUEST,
   LOGIN_REQUEST_SUCCESS,
-  LOGIN_REQUEST_ERROR
+  LOGIN_REQUEST_ERROR,
+  RESET
 } from '../ActionTypes'
 
 export const loginRequest = loginData => ({
@@ -18,3 +19,5 @@ export const loginRequestError = error => ({
   type: LOGIN_REQUEST_ERROR,
   error
 })
+
+export const reset = () => ({ type: RESET })

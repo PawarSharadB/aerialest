@@ -7,7 +7,7 @@ import styles from './Styles/PricingStyles'
 const Pricing = props => {
   const onOrderSelect = () => {
     const { navigation } = props
-    navigation.navigate('SelectAddress')
+    navigation.navigate('OrdersStack')
   }
   const FlatListItemSeparator = () => {
     return (

@@ -8,9 +8,10 @@ import Button from './Button'
 
 import I18n from '../I18n'
 
-import { View, ScrollView, Alert, Text } from 'react-native'
+import { View, ScrollView, Text } from 'react-native'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandler'
-import { saveUserDataRequest, clearData } from '../Sagas/register/Actions'
+import { saveUserDataRequest } from '../Sagas/register/Actions'
+import { reset } from '../Sagas/login/Actions'
 
 import styles from './Styles/RegisterStyles'
 
@@ -30,6 +31,11 @@ export const Register = props => {
   let confirmPasswordField = null
 
   useEffect(() => {
+    const { reset } = props
+    reset()
+  }, [])
+
+  useEffect(() => {
     if (error) {
       setResponseError(error)
     }
@@ -41,12 +47,6 @@ export const Register = props => {
       }, 500)
     }
   }, [success, error])
-  useEffect(() => {
-    return () => {
-      const { clearData } = props
-      clearData()
-    }
-  }, [])
   const onRegister = () => {
     const { saveUserDataRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
@@ -196,8 +196,8 @@ const mapDispatchToProps = dispatch => ({
   saveUserDataRequest: args => {
     dispatch(saveUserDataRequest(args))
   },
-  clearData: () => {
-    dispatch(clearData())
+  reset: () => {
+    dispatch(reset())
   }
 })
 
