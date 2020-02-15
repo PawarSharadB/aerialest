@@ -14,5 +14,5 @@ export const saveUserDataError = error => ({
 })
 
 export const clearData = () => ({
-  type: ActionTypes.CLEAR_DATA
+  type: ActionTypes.RESET
 })

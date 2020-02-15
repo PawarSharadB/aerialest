@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { KeyboardAvoidingView, ScrollView } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
+
 import Geocoder from 'react-native-geocoding'
 import CardView from 'react-native-cardview'
 import { TextField } from 'react-native-material-textfield'
@@ -11,11 +13,20 @@ import { getInitialRegionForMap } from '../Utils/getInitialRegionForMap'
 
 export const SelectAddress = props => {
   const [region, setRegion] = useState(getInitialRegionForMap().region)
-  const [loading, isLoading] = useState(false)
   const [errorSearchPlace, setSearchPlaceError] = useState('')
   const [errorlatitude, setLatitudeError] = useState('')
   const [errorLongitude, setLongitudeError] = useState('')
 
+  useEffect(() => {
+    checkToken()
+  }, [])
+  const checkToken = async () => {
+    const { navigation } = props
+    const token = await AsyncStorage.getItem('token')
+    if (!token) {
+      navigation.navigate('Login')
+    }
+  }
   const searchKeyWord = () => {
     if (region.place === '') {
       setSearchPlaceError('Please Enter Valid Place To Search')

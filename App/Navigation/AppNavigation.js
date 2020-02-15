@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-community/async-storage'
 import {
   createAppContainer,
   createDrawerNavigator,
@@ -22,8 +21,8 @@ import { SelectAddress } from '../Containers/SelectAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import NavBackButton from '../Components/NavBackButton'
+import SignoutScreen from '../Containers/SignoutScreen'
 
-import { View } from 'react-native'
 const getNavigationOptions = (navigation, title) => ({
   title,
   headerLeft: <NavBar navigationProps={navigation} />,
@@ -41,16 +40,6 @@ const getNavigationOptionsWithBackButton = (navigation, title) => ({
   headerTintColor: '#fff'
 })
 
-const SignoutScreen = props => {
-  useEffect(() => {
-    clear()
-  }, [])
-  const clear = async () => {
-    await AsyncStorage.clear()
-    props.navigation.navigate('Starter')
-  }
-  return <View />
-}
 const HomeStack = createStackNavigator({
   HomeScreen: {
     screen: HomePage,
@@ -174,8 +163,8 @@ const authNavigator = createDrawerNavigator({
   Signout: {
     screen: SignoutScreen,
     navigationOptions: {
-      drawerLabel: 'Signout',
-      drawerIcon: <Icon name="sign-out" size={20} />
+      drawerLabel: 'Sign out',
+      drawerIcon: <Icon name="power-off" size={20} />
     }
   }
 })
