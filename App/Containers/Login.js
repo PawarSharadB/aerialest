@@ -4,6 +4,7 @@ import { TextField } from 'react-native-material-textfield'
 import { connect } from 'react-redux'
 import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
 import { loginRequest } from '../Sagas/login/Actions'
+
 import { UIActivityIndicator } from 'react-native-indicators'
 import CardView from 'react-native-cardview'
 
@@ -30,6 +31,7 @@ export const Login = props => {
       setResponseError(error)
     }
   }, [success, error])
+
   const onSubmit = () => {
     const { loginRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {

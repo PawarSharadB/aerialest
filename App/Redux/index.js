@@ -12,6 +12,7 @@ export const reducers = combineReducers({
   register: require('../Sagas/register/Reducer').reducer,
   login: require('../Sagas/login/Reducer').reducer,
   profileInfo: require('../Sagas/profile/Reducer').reducer,
+  profileUpdate: require('../Sagas/profile/profileUpdateReducer').reducer,
   forgotPassword: require('../Sagas/password/Reducer').reducer
 })
 

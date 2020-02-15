@@ -33,5 +33,7 @@
    "Reset":"Reset",
    "registerMsg":"Registered Successfully!",
    "logInMsg":"LoggedIn Successfully",
-   "passwordMismatch":"Password Mismatch! Please re-enter"
+   "passwordMismatch":"Password Mismatch! Please re-enter",
+   "update":"Update",
+   "updateMsg":"Profile Update Successfully"
 }
