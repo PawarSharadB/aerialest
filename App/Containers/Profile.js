@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, ScrollView } from 'react-native'
-import CardView from 'react-native-cardview'
+import { View, ScrollView } from 'react-native'
 import Button from '../Components/Button'
-
+import AlertCard from '../Components/AlertCard'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { TextField } from 'react-native-material-textfield'
 import I18n from '../I18n'
@@ -35,15 +34,22 @@ const Profile = props => {
   useEffect(() => {
     if (updateError) {
       setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     }
     if (updateSuccess) {
       const { navigation } = props
       setResponseError(I18n.t('updateMsg'))
+      navigation.navigate('Home')
     }
   }, [updateSuccess, updateError])
   useEffect(() => {
     if (error) {
       setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     }
     if (success) {
       const { navigation } = props
@@ -51,6 +57,7 @@ const Profile = props => {
   }, [success, error])
 
   useEffect(() => {
+    setResponseError('')
     const { getProfile } = props
     getProfile()
   }, [])
@@ -98,20 +105,7 @@ const Profile = props => {
           style={styles.scrollView}
           keyboardShouldPersistTaps={'handled'}
         >
-          {responseError ? (
-            <View style={styles.cardView}>
-              <CardView
-                cardElevation={1}
-                cardMaxElevation={1}
-                cornerRadius={5}
-                style={styles.card}
-              >
-                <View>
-                  <Text style={styles.text}>{responseError}</Text>
-                </View>
-              </CardView>
-            </View>
-          ) : null}
+          {responseError ? <AlertCard message={responseError} /> : null}
           <View>
             <TextField
               label={I18n.t('firstName')}
@@ -177,7 +171,11 @@ const mapStateToProps = ({ profileInfo, profileUpdate }) => {
     isFetching,
     profile,
     success,
-    error
+    error,
+    isUpdateFetching,
+    profileData,
+    updateSuccess,
+    updateError
   }
 }
 const mapDispatchToProps = dispatch => ({

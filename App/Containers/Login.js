@@ -6,7 +6,7 @@ import { checkPatternWithExpressionAndString } from '../Utils/regexHandlerLogin'
 import { loginRequest } from '../Sagas/login/Actions'
 
 import { UIActivityIndicator } from 'react-native-indicators'
-import CardView from 'react-native-cardview'
+import AlerCard from '../Components/AlertCard'
 
 import Button from '../Components/Button'
 import I18n from '../I18n'
@@ -29,6 +29,9 @@ export const Login = props => {
     }
     if (error) {
       setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     }
   }, [success, error])
 
@@ -58,20 +61,7 @@ export const Login = props => {
         style={styles.scrollView}
         keyboardShouldPersistTaps={'handled'}
       >
-        {responseError ? (
-          <View style={styles.cardView}>
-            <CardView
-              cardElevation={4}
-              cardMaxElevation={4}
-              cornerRadius={10}
-              style={styles.card}
-            >
-              <View>
-                <Text style={styles.text}>{responseError}</Text>
-              </View>
-            </CardView>
-          </View>
-        ) : null}
+        {responseError ? <AlerCard message={responseError} /> : null}
         <TextField
           label={I18n.t('email')}
           value={email}

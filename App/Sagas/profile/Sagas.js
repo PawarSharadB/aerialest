@@ -14,15 +14,16 @@ const registerApi = async token => {
     'Authorization': `Bearer ${token}`
   }
   return fetch(requestUrl, { method: 'GET', headers: headerParams })
-  //return axios.get(requestUrl, headerParams)
 }
 const profileUpdate = ({ profileData }, token) => {
   const requestUrl = `${URL}/customers/me`
+  // prettier-ignore
   const headerParams = {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
   }
   return axios.put(requestUrl, profileData, headerParams)
+  //return fetch(requestUrl, { method: 'PUT', headers: headerParams })
 }
 
 export function* getProfileData(action) {
