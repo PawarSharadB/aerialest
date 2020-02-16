@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { UIActivityIndicator } from 'react-native-indicators'
-import CardView from 'react-native-cardview'
 
 import { TextField } from 'react-native-material-textfield'
 import Button from './Button'
-
+import AlerCard from './AlertCard'
 import I18n from '../I18n'
 
 import { View, ScrollView, Text } from 'react-native'
@@ -38,12 +37,16 @@ export const Register = props => {
   useEffect(() => {
     if (error) {
       setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     }
     if (success) {
       const { navigation } = props
       setResponseError(I18n.t('registerMsg'))
       setTimeout(() => {
         navigation.navigate('Login')
+        setResponseError('')
       }, 500)
     }
   }, [success, error])
@@ -65,6 +68,9 @@ export const Register = props => {
     }
     if (password !== confirmPassword) {
       setResponseError(I18n.t('passwordMismatch'))
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     } else if (isValidString && password === confirmPassword) {
       saveUserDataRequest(userDataRequest)
     } else {
@@ -90,20 +96,7 @@ export const Register = props => {
         keyboardShouldPersistTaps={'handled'}
       >
         <View style={styles.contentScrollView}>
-          {responseError ? (
-            <View style={styles.cardView}>
-              <CardView
-                cardElevation={1}
-                cardMaxElevation={1}
-                cornerRadius={5}
-                style={styles.card}
-              >
-                <View>
-                  <Text style={styles.text}>{responseError}</Text>
-                </View>
-              </CardView>
-            </View>
-          ) : null}
+          {responseError ? <AlerCard message={responseError} /> : null}
           <TextField
             label={I18n.t('firstName')}
             ref={ref => (firstNameField = ref)}
