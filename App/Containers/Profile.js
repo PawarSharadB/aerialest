@@ -41,7 +41,9 @@ const Profile = props => {
     if (updateSuccess) {
       const { navigation } = props
       setResponseError(I18n.t('updateMsg'))
-      navigation.navigate('Home')
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
     }
   }, [updateSuccess, updateError])
   useEffect(() => {
