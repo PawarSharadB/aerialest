@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { put, call } from 'redux-saga/effects'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -19,11 +18,15 @@ const profileUpdate = ({ profileData }, token) => {
   const requestUrl = `${URL}/customers/me`
   // prettier-ignore
   const headerParams = {
+    'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
+
   }
-  return axios.put(requestUrl, profileData, headerParams)
-  //return fetch(requestUrl, { method: 'PUT', headers: headerParams })
+  return fetch(requestUrl, {
+    method: 'PUT',
+    body: JSON.stringify(profileData),
+    headers: headerParams
+  })
 }
 
 export function* getProfileData(action) {
