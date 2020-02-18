@@ -31,6 +31,7 @@ const ContactUs = props => {
           const itemAtIndex = options[index]
           itemAtIndex.isSelected = !itemAtIndex.isSelected
           setPopUpOptions(options)
+          setShowModal(false)
         }}
         title={title}
       />

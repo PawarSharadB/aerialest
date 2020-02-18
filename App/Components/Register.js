@@ -78,6 +78,8 @@ export const Register = props => {
     }
   }
   const onCancel = () => {
+    const { navigation } = props
+
     setFirstName('')
     setLastName('')
     setResponseError('')
@@ -88,6 +90,7 @@ export const Register = props => {
     emaiField.clear()
     passwordField.clear()
     confirmPasswordField.clear()
+    navigation.navigate('Home')
   }
   return (
     <View style={styles.mainView}>
