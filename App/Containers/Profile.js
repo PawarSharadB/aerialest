@@ -27,10 +27,6 @@ const Profile = props => {
     updateError
   } = props
 
-  let firstNameField = null
-  let lastNameField = null
-  let emaiField = null
-
   useEffect(() => {
     if (updateError) {
       setResponseError(error)
@@ -39,7 +35,6 @@ const Profile = props => {
       }, 3000)
     }
     if (updateSuccess) {
-      const { navigation } = props
       setResponseError(I18n.t('updateMsg'))
       setTimeout(() => {
         setResponseError('')
@@ -54,7 +49,9 @@ const Profile = props => {
       }, 3000)
     }
     if (success) {
-      const { navigation } = props
+      setFirstName(profile.firstname)
+      setLastName(profile.lastname)
+      setEmail(profile.email)
     }
   }, [success, error])
 
@@ -66,9 +63,9 @@ const Profile = props => {
   const onUpdate = () => {
     const { profileUpdateRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
-      firstname: profile.firstname || firstname,
-      lastname: profile.lastname || lastname,
-      email: profile.email || email
+      firstname,
+      lastname,
+      email
     })
     const userDataRequest = {
       customer: {
@@ -87,12 +84,8 @@ const Profile = props => {
     }
   }
   const onCancel = () => {
-    setFirstName('')
-    setLastName('')
-    setResponseError('')
-    setEmail(''), firstNameField.clear()
-    lastNameField.clear()
-    emaiField.clear()
+    const { navigation } = props
+    navigation.navigate('Home')
   }
   return (
     <View style={styles.mainView}>
