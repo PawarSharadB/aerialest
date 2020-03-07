@@ -4,7 +4,7 @@ import { UIActivityIndicator } from 'react-native-indicators'
 
 import { TextField } from 'react-native-material-textfield'
 import Button from './Button'
-import AlerCard from './AlertCard'
+import AlertCard from './AlertCard'
 import I18n from '../I18n'
 
 import { View, ScrollView, Text } from 'react-native'
@@ -99,7 +99,7 @@ export const Register = props => {
         keyboardShouldPersistTaps={'handled'}
       >
         <View style={styles.contentScrollView}>
-          {responseError ? <AlerCard message={responseError} /> : null}
+          {responseError ? <AlertCard message={responseError} /> : null}
           <TextField
             label={I18n.t('firstName')}
             ref={ref => (firstNameField = ref)}
