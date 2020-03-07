@@ -1,22 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { KeyboardAvoidingView, ScrollView } from 'react-native'
+import { StyleSheet, View, Dimensions, PermissionsAndroid } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
-
-import Geocoder from 'react-native-geocoding'
-import CardView from 'react-native-cardview'
-import { TextField } from 'react-native-material-textfield'
-import MapView from 'react-native-maps'
+import Geolocation from '@react-native-community/geolocation'
+import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from 'react-native-maps'
 import Button from '../Components/Button'
-import ParsedText from 'react-native-parsed-text'
-import { styles } from './Styles/SelectAddressStyles'
-import { getInitialRegionForMap } from '../Utils/getInitialRegionForMap'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import { geoPermissions } from '../Utils/getPermissions'
+const { width, height } = Dimensions.get('window')
 
-export const SelectAddress = props => {
-  const [region, setRegion] = useState(getInitialRegionForMap().region)
-  const [errorSearchPlace, setSearchPlaceError] = useState('')
-  const [errorlatitude, setLatitudeError] = useState('')
-  const [errorLongitude, setLongitudeError] = useState('')
+const ASPECT_RATIO = width / height
+const LATITUDE = 37.78825
+const LONGITUDE = -122.4324
+const LATITUDE_DELTA = 0.0922
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
+const SelectAddress = props => {
+  const regionData = {
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
+  }
+  const [region, setRegion] = useState(regionData)
+  const [marginBottom, setMarginBottom] = useState(1)
+  const [mapRef, setMapRef] = useState(null)
+  const [mapType, setMapType] = useState(MAP_TYPES.SATELLITE)
+  const onMapPress = e => {
+    const { latitude, longitude } = e.nativeEvent.coordinate
+    setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
+  }
   useEffect(() => {
     checkToken()
   }, [])
@@ -27,128 +39,164 @@ export const SelectAddress = props => {
       navigation.navigate('Login')
     }
   }
-  const searchKeyWord = () => {
-    if (region.place === '') {
-      setSearchPlaceError('Please Enter Valid Place To Search')
-      return
-    }
-    Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
-    Geocoder.from(region.place)
-      .then(json => {
-        let location = json.results[0].geometry.location
-        const { lat: latitude, lng: longitude } = location
-        setRegion(region => ({
-          latitude,
-          longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-          place: region.place
-        }))
-      })
-      .catch(error => {
+  const onMapReady = () => {
+    setMarginBottom(0)
+  }
+  const onPressMyLocation = async () => {
+    const granted = await geoPermissions()
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      const positionCallback = position => {
+        const { latitude, longitude } = position.coords
+        setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
+        if (mapRef !== null) {
+          mapRef.animateCamera({ center: { latitude, longitude } })
+        }
+      }
+      const errorCallback = error => {
         console.log(error)
-      })
-  }
-  const searchWithLatAndLang = () => {
-    const { latitude, longitude } = region
-    if (latitude === '') {
-      setLatitudeError('Please Select Valid Latitude')
-      return
+      }
+      const extraParams = {
+        maximumAge: 3000,
+        timeout: 5000,
+        enableHighAccuracy: true
+      }
+      Geolocation.getCurrentPosition(
+        positionCallback,
+        errorCallback,
+        extraParams
+      )
     }
-    if (longitude === '') {
-      setLongitudeError('Please Select Valid Longitude')
-      return
-    }
-    Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
-    Geocoder.from(latitude, longitude)
-      .then(json => {
-        let address = json.results[1].formatted_address
-        setRegion(region => ({ ...region, place: address }))
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
-
-  const onRegionChange = region => {
-    setRegion(region)
+  const onPressNext = () => {
+    const { navigation } = props
+    navigation.navigate('PlaceOrder', { region })
   }
-  const getRegionLatandLng = () => ({
-    latitude: region.latitude,
-    longitude: region.longitude,
-    latitudeDelta: region.latitudeDelta,
-    longitudeDelta: region.longitudeDelta
-  })
   return (
-    <ScrollView>
-      <KeyboardAvoidingView style={styles.mainView}>
-        <ParsedText
-          parse={[{ pattern: /video/, style: styles.video }]}
-          style={styles.newToOrders}
-        >
-          New to Orders ? See this video
-        </ParsedText>
-        <CardView style={styles.cardView}>
-          <TextField
-            placeholder="Enter a location"
-            onChangeText={text => {
-              setSearchPlaceError('')
-              setRegion(region => ({ ...region, place: text }))
-            }}
-            value={region.place}
-            error={errorSearchPlace}
-          />
-          <Button
-            text="Search"
-            style={styles.button}
-            showSmallText={false}
-            textStyle={styles.textStyle}
-            onPress={searchKeyWord}
-          />
-        </CardView>
-        <CardView style={styles.cardView}>
-          <TextField
-            keyboardType="numbers-and-punctuation"
-            placeholder="Enter Latitude"
-            value={`${region.latitude}`}
-            onChangeText={text => {
-              setLatitudeError('')
-              setRegion(region => ({
-                ...region,
-                latitude: parseFloat(text) ? parseFloat(text) : 0
-              }))
-            }}
-            error={errorlatitude}
-          />
-          <TextField
-            keyboardType="numbers-and-punctuation"
-            placeholder="Enter Longitude"
-            value={`${region.longitude}`}
-            onChangeText={text => {
-              setLongitudeError('')
-              setRegion(region => ({
-                ...region,
-                longitude: parseFloat(text) ? parseFloat(text) : 0
-              }))
-            }}
-            error={errorLongitude}
-          />
-          <Button
-            text="Search"
-            style={styles.button}
-            showSmallText={false}
-            textStyle={styles.textStyle}
-            onPress={() => {
-              searchWithLatAndLang()
-            }}
-          />
-        </CardView>
-        <MapView
-          region={getRegionLatandLng()}
-          onRegionChangeComplete={onRegionChange}
-          style={{ width: '100%', height: 200, marginTop: 20 }}
+    <View style={styles.container}>
+      <MapView
+        ref={ref => {
+          setMapRef(ref)
+        }}
+        showsMyLocationButton={false}
+        loadingEnabled={true}
+        style={[styles.map, { marginBottom: marginBottom }]}
+        provider={PROVIDER_GOOGLE}
+        mapType={mapType}
+        initialRegion={region}
+        zoomEnabled={true}
+        minZoomLevel={1}
+        maxZoomLevel={19}
+        zoomTapEnabled={true}
+        zoomControlEnabled={true}
+        onPress={onMapPress}
+        rotateEnabled={true}
+        scrollEnabled={true}
+        onMapReady={onMapReady}
+        showsUserLocation={true}
+        allowScrollGesturesDuringRotateOrZoom={false}
+        onMarkerDragStart={region => setRegion(region)}
+        onRegionChangeComplete={region => {
+          setRegion(prevRegion => ({
+            ...prevRegion,
+            latitude: region.latitude,
+            longitude: region.longitude
+          }))
+        }}
+      >
+        <Marker coordinate={region} draggable />
+      </MapView>
+      <View style={styles.locationButton}>
+        <Icon
+          size={30}
+          name="my-location"
+          color="#666667"
+          onPress={onPressMyLocation}
         />
-      </KeyboardAvoidingView>
-    </ScrollView>
+      </View>
+      <View style={styles.mapTypeButtonView}>
+        <Button
+          text="Map"
+          style={styles.mapTypeButton}
+          textStyle={[
+            {
+              color: mapType === MAP_TYPES.STANDARD ? '#000000' : 'gray'
+            },
+            styles.mapTypeButtonText
+          ]}
+          onPress={() => {
+            setMapType(MAP_TYPES.STANDARD)
+          }}
+        />
+        <Button
+          text="Satellite"
+          style={styles.mapTypeButton}
+          textStyle={[
+            { color: mapType === MAP_TYPES.SATELLITE ? '#000000' : 'gray' },
+            styles.mapTypeButtonText
+          ]}
+          onPress={() => {
+            setMapType(MAP_TYPES.SATELLITE)
+          }}
+        />
+      </View>
+      <Button
+        style={styles.button}
+        onPress={onPressNext}
+        text={'Next'}
+        textStyle={styles.buttonTitle}
+      />
+    </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  map: {
+    flex: 1
+  },
+  locationButton: {
+    backgroundColor: '#ffffff',
+    borderRadius: 5,
+    position: 'absolute',
+    right: 20,
+    top: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  button: {
+    justifyContent: 'center',
+    backgroundColor: '#0485B2'
+  },
+  buttonTitle: {
+    color: '#ffffff',
+    fontSize: 20
+  },
+  mapTypeButtonView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: 200,
+    height: 40,
+    position: 'absolute',
+    left: 10,
+    top: 10
+  },
+  mapTypeButton: {
+    minWidth: 100,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    borderRadius: 0,
+    height: 40,
+    padding: 0
+  },
+  mapTypeButtonText: {
+    marginTop: 10,
+    paddingVertical: 0,
+    alignSelf: 'center'
+  }
+})
+
+export default SelectAddress

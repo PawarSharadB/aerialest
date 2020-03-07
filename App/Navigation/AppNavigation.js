@@ -16,32 +16,41 @@ import Profile from '../Containers/Profile'
 import LaunchScreen from '../Containers/LaunchScreen'
 import Login from '../Containers/Login'
 import ForgotPassword from '../Containers/ForgotPassword'
-import { SelectAddress } from '../Containers/SelectAddress'
+import SelectAddress from '../Containers/SelectAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import NavBackButton from '../Components/NavBackButton'
 import SignoutScreen from '../Containers/SignoutScreen'
-const getNavigationOptions = (navigation, title) => ({
+import PlaceOrder from '../Containers/PlaceOrder'
+import ChoosePayment from '../Containers/ChoosePayment'
+import PromoCode from '../Containers/PromoCode'
+
+import { View } from 'react-native'
+const getNavigationOptions = (navigation, title, showOrder = true) => ({
   title,
   headerLeft: <NavBar navigationProps={navigation} />,
-  headerRight: () => (
-    <Button
-      style={{
-        minWidth: 50,
-        backgroundColor: 'white',
-        height: 30,
-        justifyContent: 'center',
-        marginRight: 10
-      }}
-      textStyle={{
-        alignSelf: 'center',
-        paddingVertical: 0,
-        color: 'black'
-      }}
-      onPress={() => navigation.navigate('OrdersStack')}
-      text="Order"
-    />
-  ),
+  headerRight: () => {
+    return showOrder ? (
+      <Button
+        style={{
+          minWidth: 50,
+          backgroundColor: 'white',
+          height: 30,
+          justifyContent: 'center',
+          marginRight: 10
+        }}
+        textStyle={{
+          alignSelf: 'center',
+          paddingVertical: 0,
+          color: 'black'
+        }}
+        onPress={() => navigation.navigate('OrdersStack')}
+        text="Order"
+      />
+    ) : (
+      <View />
+    )
+  },
   headerStyle: {
     backgroundColor: '#0485B2'
   },
@@ -83,13 +92,28 @@ const ContactUsStack = createStackNavigator({
       getNavigationOptions(navigation, 'Contact')
   }
 })
-const OrdersStack = createStackNavigator({
-  Orders: {
-    screen: SelectAddress,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'Contact')
+const OrdersStack = createStackNavigator(
+  {
+    Orders: {
+      screen: SelectAddress,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Search Address', (showOrder = false))
+    },
+    PlaceOrder: {
+      screen: PlaceOrder,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Place Order', (showOrder = false))
+    },
+    PromoCode: {
+      screen: PromoCode,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Promocode', (showOrder = false))
+    }
+  },
+  {
+    initialRouteName: 'Orders'
   }
-})
+)
 const ProfileStack = createStackNavigator({
   Profile: {
     screen: Profile,
@@ -97,13 +121,23 @@ const ProfileStack = createStackNavigator({
       getNavigationOptions(navigation, 'Profile')
   }
 })
-const BillingInfoStack = createStackNavigator({
-  BillingInfo: {
-    screen: BillingInfo,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'BillingInfo')
+const BillingInfoStack = createStackNavigator(
+  {
+    BillingInfo: {
+      screen: BillingInfo,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Billing Details', (showOrder = false))
+    },
+    ChoosePayment: {
+      screen: ChoosePayment,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Choose Payment', (showOrder = false))
+    }
+  },
+  {
+    initialRouteName: 'BillingInfo'
   }
-})
+)
 const RegisterStack = createStackNavigator({
   RegisterInfo: {
     screen: Register,
