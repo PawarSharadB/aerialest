@@ -7,5 +7,9 @@ export default Images = {
   select: require('./Contact/selected.png'),
   unSelect: require('./Contact/unSelected.png'),
   dropdown: require('./Contact/dropDown.png'),
-  back: require('./Home/left.png')
+  back: require('./Home/left.png'),
+  unSelectBlack: require('./Orders/unSelectedBlack.png'),
+  selectedBlack: require('./Orders/selectedBlack.png'),
+  unSelectedSquareBlack: require('./Orders/unSelectedSquareBlack.png'),
+  selectedSquareBlack: require('./Orders/selectedSquareBlack.png')
 }
