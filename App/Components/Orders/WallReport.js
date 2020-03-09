@@ -18,6 +18,7 @@ const MultiFamilyOrders = props => {
       : 'Estimation Price: $30.00'
   return (
     <View style={styles.mainView}>
+      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
@@ -83,7 +84,6 @@ const MultiFamilyOrders = props => {
         style={styles.order}
         text="Order"
       />
-      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )
 }
@@ -92,7 +92,8 @@ export default MultiFamilyOrders
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',

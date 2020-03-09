@@ -5,66 +5,105 @@ import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
 const ResedentialAndCommercialOrders = props => {
-  const { type, onPress } = props
+  const {
+    type,
+    onPress,
+    residential_30,
+    residential_30plus,
+    commercial_60,
+    commercial_60plus
+  } = props
   const [estimationArea, setEstimationArea] = useState(null)
   const [measurements, setMeasurements] = useState(null)
+  const [delivery, setDelivery] = useState(null)
   const [fileFormat, setFileFormat] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
-
-  const getEnstimationPriceText = () =>
-    deliveryType === '0'
-      ? 'Estimation Price: $15.00'
-      : 'Estimation Price: $30.00'
-
+  const showPrice = () => {
+    return estimationArea !== null
+  }
+  const priceText = () => {
+    let price = null
+    if (type === 'Commercial') {
+      price = measurements === 1 ? commercial_60 : commercial_60plus
+    } else {
+      price = measurements === 1 ? residential_30 : residential_30plus
+    }
+    return `Price: $ ${price}: 00`
+  }
   return (
     <View style={styles.mainView}>
+      {showPrice() && (
+        <Text style={[styles.commonMarginTop, styles.heading]}>
+          {priceText()}
+        </Text>
+      )}
+
       <Text style={[styles.commonMarginTop, styles.heading]}>
         Estimation Area
       </Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
-          onSelect={() => setEstimationArea('1')}
-          isSelected={estimationArea === '1'}
+          onSelect={() => setEstimationArea(1)}
+          isSelected={estimationArea === 1}
           type={'Circle'}
-          title="60 Squares"
+          title={type === 'Commercial' ? '60 Squares' : '30 Squares'}
         />
         <SelectionWithText
-          onSelect={() => setEstimationArea('2')}
-          isSelected={estimationArea === '2'}
+          onSelect={() => setEstimationArea(2)}
+          isSelected={estimationArea === 2}
           type={'Circle'}
-          title="60+ Squares"
+          title={type === 'Commercial' ? '60+ Squares' : '30+ Squares'}
         />
       </View>
       <Text style={[styles.commonMarginTop, styles.heading]}>Measurements</Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
-          onSelect={() => setMeasurements('1')}
-          isSelected={measurements === '1'}
+          onSelect={() => setMeasurements(1)}
+          isSelected={measurements === 1}
           type={'Circle'}
           title="Main Structure + Garage"
         />
         <SelectionWithText
-          onSelect={() => setMeasurements('2')}
-          isSelected={measurements === '2'}
+          onSelect={() => setMeasurements(2)}
+          isSelected={measurements === 2}
           type={'Circle'}
           title="Main Structure"
         />
       </View>
+      {estimationArea !== null && (
+        <View>
+          <Text style={[styles.commonMarginTop, styles.heading]}>Delivery</Text>
+          <View style={styles.rowFlexStart}>
+            <SelectionWithText
+              onSelect={() => setDelivery(1)}
+              isSelected={delivery === 1}
+              type={'Circle'}
+              title="Delivery - 1 Business day or Less"
+            />
+            <SelectionWithText
+              onSelect={() => setDelivery(2)}
+              isSelected={delivery === 2}
+              type={'Circle'}
+              title="Delivery - 2 Business Hours"
+            />
+          </View>
+        </View>
+      )}
       <Text style={[styles.commonMarginTop, styles.heading]}>File Format</Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
-          onSelect={() => setFileFormat('1')}
-          isSelected={fileFormat === '1'}
+          onSelect={() => setFileFormat(1)}
+          isSelected={fileFormat === 1}
           type={'Circle'}
           title="XML"
         />
         <SelectionWithText
-          onSelect={() => setFileFormat('2')}
-          isSelected={fileFormat === '2'}
+          onSelect={() => setFileFormat(2)}
+          isSelected={fileFormat === 2}
           type={'Circle'}
           title="ESX"
         />
@@ -114,7 +153,6 @@ const ResedentialAndCommercialOrders = props => {
         style={styles.order}
         text="Order"
       />
-      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )
 }
@@ -123,7 +161,8 @@ export default ResedentialAndCommercialOrders
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',

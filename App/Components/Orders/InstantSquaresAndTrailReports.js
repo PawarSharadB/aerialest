@@ -3,8 +3,9 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
+
 const InstantSquareAndTrailReports = props => {
-  const { type, onPress } = props
+  const { type, onPress, TrailPrice } = props
   const [measurements, setMeasurements] = useState(null)
   const [delivery, setDelivery] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
@@ -12,41 +13,72 @@ const InstantSquareAndTrailReports = props => {
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
-  const getEnstimationPriceText = () =>
-    deliveryType === '0'
-      ? 'Estimation Price: $15.00'
-      : 'Estimation Price: $30.00'
 
+  const getPrice = () => {
+    if (type !== 'instantSquares') {
+      return delivery === 1
+        ? `Price $ ${TrailPrice * 1}.00`
+        : `Price $ ${TrailPrice * 2}.00`
+    }
+    return `Price $ ${TrailPrice * 1}.00`
+  }
+  const showPrice = () => {
+    if (type !== 'instantSquares') {
+      return delivery !== null
+    }
+    return true
+  }
   return (
     <View style={styles.mainView}>
-      <Text style={[styles.heading, styles.commonMarginTop]}>MeasureMents</Text>
-      <View style={styles.rowFlexStart}>
-        <SelectionWithText
-          onSelect={() => setMeasurements('1')}
-          isSelected={measurements === '1'}
-          type={'Circle'}
-          title="Main Structure + Garage"
-        />
-        <SelectionWithText
-          onSelect={() => setMeasurements('2')}
-          isSelected={measurements === '2'}
-          type={'Circle'}
-          title="Main Structure"
-        />
-      </View>
+      {showPrice() && (
+        <Text style={[styles.commonMarginTop, styles.heading]}>
+          {getPrice()}
+        </Text>
+      )}
+
       {type === 'instantSquares' && (
         <View>
-          <Text style={[styles.commonMarginTop, styles.heading]}>Delivery</Text>
+          <Text style={[styles.heading, styles.commonMarginTop]}>
+            MeasureMents
+          </Text>
           <View style={styles.rowFlexStart}>
             <SelectionWithText
-              onSelect={() => setDelivery('1')}
-              isSelected={delivery !== null}
+              onSelect={() => {
+                setMeasurements(1)
+                setDeliveryType
+              }}
+              isSelected={measurements === 1}
               type={'Circle'}
-              title="Delivery - 2 Business Hours"
+              title="Main Structure + Garage"
+            />
+            <SelectionWithText
+              onSelect={() => setMeasurements(2)}
+              isSelected={measurements === 2}
+              type={'Circle'}
+              title="Main Structure"
             />
           </View>
         </View>
       )}
+      <View>
+        <Text style={[styles.commonMarginTop, styles.heading]}>Delivery</Text>
+        <View style={styles.rowFlexStart}>
+          {type !== 'instantSquares' && (
+            <SelectionWithText
+              onSelect={() => setDelivery(1)}
+              isSelected={delivery === 1}
+              type={'Circle'}
+              title="Delivery - 1 Business day or Less"
+            />
+          )}
+          <SelectionWithText
+            onSelect={() => setDelivery(2)}
+            isSelected={delivery === 2}
+            type={'Circle'}
+            title="Delivery - 2 Business Hours"
+          />
+        </View>
+      </View>
       <View>
         <Text style={[styles.heading, styles.commonMarginTop]}>
           Special Notes
@@ -86,11 +118,6 @@ const InstantSquareAndTrailReports = props => {
           setAlternativeEmail(value)
         }}
       />
-      {deliveryType !== null && (
-        <Text style={[styles.commonMarginTop]}>
-          {getEnstimationPriceText()}
-        </Text>
-      )}
       <Button
         onPress={onPress}
         textStyle={styles.orderText}
@@ -105,7 +132,8 @@ export default InstantSquareAndTrailReports
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',

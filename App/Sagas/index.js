@@ -6,7 +6,7 @@ import { saveUserdata } from './register/Sagas'
 import { userLogin } from './login/Sagas'
 import { getProfileData, updateProfileData } from './profile/Sagas'
 import { getPasswordData } from './password/Sagas'
-
+import { getPricesForPlaceOrder } from './PlaceOrder/Sagas'
 import * as ActionTypes from './ActionTypes'
 
 /* ------------- Types ------------- */
@@ -35,9 +35,8 @@ export default function* root() {
     takeLatest(ActionTypes.LOGIN_REQUEST, userLogin),
     takeLatest(ActionTypes.PROFILE_REQUEST, getProfileData),
     takeLatest(ActionTypes.PROFILE_UPDATE_REQUEST, updateProfileData),
-
     takeLatest(ActionTypes.PASSWORD_REQUEST, getPasswordData),
-
+    takeLatest(ActionTypes.GET_PRICES_REQUEST, getPricesForPlaceOrder),
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])
