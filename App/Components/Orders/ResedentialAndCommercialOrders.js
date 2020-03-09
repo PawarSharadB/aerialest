@@ -5,7 +5,7 @@ import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
 const ResedentialAndCommercialOrders = props => {
-  const { type } = props
+  const { type, onPress } = props
   const [estimationArea, setEstimationArea] = useState(null)
   const [measurements, setMeasurements] = useState(null)
   const [fileFormat, setFileFormat] = useState(null)
@@ -108,7 +108,12 @@ const ResedentialAndCommercialOrders = props => {
           setAlternativeEmail(value)
         }}
       />
-      <Button textStyle={styles.orderText} style={styles.order} text="Order" />
+      <Button
+        onPress={onPress}
+        textStyle={styles.orderText}
+        style={styles.order}
+        text="Order"
+      />
       {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )

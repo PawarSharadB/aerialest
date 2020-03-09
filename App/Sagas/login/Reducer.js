@@ -29,7 +29,9 @@ const reducers = {
   },
   [LOGIN_REQUEST_ERROR]: (state, { error }) => {
     return Immutable.merge(state, {
-      error: error.response.data.message,
+      error: error.response
+        ? error.response.data.message
+        : 'Something went wrong!',
       isFetching: false,
       success: false
     })

@@ -15,20 +15,31 @@ const OrderWithOutTrailReport = props => {
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
+  const { onPress } = props
   const getNonTrailReportView = () => {
     switch (selectedType) {
       case '1':
-        return <InstantSquares type="instantSquares" />
+        return <InstantSquares onPress={onPress} type="instantSquares" />
       case '2':
-        return <ResedentialAndCommercialOrders type={'Resedential'} />
+        return (
+          <ResedentialAndCommercialOrders
+            onPress={onPress}
+            type={'Resedential'}
+          />
+        )
       case '3':
-        return <ResedentialAndCommercialOrders type={'Commercial'} />
+        return (
+          <ResedentialAndCommercialOrders
+            onPress={onPress}
+            type={'Commercial'}
+          />
+        )
       case '4':
-        return <MultiFamily />
+        return <MultiFamily onPress={onPress} />
       case '5':
-        return <WallReport />
+        return <WallReport onPress={onPress} />
       case '6':
-        return <BluePrints />
+        return <BluePrints onPress={onPress} />
       default:
         return <View />
     }

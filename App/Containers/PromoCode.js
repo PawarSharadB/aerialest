@@ -12,8 +12,14 @@ const PromoCode = props => {
   const [promocode, setPromocode] = useState('')
   const [inputError, setInputError] = useState(null)
   let promocodeField = null
-  const onApplyPress = () => {}
-  const onSkipPress = () => {}
+  const onApplyPress = () => {
+    const { navigation } = props
+    navigation.navigate('BillingInfo')
+  }
+  const onSkipPress = () => {
+    const { navigation } = props
+    navigation.navigate('BillingInfo')
+  }
   return (
     <View style={styles.mainView}>
       <PromoCodeCard />

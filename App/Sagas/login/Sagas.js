@@ -22,7 +22,6 @@ export function* userLogin(action) {
 
     yield put(LoginUser.loginRequestSuccess(response))
   } catch (error) {
-    console.log(error)
     yield put(Actions.loginRequestError(error))
   }
 }
