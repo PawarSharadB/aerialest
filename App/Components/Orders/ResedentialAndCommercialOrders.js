@@ -28,9 +28,9 @@ const ResedentialAndCommercialOrders = props => {
   const priceText = () => {
     let price = null
     if (type === 'Commercial') {
-      price = measurements === 1 ? commercial_60 : commercial_60plus
+      price = estimationArea === 1 ? commercial_60 : commercial_60plus
     } else {
-      price = measurements === 1 ? residential_30 : residential_30plus
+      price = estimationArea === 1 ? residential_30 : residential_30plus
     }
     return `Price: $ ${price}: 00`
   }
