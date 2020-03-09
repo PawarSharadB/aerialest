@@ -6,7 +6,7 @@ import Button from '../Button'
 
 const ReportsDelivery = props => {
   const [deliveryType, setDeliveryType] = useState(null)
-  const [specialNotes, setSpecialNotes] = useState(''')
+  const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
@@ -16,6 +16,7 @@ const ReportsDelivery = props => {
       : 'Estimation Price: $30.00'
   return (
     <View>
+      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
       <Text style={styles.heading}>Delivery</Text>
       <View style={styles.deliveryView}>
         <SelectionWithText
@@ -61,13 +62,13 @@ const ReportsDelivery = props => {
         }}
       />
       <Button textStyle={styles.orderText} style={styles.order} text="Order" />
-      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )
 }
 const styles = StyleSheet.create({
   mainView: {
-    padding: 10
+    padding: 10,
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: '#C2C2C2',
+    borderColor: '#C2C2C2'
   },
   order: {
     minWidth: 100,

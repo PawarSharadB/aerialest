@@ -5,35 +5,53 @@ import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
 const MultiFamilyOrders = props => {
-  const { onPress } = props
+  const {
+    onPress,
+    multifamily_instant_squares,
+    multifamily_residential,
+    multifamily_commercial
+  } = props
   const [type, setType] = useState(null)
-  const [buildings, setBuildings] = useState('')
+  const [buildings, setBuildings] = useState(0)
   const [fileFormat, setFileFormat] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
-
+  const getPrice = () => {
+    const price =
+      type === 0
+        ? multifamily_instant_squares
+        : type === 1
+        ? multifamily_residential
+        : multifamily_commercial
+    return `Price: $ ${buildings * price}.00`
+  }
   return (
     <View style={styles.mainView}>
+      {buildings !== 0 && type !== null && (
+        <Text style={[styles.commonMarginTop, styles.heading]}>
+          {getPrice()}
+        </Text>
+      )}
       <Text style={[styles.commonMarginTop, styles.heading]}>Type</Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
-          onSelect={() => setType('1')}
-          isSelected={type === '1'}
+          onSelect={() => setType(1)}
+          isSelected={type === 1}
           type={'Circle'}
           title="Instant Squares"
         />
         <SelectionWithText
-          onSelect={() => setType('2')}
-          isSelected={type === '2'}
+          onSelect={() => setType(2)}
+          isSelected={type === 2}
           type={'Circle'}
           title="Residential"
         />
         <SelectionWithText
-          onSelect={() => setType('3')}
-          isSelected={type === '3'}
+          onSelect={() => setType(3)}
+          isSelected={type === 3}
           type={'Circle'}
           title="Commercial"
         />
@@ -71,6 +89,7 @@ const MultiFamilyOrders = props => {
           }}
         />
       </View>
+      <Text style={[styles.heading, styles.commonMarginTop]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
           console.log('Upload Image Button Pressed')
@@ -104,7 +123,6 @@ const MultiFamilyOrders = props => {
         style={styles.order}
         text="Order"
       />
-      {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )
 }
@@ -113,7 +131,8 @@ export default MultiFamilyOrders
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',
