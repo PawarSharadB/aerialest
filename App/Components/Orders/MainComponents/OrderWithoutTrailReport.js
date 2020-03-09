@@ -2,27 +2,54 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import SelectionWithText from '../../SelectionWithText'
 import UploadImage from '../../UploadImage'
-import InstantSquares from '../InstantSquaresAndTrailReports'
+import InstantSquaresView from '../InstantSquaresAndTrailReports'
 import ResedentialAndCommercialOrders from '../ResedentialAndCommercialOrders'
 import MultiFamily from '../MultiFamilyOrders'
 import WallReport from '../WallReport'
 import BluePrints from '../BluePrints'
 import Button from '../../../Components/Button'
 const OrderWithOutTrailReport = props => {
+  const {
+    onPress,
+    data: {
+      InstantSquares,
+      residential_30,
+      residential_30plus,
+      commercial_60,
+      commercial_60plus,
+      multifamily_instant_squares,
+      multifamily_residential,
+      multifamily_commercial,
+      multifamily_multifamily,
+      wallreport_pro,
+      wallreport_residential,
+      blueprint,
+      fileformat_esx,
+      rush_report,
+      fileformat_xml
+    }
+  } = props
   const [selectedType, setSelectedType] = useState(null)
   const [measurements, setMeasurements] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
-  const { onPress } = props
   const getNonTrailReportView = () => {
     switch (selectedType) {
       case '1':
-        return <InstantSquares onPress={onPress} type="instantSquares" />
+        return (
+          <InstantSquaresView
+            TrailPrice={InstantSquares}
+            onPress={onPress}
+            type="instantSquares"
+          />
+        )
       case '2':
         return (
           <ResedentialAndCommercialOrders
+            residential_30={residential_30}
+            residential_30plus={residential_30plus}
             onPress={onPress}
             type={'Resedential'}
           />
@@ -30,16 +57,32 @@ const OrderWithOutTrailReport = props => {
       case '3':
         return (
           <ResedentialAndCommercialOrders
+            commercial_60={commercial_60}
+            commercial_60plus={commercial_60plus}
             onPress={onPress}
             type={'Commercial'}
           />
         )
       case '4':
-        return <MultiFamily onPress={onPress} />
+        return (
+          <MultiFamily
+            multifamily_instant_squares={multifamily_instant_squares}
+            multifamily_residential={multifamily_residential}
+            multifamily_commercial={multifamily_commercial}
+            multifamily_multifamily={multifamily_multifamily}
+            onPress={onPress}
+          />
+        )
       case '5':
-        return <WallReport onPress={onPress} />
-      case '6':
-        return <BluePrints onPress={onPress} />
+        return (
+          <BluePrints
+            blueprint={blueprint}
+            fileformat_esx={fileformat_esx}
+            rush_report={rush_report}
+            fileformat_xml={fileformat_xml}
+            onPress={onPress}
+          />
+        )
       default:
         return <View />
     }
@@ -82,17 +125,9 @@ const OrderWithOutTrailReport = props => {
         <SelectionWithText
           isSelected={selectedType === '5'}
           type={'Circle'}
-          title={'Wall Report'}
-          onSelect={() => {
-            setSelectedType('5')
-          }}
-        />
-        <SelectionWithText
-          isSelected={selectedType === '6'}
-          type={'Circle'}
           title={'Blue prints'}
           onSelect={() => {
-            setSelectedType('6')
+            setSelectedType('5')
           }}
         />
       </View>
@@ -175,7 +210,8 @@ export default OrderWithOutTrailReport
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   typesView: {
     flexDirection: 'row',

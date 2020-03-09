@@ -3,17 +3,18 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
 import Button from '../Button'
 const BluePrints = props => {
-  const { onPress } = props
+  const { onPress, blueprint } = props
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
-  const getEnstimationPriceText = () =>
-    deliveryType === '0'
-      ? 'Estimation Price: $15.00'
-      : 'Estimation Price: $30.00'
 
+  const getEnstimationPriceText = () => `Price: $ ${blueprint}.00`
   return (
     <View style={styles.mainView}>
+      <Text style={[styles.commonMarginTop, styles.heading]}>
+        {getEnstimationPriceText()}
+      </Text>
+
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
@@ -38,11 +39,6 @@ const BluePrints = props => {
         text="Order"
         textStyle={styles.ordersText}
       />
-      {deliveryType !== null && (
-        <Text style={[styles.commonMarginTop]}>
-          {getEnstimationPriceText()}
-        </Text>
-      )}
     </View>
   )
 }
@@ -50,7 +46,8 @@ export default BluePrints
 const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    marginBottom: 20
   },
   heading: {
     fontWeight: 'bold',
