@@ -15,9 +15,12 @@ const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
 const SelectAddress = props => {
+  const {
+    navigation: { state }
+  } = props
   const regionData = {
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
+    latitude: state.params ? state.params.region.latitude : LATITUDE,
+    longitude: state.params ? state.params.region.longitude : LONGITUDE,
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA
   }
@@ -29,6 +32,7 @@ const SelectAddress = props => {
     const { latitude, longitude } = e.nativeEvent.coordinate
     setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
   }
+
   useEffect(() => {
     checkToken()
   }, [])
