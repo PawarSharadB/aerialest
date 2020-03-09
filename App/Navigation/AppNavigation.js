@@ -17,6 +17,7 @@ import LaunchScreen from '../Containers/LaunchScreen'
 import Login from '../Containers/Login'
 import ForgotPassword from '../Containers/ForgotPassword'
 import SelectAddress from '../Containers/SelectAddress'
+import SearchAddress from '../Containers/SearchAddress'
 import Register from '../Components/Register'
 import NavBar from '../Components/NavBar'
 import NavBackButton from '../Components/NavBackButton'
@@ -94,6 +95,11 @@ const ContactUsStack = createStackNavigator({
 })
 const OrdersStack = createStackNavigator(
   {
+    SearchAddress: {
+      screen: SearchAddress,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Search Address', (showOrder = false))
+    },
     Orders: {
       screen: SelectAddress,
       navigationOptions: ({ navigation }) =>
@@ -111,7 +117,7 @@ const OrdersStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Orders'
+    initialRouteName: 'SearchAddress'
   }
 )
 const ProfileStack = createStackNavigator({
