@@ -1,1 +1,1 @@
-export const URL = 'https://520j0icrqyx8y7og.mojostratus.io/rest/V1'
+export const URL = 'https://www.aerialestimation.com/rest/V1'

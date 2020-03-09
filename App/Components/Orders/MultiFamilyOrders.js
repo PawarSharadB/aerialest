@@ -5,6 +5,7 @@ import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
 const MultiFamilyOrders = props => {
+  const { onPress } = props
   const [type, setType] = useState(null)
   const [buildings, setBuildings] = useState('')
   const [fileFormat, setFileFormat] = useState(null)
@@ -31,8 +32,8 @@ const MultiFamilyOrders = props => {
           title="Residential"
         />
         <SelectionWithText
-          onSelect={() => setType('2')}
-          isSelected={type === '2'}
+          onSelect={() => setType('3')}
+          isSelected={type === '3'}
           type={'Circle'}
           title="Commercial"
         />
@@ -97,7 +98,12 @@ const MultiFamilyOrders = props => {
           setAlternativeEmail(value)
         }}
       />
-      <Button textStyle={styles.orderText} style={styles.order} text="Order" />
+      <Button
+        onPress={onPress}
+        textStyle={styles.orderText}
+        style={styles.order}
+        text="Order"
+      />
       {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )

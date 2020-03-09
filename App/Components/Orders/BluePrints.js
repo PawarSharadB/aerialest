@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
 import Button from '../Button'
 const BluePrints = props => {
+  const { onPress } = props
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
@@ -31,7 +32,12 @@ const BluePrints = props => {
           setAlternativeEmail(value)
         }}
       />
-      <Button style={styles.order} text="Order" textStyle={styles.ordersText} />
+      <Button
+        onPress={onPress}
+        style={styles.order}
+        text="Order"
+        textStyle={styles.ordersText}
+      />
       {deliveryType !== null && (
         <Text style={[styles.commonMarginTop]}>
           {getEnstimationPriceText()}

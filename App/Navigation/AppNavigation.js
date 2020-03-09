@@ -24,7 +24,6 @@ import SignoutScreen from '../Containers/SignoutScreen'
 import PlaceOrder from '../Containers/PlaceOrder'
 import ChoosePayment from '../Containers/ChoosePayment'
 import PromoCode from '../Containers/PromoCode'
-import Orders from '../Containers/Orders'
 
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
@@ -109,13 +108,10 @@ const OrdersStack = createStackNavigator(
       screen: PromoCode,
       navigationOptions: ({ navigation }) =>
         getNavigationOptions(navigation, 'Promocode', (showOrder = false))
-    },
-    ordersDups: {
-      screen: Orders
     }
   },
   {
-    initialRouteName: 'ordersDups'
+    initialRouteName: 'Orders'
   }
 )
 const ProfileStack = createStackNavigator({

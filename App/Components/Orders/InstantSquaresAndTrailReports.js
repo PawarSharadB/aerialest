@@ -4,7 +4,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 const InstantSquareAndTrailReports = props => {
-  const { type } = props
+  const { type, onPress } = props
   const [measurements, setMeasurements] = useState(null)
   const [delivery, setDelivery] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
@@ -16,6 +16,7 @@ const InstantSquareAndTrailReports = props => {
     deliveryType === '0'
       ? 'Estimation Price: $15.00'
       : 'Estimation Price: $30.00'
+
   return (
     <View style={styles.mainView}>
       <Text style={[styles.heading, styles.commonMarginTop]}>MeasureMents</Text>
@@ -90,7 +91,12 @@ const InstantSquareAndTrailReports = props => {
           {getEnstimationPriceText()}
         </Text>
       )}
-      <Button textStyle={styles.orderText} style={styles.order} text="Order" />
+      <Button
+        onPress={onPress}
+        textStyle={styles.orderText}
+        style={styles.order}
+        text="Order"
+      />
     </View>
   )
 }

@@ -5,6 +5,7 @@ import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
 const MultiFamilyOrders = props => {
+  const { onPress } = props
   const [type, setType] = useState(null)
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [specialNotes, setSpecialNotes] = useState('')
@@ -15,7 +16,6 @@ const MultiFamilyOrders = props => {
     deliveryType === '0'
       ? 'Estimation Price: $15.00'
       : 'Estimation Price: $30.00'
-
   return (
     <View style={styles.mainView}>
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
@@ -77,7 +77,12 @@ const MultiFamilyOrders = props => {
           setAlternativeEmail(value)
         }}
       />
-      <Button textStyle={styles.ordersText} style={styles.order} text="Order" />
+      <Button
+        onPress={onPress}
+        textStyle={styles.ordersText}
+        style={styles.order}
+        text="Order"
+      />
       {deliveryType !== null && <Text>{getEnstimationPriceText()}</Text>}
     </View>
   )

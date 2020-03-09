@@ -2,6 +2,7 @@ import React from 'react'
 import InstantSquareAndTrailReports from '../InstantSquaresAndTrailReports'
 
 const OrderWithTrailReport = props => {
-  return <InstantSquareAndTrailReports type="trail" />
+  const { onPress } = props
+  return <InstantSquareAndTrailReports onPress={onPress} type="trail" />
 }
 export default OrderWithTrailReport
