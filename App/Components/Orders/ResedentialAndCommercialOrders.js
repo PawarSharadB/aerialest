@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
+import DocumentPicker from 'react-native-document-picker'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
-
+import { uploadFile } from '../../Utils/UploadFile'
 const ResedentialAndCommercialOrders = props => {
   const {
     type,
@@ -20,7 +21,10 @@ const ResedentialAndCommercialOrders = props => {
   const [delivery, setDelivery] = useState(null)
   const [fileFormat, setFileFormat] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
+  const [uploadDetails, setUploadDetails] = useState({
+    name: 'No File Choosen',
+    uri: ''
+  })
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
@@ -145,9 +149,14 @@ const ResedentialAndCommercialOrders = props => {
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
-          console.log('Upload Image Button Pressed')
+          uploadFile((response, error) => {
+            if (error === null) {
+              const { name, uri } = response
+              setUploadDetails({ name, uri })
+            }
+          })
         }}
-        title={uploadTitle}
+        title={uploadDetails.name}
         buttonTitle={'Choose File'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>
