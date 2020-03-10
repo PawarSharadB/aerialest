@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -19,6 +19,23 @@ const InstantSquareAndTrailReports = props => {
     uri: ''
   })
 
+  const validate = () => {
+    if (type === 'instantSquares') {
+      let errorMessage = null
+      measurements
+        ? delivery
+          ? onPress()
+          : (errorMessage = 'Please Select Delivery')
+        : (errorMessage = 'Please Select Measurements')
+      errorMessage
+        ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+        : onPress()
+    } else {
+      delivery
+        ? onPress()
+        : Alert.alert('Alert!', 'Please Select Delivery', [{ style: 'cancel' }])
+    }
+  }
   const getPrice = () => {
     if (type !== 'instantSquares') {
       return delivery === 1
@@ -130,7 +147,7 @@ const InstantSquareAndTrailReports = props => {
         }}
       />
       <Button
-        onPress={onPress}
+        onPress={validate}
         textStyle={styles.orderText}
         style={styles.order}
         text="Order"

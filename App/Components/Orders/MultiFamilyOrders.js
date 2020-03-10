@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import { uploadFile } from '../../Utils/UploadFile'
 
@@ -27,19 +27,33 @@ const MultiFamilyOrders = props => {
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
+  const validate = () => {
+    let errorMessage = null
+    type
+      ? buildings && buildings !== '0'
+        ? onPress()
+        : (errorMessage = 'Please Enter no of buildings')
+      : (errorMessage = 'Please select type')
+    errorMessage
+      ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+      : onPress()
+  }
   const getPrice = () => {
     const multiFamilyPrice =
       type === 0
         ? multifamily_instant_squares
         : type === 1
-        ? multifamily_residential
-        : multifamily_commercial
+        ? multifamily_instant_squares
+        : multifamily_instant_squares
     const filePrice = fileFormat
       ? fileFormat === 1
-        ? parseInt(fileformat_xml)
-        : parseInt(fileformat_esx)
+        ? fileformat_xml
+        : fileformat_esx
       : 0
-    return `Price: $ ${buildings * (multiFamilyPrice + filePrice)}.00`
+    return buildings
+      ? `Price: $ ${parseInt(buildings) *
+          (parseInt(multiFamilyPrice) + parseInt(filePrice))}.00`
+      : 'Price $ 0.00'
   }
   return (
     <View style={styles.mainView}>
@@ -76,6 +90,7 @@ const MultiFamilyOrders = props => {
         style={[styles.enterValue, styles.commonMarginTop]}
         value={buildings}
         onChangeText={value => setBuildings(value)}
+        keyboardType={'number-pad'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>File Format</Text>
       <View style={styles.rowFlexStart}>
@@ -136,7 +151,7 @@ const MultiFamilyOrders = props => {
         }}
       />
       <Button
-        onPress={onPress}
+        onPress={validate}
         textStyle={styles.orderText}
         style={styles.order}
         text="Order"
