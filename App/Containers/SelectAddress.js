@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Dimensions, PermissionsAndroid } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
 import Geolocation from '@react-native-community/geolocation'
 import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from 'react-native-maps'
 import Button from '../Components/Button'
@@ -78,8 +77,7 @@ const SelectAddress = props => {
         mapType={mapType}
         initialRegion={region}
         zoomEnabled={true}
-        minZoomLevel={19}
-        maxZoomLevel={19}
+        minZoomLevel={15}
         zoomTapEnabled={true}
         zoomControlEnabled={true}
         onPress={onMapPress}
