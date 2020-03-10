@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
-import DocumentPicker from 'react-native-document-picker'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
