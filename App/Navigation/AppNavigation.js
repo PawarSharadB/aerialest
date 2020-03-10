@@ -186,13 +186,6 @@ const authNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="tags" size={20} />
       }
     },
-    ContactUs: {
-      screen: ContactUsStack,
-      navigationOptions: {
-        drawerLabel: 'Contact Us',
-        drawerIcon: <Icon name="envelope" size={20} />
-      }
-    },
     OrdersStack: {
       screen: OrdersStack,
       navigationOptions: {
@@ -200,6 +193,14 @@ const authNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },
+    ContactUs: {
+      screen: ContactUsStack,
+      navigationOptions: {
+        drawerLabel: 'Contact Us',
+        drawerIcon: <Icon name="envelope" size={20} />
+      }
+    },
+
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
@@ -247,6 +248,13 @@ const nonAuthNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Pricing',
         drawerIcon: <Icon name="tags" size={20} />
+      }
+    },
+    OrdersStack: {
+      screen: OrdersStack,
+      navigationOptions: {
+        drawerLabel: 'Orders',
+        drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },
     ContactUs: {
