@@ -91,6 +91,7 @@ const InstantSquareAndTrailReports = props => {
           }}
         />
       </View>
+      <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
           console.log('Upload Image Button Pressed')

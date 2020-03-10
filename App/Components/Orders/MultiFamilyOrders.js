@@ -9,7 +9,9 @@ const MultiFamilyOrders = props => {
     onPress,
     multifamily_instant_squares,
     multifamily_residential,
-    multifamily_commercial
+    multifamily_commercial,
+    fileformat_xml,
+    fileformat_esx
   } = props
   const [type, setType] = useState(null)
   const [buildings, setBuildings] = useState(0)
@@ -20,13 +22,18 @@ const MultiFamilyOrders = props => {
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
   const getPrice = () => {
-    const price =
+    const multiFamilyPrice =
       type === 0
         ? multifamily_instant_squares
         : type === 1
         ? multifamily_residential
         : multifamily_commercial
-    return `Price: $ ${buildings * price}.00`
+    const filePrice = fileFormat
+      ? fileFormat === 1
+        ? parseInt(fileformat_xml)
+        : parseInt(fileformat_esx)
+      : 0
+    return `Price: $ ${buildings * (multiFamilyPrice + filePrice)}.00`
   }
   return (
     <View style={styles.mainView}>

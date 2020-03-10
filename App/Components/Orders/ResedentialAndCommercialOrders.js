@@ -11,7 +11,9 @@ const ResedentialAndCommercialOrders = props => {
     residential_30,
     residential_30plus,
     commercial_60,
-    commercial_60plus
+    commercial_60plus,
+    fileformat_xml,
+    fileformat_esx
   } = props
   const [estimationArea, setEstimationArea] = useState(null)
   const [measurements, setMeasurements] = useState(null)
@@ -28,9 +30,29 @@ const ResedentialAndCommercialOrders = props => {
   const priceText = () => {
     let price = null
     if (type === 'Commercial') {
-      price = estimationArea === 1 ? commercial_60 : commercial_60plus
+      const commercialPrice =
+        estimationArea === 1
+          ? parseInt(commercial_60)
+          : parseInt(commercial_60plus)
+      const deliveryPrice = delivery ? (delivery === 1 ? 0 : 15) : 0
+      const fileFormarPrice = fileFormat
+        ? fileFormat === 1
+          ? parseInt(fileformat_xml)
+          : parseInt(fileformat_esx)
+        : 0
+      price = commercialPrice + deliveryPrice + fileFormarPrice
     } else {
-      price = estimationArea === 1 ? residential_30 : residential_30plus
+      const resedentialPrice =
+        estimationArea === 1
+          ? parseInt(residential_30)
+          : parseInt(residential_30plus)
+      const deliveryPrice = delivery ? (delivery === 1 ? 0 : 15) : 0
+      const fileFormarPrice = fileFormat
+        ? fileFormat === 1
+          ? parseInt(fileformat_xml)
+          : parseInt(fileformat_esx)
+        : 0
+      price = resedentialPrice + deliveryPrice + fileFormarPrice
     }
     return `Price: $ ${price}: 00`
   }
@@ -120,6 +142,7 @@ const ResedentialAndCommercialOrders = props => {
           }}
         />
       </View>
+      <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
           console.log('Upload Image Button Pressed')

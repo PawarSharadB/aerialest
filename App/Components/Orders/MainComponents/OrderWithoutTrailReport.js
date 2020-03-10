@@ -48,6 +48,8 @@ const OrderWithOutTrailReport = props => {
       case '2':
         return (
           <ResedentialAndCommercialOrders
+            fileformat_xml={fileformat_xml}
+            fileformat_esx={fileformat_esx}
             residential_30={residential_30}
             residential_30plus={residential_30plus}
             onPress={onPress}
@@ -57,6 +59,8 @@ const OrderWithOutTrailReport = props => {
       case '3':
         return (
           <ResedentialAndCommercialOrders
+            fileformat_xml={fileformat_xml}
+            fileformat_esx={fileformat_esx}
             commercial_60={commercial_60}
             commercial_60plus={commercial_60plus}
             onPress={onPress}
@@ -66,6 +70,8 @@ const OrderWithOutTrailReport = props => {
       case '4':
         return (
           <MultiFamily
+            fileformat_xml={fileformat_xml}
+            fileformat_esx={fileformat_esx}
             multifamily_instant_squares={multifamily_instant_squares}
             multifamily_residential={multifamily_residential}
             multifamily_commercial={multifamily_commercial}
