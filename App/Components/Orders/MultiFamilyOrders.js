@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
+import { uploadFile } from '../../Utils/UploadFile'
+
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
@@ -19,6 +21,10 @@ const MultiFamilyOrders = props => {
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
+  const [uploadDetails, setUploadDetails] = useState({
+    name: 'No File Choosen',
+    uri: ''
+  })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
   const validate = () => {
@@ -114,9 +120,14 @@ const MultiFamilyOrders = props => {
       <Text style={[styles.heading, styles.commonMarginTop]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
-          console.log('Upload Image Button Pressed')
+          uploadFile((response, error) => {
+            if (error === null) {
+              const { name, uri } = response
+              setUploadDetails({ name, uri })
+            }
+          })
         }}
-        title={uploadTitle}
+        title={uploadDetails.name}
         buttonTitle={'Choose File'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>

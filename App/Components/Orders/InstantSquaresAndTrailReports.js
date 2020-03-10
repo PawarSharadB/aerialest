@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
+import { uploadFile } from '../../Utils/UploadFile'
 
 const InstantSquareAndTrailReports = props => {
   const { type, onPress, TrailPrice } = props
@@ -13,6 +14,10 @@ const InstantSquareAndTrailReports = props => {
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
+  const [uploadDetails, setUploadDetails] = useState({
+    name: 'No File Choosen',
+    uri: ''
+  })
 
   const validate = () => {
     if (type === 'instantSquares') {
@@ -111,9 +116,14 @@ const InstantSquareAndTrailReports = props => {
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
-          console.log('Upload Image Button Pressed')
+          uploadFile((response, error) => {
+            if (error === null) {
+              const { name, uri } = response
+              setUploadDetails({ name, uri })
+            }
+          })
         }}
-        title={uploadTitle}
+        title={uploadDetails.name}
         buttonTitle={'Choose File'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>
