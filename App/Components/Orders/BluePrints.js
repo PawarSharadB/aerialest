@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
+import { uploadFile } from '../../Utils/UploadFile'
+
 import Button from '../Button'
 const BluePrints = props => {
   const { onPress, blueprint } = props
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
+  const [uploadDetails, setUploadDetails] = useState({
+    name: 'No File Choosen',
+    uri: ''
+  })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
 
@@ -18,9 +24,14 @@ const BluePrints = props => {
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
-          console.log('Upload Image Button Pressed')
+          uploadFile((response, error) => {
+            if (error === null) {
+              const { name, uri } = response
+              setUploadDetails({ name, uri })
+            }
+          })
         }}
-        title={uploadTitle}
+        title={uploadDetails.name}
         buttonTitle={'Choose File'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>
