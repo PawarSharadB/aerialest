@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
@@ -28,6 +28,19 @@ const ResedentialAndCommercialOrders = props => {
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
+  const validate = () => {
+    let errorMessage = null
+    estimationArea
+      ? delivery
+        ? measurements
+          ? onPress()
+          : (errorMessage = 'Please select Measurement structure')
+        : (errorMessage = 'Please select Delivery')
+      : (errorMessage = 'Please select estimation area')
+    errorMessage
+      ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+      : onPress()
+  }
   const showPrice = () => {
     return estimationArea !== null
   }
@@ -180,7 +193,7 @@ const ResedentialAndCommercialOrders = props => {
         }}
       />
       <Button
-        onPress={onPress}
+        onPress={validate}
         textStyle={styles.orderText}
         style={styles.order}
         text="Order"
