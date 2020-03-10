@@ -257,6 +257,13 @@ const nonAuthNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },
+    BilligInfo: {
+      screen: BillingInfoStack,
+      navigationOptions: {
+        drawerLabel: 'Billing Info',
+        drawerIcon: <Icon name="gear" size={20} />
+      }
+    },
     ContactUs: {
       screen: ContactUsStack,
       navigationOptions: {
