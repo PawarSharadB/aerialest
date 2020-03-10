@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { KeyboardAvoidingView, ScrollView } from 'react-native'
-import AsyncStorage from '@react-native-community/async-storage'
 
 import Geocoder from 'react-native-geocoding'
 import CardView from 'react-native-cardview'
