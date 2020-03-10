@@ -17,16 +17,6 @@ const SearchAddress = props => {
   const [errorlatitude, setLatitudeError] = useState('')
   const [errorLongitude, setLongitudeError] = useState('')
 
-  useEffect(() => {
-    checkToken()
-  }, [])
-  const checkToken = async () => {
-    const { navigation } = props
-    const token = await AsyncStorage.getItem('token')
-    if (!token) {
-      navigation.navigate('Login')
-    }
-  }
   const searchKeyWord = () => {
     const { navigation } = props
     if (region.place === '') {
@@ -84,7 +74,7 @@ const SearchAddress = props => {
     longitudeDelta: region.longitudeDelta
   })
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps={'handled'}>
       <KeyboardAvoidingView style={styles.mainView}>
         <ParsedText
           parse={[{ pattern: /video/, style: styles.video }]}
@@ -113,7 +103,7 @@ const SearchAddress = props => {
         <CardView style={styles.cardView}>
           <TextField
             keyboardType="numbers-and-punctuation"
-            placeholder="Enter Latitude"
+            placeholder="Latitude"
             value={`${region.latitude}`}
             onChangeText={text => {
               setLatitudeError('')
@@ -126,7 +116,7 @@ const SearchAddress = props => {
           />
           <TextField
             keyboardType="numbers-and-punctuation"
-            placeholder="Enter Longitude"
+            placeholder="Longitude"
             value={`${region.longitude}`}
             onChangeText={text => {
               setLongitudeError('')

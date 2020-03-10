@@ -33,16 +33,6 @@ const SelectAddress = props => {
     setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
   }
 
-  useEffect(() => {
-    checkToken()
-  }, [])
-  const checkToken = async () => {
-    const { navigation } = props
-    const token = await AsyncStorage.getItem('token')
-    if (!token) {
-      navigation.navigate('Login')
-    }
-  }
   const onMapReady = () => {
     setMarginBottom(0)
   }
@@ -88,7 +78,7 @@ const SelectAddress = props => {
         mapType={mapType}
         initialRegion={region}
         zoomEnabled={true}
-        minZoomLevel={1}
+        minZoomLevel={19}
         maxZoomLevel={19}
         zoomTapEnabled={true}
         zoomControlEnabled={true}
