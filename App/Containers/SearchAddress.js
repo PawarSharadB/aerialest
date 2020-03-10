@@ -12,6 +12,7 @@ import { styles } from './Styles/SelectAddressStyles'
 import { getInitialRegionForMap } from '../Utils/getInitialRegionForMap'
 
 const SearchAddress = props => {
+  const { navigation } = props
   const [region, setRegion] = useState(getInitialRegionForMap().region)
   const [errorSearchPlace, setSearchPlaceError] = useState('')
   const [errorlatitude, setLatitudeError] = useState('')
@@ -28,13 +29,14 @@ const SearchAddress = props => {
       .then(json => {
         let location = json.results[0].geometry.location
         const { lat: latitude, lng: longitude } = location
-        setRegion(region => ({
+        const region = {
+          ...region,
           latitude,
           longitude,
           latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-          place: region.place
-        }))
+          longitudeDelta: 0.0421
+        }
+        setRegion(region)
         navigation.navigate('Orders', { region })
       })
       .catch(error => {
@@ -104,7 +106,7 @@ const SearchAddress = props => {
           <TextField
             keyboardType="numbers-and-punctuation"
             placeholder="Latitude"
-            value={`${region.latitude}`}
+            value={region.latitude === 0.0 ? '' : `${region.latitude}`}
             onChangeText={text => {
               setLatitudeError('')
               setRegion(region => ({
@@ -117,7 +119,7 @@ const SearchAddress = props => {
           <TextField
             keyboardType="numbers-and-punctuation"
             placeholder="Longitude"
-            value={`${region.longitude}`}
+            value={region.longitude === 0.0 ? '' : `${region.longitude}`}
             onChangeText={text => {
               setLongitudeError('')
               setRegion(region => ({
