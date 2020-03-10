@@ -1,11 +1,13 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Button from './Button'
+
 const UploadImage = props => {
   const { onPress, title, buttonTitle } = props
   return (
-    <View style={styles.mainView}>
+    <View style={styles.mainView} onPress={onPress}>
       <Button
+        onPress={onPress}
         style={styles.button}
         text={buttonTitle}
         textStyle={styles.buttonText}
