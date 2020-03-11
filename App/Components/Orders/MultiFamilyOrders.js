@@ -40,11 +40,11 @@ const MultiFamilyOrders = props => {
   }
   const getPrice = () => {
     const multiFamilyPrice =
-      type === 0
+      type === 1
         ? multifamily_instant_squares
-        : type === 1
-        ? multifamily_instant_squares
-        : multifamily_instant_squares
+        : type === 2
+        ? multifamily_residential
+        : multifamily_commercial
     const filePrice = fileFormat
       ? fileFormat === 1
         ? fileformat_xml
