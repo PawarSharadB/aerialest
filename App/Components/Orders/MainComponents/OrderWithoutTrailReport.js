@@ -8,6 +8,8 @@ import MultiFamily from '../MultiFamilyOrders'
 import WallReport from '../WallReport'
 import BluePrints from '../BluePrints'
 import Button from '../../../Components/Button'
+import { uploadFile } from '../../../Utils/UploadFile'
+
 const OrderWithOutTrailReport = props => {
   const {
     onPress,
@@ -34,6 +36,10 @@ const OrderWithOutTrailReport = props => {
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
+  const [uploadDetails, setUploadDetails] = useState({
+    name: 'No File Choosen',
+    uri: ''
+  })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const getNonTrailReportView = () => {
     switch (selectedType) {
@@ -176,9 +182,14 @@ const OrderWithOutTrailReport = props => {
           </View>
           <UploadImage
             onPress={() => {
-              console.log('Upload Image Button Pressed')
+              uploadFile((response, error) => {
+                if (error === null) {
+                  const { name, uri } = response
+                  setUploadDetails({ name, uri })
+                }
+              })
             }}
-            title={uploadTitle}
+            title={uploadDetails.name}
             buttonTitle={'Choose File'}
           />
           <Text style={[styles.commonMarginTop, styles.heading]}>
