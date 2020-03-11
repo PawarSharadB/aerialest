@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
@@ -10,7 +10,6 @@ const InstantSquareAndTrailReports = props => {
   const [measurements, setMeasurements] = useState(null)
   const [delivery, setDelivery] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
