@@ -5,10 +5,10 @@ import UploadImage from '../../UploadImage'
 import InstantSquaresView from '../InstantSquaresAndTrailReports'
 import ResedentialAndCommercialOrders from '../ResedentialAndCommercialOrders'
 import MultiFamily from '../MultiFamilyOrders'
-import WallReport from '../WallReport'
 import BluePrints from '../BluePrints'
 import Button from '../../../Components/Button'
 import { uploadFile } from '../../../Utils/UploadFile'
+import AlertCard from '../../../Components/AlertCard'
 
 const OrderWithOutTrailReport = props => {
   const {
@@ -23,8 +23,6 @@ const OrderWithOutTrailReport = props => {
       multifamily_residential,
       multifamily_commercial,
       multifamily_multifamily,
-      wallreport_pro,
-      wallreport_residential,
       blueprint,
       fileformat_esx,
       rush_report,
@@ -34,13 +32,13 @@ const OrderWithOutTrailReport = props => {
   const [selectedType, setSelectedType] = useState(null)
   const [measurements, setMeasurements] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
     uri: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
+  const [inputError, setInputError] = useState('')
   const getNonTrailReportView = () => {
     switch (selectedType) {
       case '1':
@@ -99,6 +97,15 @@ const OrderWithOutTrailReport = props => {
         return <View />
     }
   }
+  const onOrderPress = () => {
+    if (selectedType === null) {
+      const error = 'Please select report type'
+      setInputError(error)
+      setTimeout(() => {
+        setInputError('')
+      }, 3000)
+    }
+  }
   return (
     <View style={styles.mainView}>
       <View style={styles.typesView}>
@@ -143,6 +150,7 @@ const OrderWithOutTrailReport = props => {
           }}
         />
       </View>
+      {inputError ? <AlertCard message={inputError} /> : null}
       {selectedType && <View>{getNonTrailReportView()}</View>}
       {!selectedType && (
         <View style={styles.mainView}>
@@ -215,6 +223,7 @@ const OrderWithOutTrailReport = props => {
           <Button
             style={styles.order}
             text="Order"
+            onPress={onOrderPress}
             textStyle={styles.ordersText}
           />
         </View>

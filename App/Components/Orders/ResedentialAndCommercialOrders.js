@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-import DocumentPicker from 'react-native-document-picker'
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -27,7 +26,6 @@ const ResedentialAndCommercialOrders = props => {
   })
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
-  const [deliveryType, setDeliveryType] = useState(null)
   const validate = () => {
     let errorMessage = null
     estimationArea
