@@ -1,46 +1,115 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, ScrollView } from 'react-native'
+import { connect } from 'react-redux'
+import AsyncStorage from '@react-native-community/async-storage'
+
 import I18n from '../I18n'
 import Button from '../Components/Button'
+import AlertCard from '../Components/AlertCard'
+import { UIActivityIndicator } from 'react-native-indicators'
+import { profileRequest } from '../Sagas/profile/Actions'
+import { placeOrderRequest } from '../Sagas/order/Actions'
 
 import { TextField } from 'react-native-material-textfield'
+import { checkPatternWithExpressionAndString } from '../Utils/validateBillingDetails'
+
 import styles from './Styles/BillingInfoStyles'
 
 const BillingInfo = props => {
   const [firstName, setFirstName] = useState('')
-  const [middleName, setMiddleName] = useState('')
   const [lastName, setLastName] = useState('')
   const [company, setCompany] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
-  const [state, setState] = useState('')
+  const [addState, setState] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [country, setCountry] = useState('')
   const [telephone, setTelephone] = useState('')
   const [fax, setFax] = useState('')
-
+  const [responseError, setResponseError] = useState(null)
   const [inputError, setInputError] = useState('')
-  let firstNameField = null
-  let middleNameField = null
-  let lastNameField = null
-  let companyField = null
-  let addressField = null
-  let cityField = null
-  let stateField = null
-  let zipCodeField = null
-  let countryField = null
-  let telephoneField = null
-  let faxField = null
+  const {
+    navigation: { state }
+  } = props
+  const { success, error, profile, orderError, orderSuccess, orderData } = props
   const onNext = () => {
-    const { navigation } = props
-    navigation.navigate('ChoosePayment')
+    const { placeOrderRequest } = props
+    const { itemOptions, latitude, longitude } = state.params
+    const price = state.params.itemOptions.price
+    const addressFrom = `${address},${city},${addState},${zipCode},${country}`
+
+    const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
+      firstName,
+      lastName,
+      address,
+      city,
+      addState,
+      zipCode,
+      country,
+      telephone
+    })
+    const orderData = {
+      email: profile.email ? email : '',
+      price,
+      itemOptions: [itemOptions, addressFrom, latitude, longitude],
+      currency: 'USD'
+    }
+    if (isValidString) {
+      placeOrderRequest(orderData)
+    } else {
+      setInputError('Please fill all the fields')
+    }
   }
+  useEffect(async () => {
+    const { getProfile, placeOrderRequest } = props
+    const token = await AsyncStorage.getItem('token')
+    setResponseError('')
+    getProfile()
+    if (token) {
+      const { itemOptions, latitude, longitude } = state.params
+      const price = state.params.itemOptions.price
+      const addressFrom = profile.address ? profile.address : ''
+      const orderData = {
+        email: profile.email ? profile.email : '',
+        price,
+        itemOptions: [itemOptions, addressFrom, latitude, longitude],
+        currency: 'USD'
+      }
+      placeOrderRequest(orderData)
+    }
+  }, [])
+  useEffect(() => {
+    if (orderSuccess) {
+      const { navigation } = props
+      setResponseError('Order successfull')
+      setTimeout(() => {
+        navigation.navigate('ChoosePayment')
+      }, 500)
+    }
+    if (orderError) {
+      setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
+    }
+  }, [orderSuccess, orderError])
+  useEffect(() => {
+    if (error) {
+      setResponseError(error)
+      setTimeout(() => {
+        setResponseError('')
+      }, 3000)
+    }
+    if (success) {
+    }
+  }, [success, error])
   return (
     <View style={styles.mainView}>
       <ScrollView
         style={styles.scrollView}
         keyboardShouldPersistTaps={'handled'}
       >
+        {responseError ? <AlertCard message={responseError} /> : null}
         <View style={styles.contentScrollView}>
           <TextField
             label={I18n.t('firstName')}
@@ -51,16 +120,6 @@ const BillingInfo = props => {
               setFirstName(firstName)
             }}
             error={firstName ? '' : inputError}
-          />
-          <TextField
-            label={I18n.t('middleName')}
-            ref={ref => (middleNameField = ref)}
-            value={middleName}
-            onChangeText={middleName => {
-              setInputError('')
-              setMiddleName(middleName)
-            }}
-            error={middleName ? '' : inputError}
           />
           <TextField
             label={I18n.t('lastName')}
@@ -74,7 +133,6 @@ const BillingInfo = props => {
           />
           <TextField
             label={I18n.t('company')}
-            ref={ref => (companyField = ref)}
             value={company}
             onChangeText={company => {
               setInputError('')
@@ -105,12 +163,12 @@ const BillingInfo = props => {
           <TextField
             label={I18n.t('state')}
             ref={ref => (stateField = ref)}
-            value={state}
-            onChangeText={state => {
+            value={addState}
+            onChangeText={addState => {
               setInputError('')
-              setState(state)
+              setState(addState)
             }}
-            error={state ? '' : inputError}
+            error={addState ? '' : inputError}
           />
           <TextField
             label={I18n.t('zipCode')}
@@ -144,7 +202,6 @@ const BillingInfo = props => {
           />
           <TextField
             label={I18n.t('fax')}
-            ref={ref => (faxField = ref)}
             value={fax}
             onChangeText={fax => {
               setInputError('')
@@ -166,4 +223,28 @@ const BillingInfo = props => {
     </View>
   )
 }
-export default BillingInfo
+
+const mapStateToProps = ({ profileInfo, order }) => {
+  const { isFetching, profile, success, error } = profileInfo
+  const { isPlacingOrder, orderData, orderSuccess, orderError } = order
+
+  return {
+    isFetching,
+    profile,
+    success,
+    error,
+    isPlacingOrder,
+    orderData,
+    orderSuccess,
+    orderError
+  }
+}
+const mapDispatchToProps = dispatch => ({
+  getProfile: () => {
+    dispatch(profileRequest())
+  },
+  placeOrderRequest: args => {
+    dispatch(placeOrderRequest(args))
+  }
+})
+export default connect(mapStateToProps, mapDispatchToProps)(BillingInfo)

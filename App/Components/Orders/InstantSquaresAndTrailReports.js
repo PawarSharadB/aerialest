@@ -34,6 +34,19 @@ const InstantSquareAndTrailReports = props => {
         ? onPress()
         : Alert.alert('Alert!', 'Please Select Delivery', [{ style: 'cancel' }])
     }
+    onPress({
+      type,
+      price: delivery === 1 ? TrailPrice * 1 : TrailPrice * 2,
+      measurements,
+      deliveryType:
+        delivery === 1
+          ? 'Delivery - 1 Business day or Less'
+          : 'Delivery - 2 Business Hours',
+      specialNotes,
+      pitchValue,
+      alternativeEmail,
+      uploadDetails
+    })
   }
   const getPrice = () => {
     if (type !== 'instantSquares') {
