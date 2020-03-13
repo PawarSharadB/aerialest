@@ -19,7 +19,6 @@ const MultiFamilyOrders = props => {
   const [buildings, setBuildings] = useState(0)
   const [fileFormat, setFileFormat] = useState(null)
   const [specialNotes, setSpecialNotes] = useState('')
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [pitchValue, setPitchValue] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
@@ -36,9 +35,19 @@ const MultiFamilyOrders = props => {
       : (errorMessage = 'Please select type')
     errorMessage
       ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
-      : onPress()
+      : onPress({
+          orderType: 'MultiFamily Orders',
+          type,
+          buildings,
+          fileFormat,
+          specialNotes,
+          uploadDetails,
+          alternativeEmail,
+          pitchValue,
+          price: getPriceWithOutText()
+        })
   }
-  const getPrice = () => {
+  const getPriceWithOutText = () => {
     const multiFamilyPrice =
       type === 1
         ? multifamily_instant_squares
@@ -51,10 +60,11 @@ const MultiFamilyOrders = props => {
         : fileformat_esx
       : 0
     return buildings
-      ? `Price: $ ${parseInt(buildings) *
-          (parseInt(multiFamilyPrice) + parseInt(filePrice))}.00`
-      : 'Price $ 0.00'
+      ? parseInt(buildings) * (parseInt(multiFamilyPrice) + parseInt(filePrice))
+      : 0.0
   }
+  const getPrice = () => `Price $ ${getPriceWithOutText()}`
+
   return (
     <View style={styles.mainView}>
       {buildings !== 0 && type !== null && (

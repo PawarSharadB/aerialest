@@ -4,6 +4,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 import { uploadFile } from '../../Utils/UploadFile'
+import { useIsEmulator } from 'react-native-device-info'
 
 const InstantSquareAndTrailReports = props => {
   const { type, onPress, TrailPrice } = props
@@ -28,25 +29,35 @@ const InstantSquareAndTrailReports = props => {
         : (errorMessage = 'Please Select Measurements')
       errorMessage
         ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
-        : onPress()
+        : onPress({
+            type,
+            price: getPriceWithoutText(),
+            measurements,
+            deliveryType:
+              delivery === 1
+                ? 'Delivery - 1 Business day or Less'
+                : 'Delivery - 2 Business Hours',
+            specialNotes,
+            pitchValue,
+            alternativeEmail,
+            uploadDetails
+          })
     } else {
       delivery
-        ? onPress()
+        ? onPress({
+            type: 'Trial Report',
+            price: getPriceWithoutText(),
+            deliveryType:
+              delivery === 1
+                ? 'Delivery - 1 Business day or Less'
+                : 'Delivery - 2 Business Hours',
+            specialNotes,
+            uploadDetails,
+            pitchValue,
+            alternativeEmail
+          })
         : Alert.alert('Alert!', 'Please Select Delivery', [{ style: 'cancel' }])
     }
-    onPress({
-      type,
-      price: getPriceWithoutText(),
-      measurements,
-      deliveryType:
-        delivery === 1
-          ? 'Delivery - 1 Business day or Less'
-          : 'Delivery - 2 Business Hours',
-      specialNotes,
-      pitchValue,
-      alternativeEmail,
-      uploadDetails
-    })
   }
   const getPriceWithoutText = () => {
     if (type !== 'instantSquares') {

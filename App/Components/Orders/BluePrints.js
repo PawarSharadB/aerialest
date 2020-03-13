@@ -2,25 +2,33 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
 import { uploadFile } from '../../Utils/UploadFile'
-
 import Button from '../Button'
+
 const BluePrints = props => {
   const { onPress, blueprint } = props
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
     uri: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
-  const [deliveryType, setDeliveryType] = useState(null)
 
-  const getEnstimationPriceText = () => `Price: $ ${blueprint}.00`
+  const onPressButton = () => {
+    onPress({
+      type: 'Blue Prints',
+      price: getPriceWithOutText(),
+      uploadDetails,
+      alternativeEmail
+    })
+  }
+  const getPriceWithOutText = () => blueprint
+
+  const getEnstimationPriceText = () => `Price: $ ${getPriceWithOutText()}.00`
+
   return (
     <View style={styles.mainView}>
       <Text style={[styles.commonMarginTop, styles.heading]}>
         {getEnstimationPriceText()}
       </Text>
-
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
         onPress={() => {
@@ -45,7 +53,7 @@ const BluePrints = props => {
         }}
       />
       <Button
-        onPress={onPress}
+        onPress={onPressButton}
         style={styles.order}
         text="Order"
         textStyle={styles.ordersText}
