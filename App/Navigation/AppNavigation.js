@@ -25,6 +25,7 @@ import SignoutScreen from '../Containers/SignoutScreen'
 import PlaceOrder from '../Containers/PlaceOrder'
 import ChoosePayment from '../Containers/ChoosePayment'
 import PromoCode from '../Containers/PromoCode'
+import PayPalView from '../Containers/PaypalIntegration'
 
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
@@ -296,10 +297,11 @@ export default createAppContainer(
     {
       Starter: LaunchScreen,
       App: nonAuthNavigator,
-      Auth: authNavigator
+      Auth: authNavigator,
+      PayPalView
     },
     {
-      initialRouteName: 'Starter'
+      initialRouteName: 'PayPalView'
     }
   )
 )
