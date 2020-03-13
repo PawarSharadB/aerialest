@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
-
 import I18n from '../I18n'
 import Button from '../Components/Button'
 import AlertCard from '../Components/AlertCard'
@@ -14,7 +13,6 @@ import { TextField } from 'react-native-material-textfield'
 import { checkPatternWithExpressionAndString } from '../Utils/validateBillingDetails'
 
 import styles from './Styles/BillingInfoStyles'
-
 const BillingInfo = props => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -28,6 +26,7 @@ const BillingInfo = props => {
   const [fax, setFax] = useState('')
   const [responseError, setResponseError] = useState(null)
   const [inputError, setInputError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const {
     navigation: { state }
   } = props
@@ -37,7 +36,6 @@ const BillingInfo = props => {
     const { itemOptions, latitude, longitude } = state.params
     const price = state.params.itemOptions.price
     const addressFrom = `${address},${city},${addState},${zipCode},${country}`
-
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,
@@ -67,12 +65,14 @@ const BillingInfo = props => {
   useEffect(() => {
     if (orderSuccess) {
       const { navigation } = props
+      setIsLoading(false)
       setResponseError('Order successfull')
       setTimeout(() => {
         navigation.navigate('ChoosePayment')
       }, 500)
     }
     if (orderError) {
+      setIsLoading(false)
       setResponseError(error)
       setTimeout(() => {
         setResponseError('')
@@ -115,6 +115,11 @@ const BillingInfo = props => {
       >
         {responseError ? <AlertCard message={responseError} /> : null}
         <View style={styles.contentScrollView}>
+          {isLoading && (
+            <View style={{}}>
+              <UIActivityIndicator />
+            </View>
+          )}
           <TextField
             label={I18n.t('firstName')}
             ref={ref => (firstNameField = ref)}
