@@ -36,7 +36,7 @@ const InstantSquareAndTrailReports = props => {
     }
     onPress({
       type,
-      price: delivery === 1 ? TrailPrice * 1 : TrailPrice * 2,
+      price: getPriceWithoutText(),
       measurements,
       deliveryType:
         delivery === 1
@@ -48,13 +48,14 @@ const InstantSquareAndTrailReports = props => {
       uploadDetails
     })
   }
-  const getPrice = () => {
+  const getPriceWithoutText = () => {
     if (type !== 'instantSquares') {
-      return delivery === 1
-        ? `Price $ ${TrailPrice * 1}.00`
-        : `Price $ ${TrailPrice * 2}.00`
+      return delivery === 1 ? TrailPrice * 1 : TrailPrice * 2
     }
-    return `Price $ ${TrailPrice * 1}.00`
+    return TrailPrice * 1
+  }
+  const getPrice = () => {
+    return `Price $ ${getPriceWithoutText()}.00`
   }
   const showPrice = () => {
     if (type !== 'instantSquares') {

@@ -38,11 +38,24 @@ const ResedentialAndCommercialOrders = props => {
     errorMessage
       ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
       : onPress()
+
+    onPress({
+      type,
+      price: priceWithoutText(),
+      estimationArea,
+      measurements,
+      delivery:
+        delivery === 1
+          ? 'Delivery - 1 Business day or Less'
+          : 'Delivery - 2 Business Hour',
+      fileFormat: fileFormat === 1 ? 'XML' : 'ESX',
+      specialNotes,
+      uploadDetails,
+      pitchValue,
+      alternativeEmail
+    })
   }
-  const showPrice = () => {
-    return estimationArea !== null
-  }
-  const priceText = () => {
+  const priceWithoutText = () => {
     let price = null
     if (type === 'Commercial') {
       const commercialPrice =
@@ -69,7 +82,13 @@ const ResedentialAndCommercialOrders = props => {
         : 0
       price = resedentialPrice + deliveryPrice + fileFormarPrice
     }
-    return `Price: $ ${price}: 00`
+    return price
+  }
+  const showPrice = () => {
+    return estimationArea !== null
+  }
+  const priceText = () => {
+    return `Price: $ ${priceWithoutText()}: 00`
   }
   return (
     <View style={styles.mainView}>
