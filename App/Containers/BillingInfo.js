@@ -60,23 +60,9 @@ const BillingInfo = props => {
       setInputError('Please fill all the fields')
     }
   }
-  useEffect(async () => {
-    const { getProfile, placeOrderRequest } = props
-    const token = await AsyncStorage.getItem('token')
-    setResponseError('')
-    getProfile()
-    if (token) {
-      const { itemOptions, latitude, longitude } = state.params
-      const price = state.params.itemOptions.price
-      const addressFrom = profile.address ? profile.address : ''
-      const orderData = {
-        email: profile.email ? profile.email : '',
-        price,
-        itemOptions: [itemOptions, addressFrom, latitude, longitude],
-        currency: 'USD'
-      }
-      placeOrderRequest(orderData)
-    }
+
+  useEffect(() => {
+    getToken()
   }, [])
   useEffect(() => {
     if (orderSuccess) {
@@ -103,6 +89,24 @@ const BillingInfo = props => {
     if (success) {
     }
   }, [success, error])
+  const getToken = async () => {
+    const { getProfile, placeOrderRequest } = props
+    const tokeExits = await AsyncStorage.getItem('token')
+    setResponseError('')
+    getProfile()
+    if (tokeExits) {
+      const { itemOptions, latitude, longitude } = state.params
+      const price = state.params.itemOptions.price
+      const addressFrom = profile.address ? profile.address : ''
+      const orderData = {
+        email: profile.email ? profile.email : '',
+        price,
+        itemOptions: [itemOptions, addressFrom, latitude, longitude],
+        currency: 'USD'
+      }
+      placeOrderRequest(orderData)
+    }
+  }
   return (
     <View style={styles.mainView}>
       <ScrollView
