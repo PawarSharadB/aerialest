@@ -13,13 +13,16 @@ const PlaceOrder = props => {
   const {
     navigation: { state }
   } = props
+  const latitude = state.params.region.latitude
+  const longitude = state.params.region.longitude
   useEffect(() => {
     const { getPricesData } = props
     getPricesData()
   }, [])
-  const placeOrder = () => {
+  const placeOrder = e => {
+    const itemOptions = e
     const { navigation } = props
-    navigation.navigate('PromoCode')
+    navigation.navigate('BillingInfo', { itemOptions, latitude, longitude })
   }
 
   return (
@@ -39,7 +42,7 @@ const PlaceOrder = props => {
             }}
           >
             <Text style={{ fontWeight: 'bold', fontSize: 17 }}>Latitude: </Text>
-            <Text>{state.params.region.latitude}</Text>
+            <Text>{latitude}</Text>
           </View>
           <View
             style={{
@@ -51,7 +54,7 @@ const PlaceOrder = props => {
             <Text style={{ fontWeight: 'bold', fontSize: 17 }}>
               Longitude:{' '}
             </Text>
-            <Text>{state.params.region.latitude}</Text>
+            <Text>{longitude}</Text>
           </View>
           <SelectionWithText
             isSelected={isTrailReport}
