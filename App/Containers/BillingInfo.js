@@ -60,6 +60,7 @@ const BillingInfo = props => {
   }
 
   useEffect(() => {
+    setIsLoading(false)
     getToken()
   }, [])
   useEffect(() => {

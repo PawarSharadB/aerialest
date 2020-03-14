@@ -25,7 +25,7 @@ const PayPalView = () => {
       {
         amount: {
           total: 100,
-          currency: 'THB',
+          currency: 'USD',
           details: {
             subtotal: 100,
             tax: '0',
@@ -91,28 +91,29 @@ const PayPalView = () => {
             })
           })
           .catch(error => {
-            debugger
             console.log(error)
           })
       })
       .catch(error => {
-        debugger
         console.log(error)
       })
   }, [])
   const onNavigationStateChange = webViewState => {
+    debugger
     if (webViewState.url.includes('https://example.com/')) {
+      console.log(webViewState, 'web')
       setPaypalData(prevData => ({
         ...prevData,
         approvalUrl: null
       }))
       const { PayerID, paymentId } = webViewState.url
       fetch(
-        `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
+        `https://api.sandbox.paypal.com/v1/payments/payment/${paypalData.paymentId}/execute`,
         {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: token
+            Authorization: paypalData.token
           },
           body: JSON.stringify({ payer_id: PayerID })
         }
@@ -122,6 +123,7 @@ const PayPalView = () => {
           console.log(response)
         })
         .catch(error => {
+          debugger
           console.log(error)
         })
     }

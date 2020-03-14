@@ -139,6 +139,9 @@ const BillingInfoStack = createStackNavigator(
       screen: ChoosePayment,
       navigationOptions: ({ navigation }) =>
         getNavigationOptions(navigation, 'Choose Payment', (showOrder = false))
+    },
+    PayPalView: {
+      screen: PayPalView
     }
   },
   {
@@ -301,7 +304,7 @@ export default createAppContainer(
       PayPalView
     },
     {
-      initialRouteName: 'PayPalView'
+      initialRouteName: 'Starter'
     }
   )
 )
