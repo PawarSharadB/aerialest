@@ -96,31 +96,41 @@ const PayPalView = props => {
         console.log(error)
       })
   }, [])
-  const onNavigationStateChange = webViewState => {
-    debugger
+  _onNavigationStateChange = webViewState => {
+    console.log('webViewState', webViewState)
+
+    //When the webViewState.title is empty this mean it's in process loading the first paypal page so there is no paypal's loading icon
+    //We show our loading icon then. After that we don't want to show our icon we need to set setShouldShowWebviewLoading to limit it
+    if (webViewState.title == '') {
+      //When the webview get here Don't need our loading anymore because there is one from paypal
+      setShouldShowWebviewLoading(false)
+    }
+
     if (webViewState.url.includes('https://example.com/')) {
-      console.log(webViewState, 'web')
-      setPaypalData(prevData => ({
-        ...prevData,
-        approvalUrl: null
-      }))
-      const { PayerID, paymentId, token } = getParamsFromUrl(webViewState.url)
-      fetch(
-        `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: token
-          },
-          body: JSON.stringify({ payer_id: PayerID })
-        }
-      )
+      setPaypalUrl(null)
+      const urlArr = webViewState.url.split(/(=|&)/)
+
+      const paymentId = urlArr[2]
+      const payerId = urlArr[10]
+
+      axios
+        .post(
+          `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
+          { payer_id: payerId },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`
+            }
+          }
+        )
         .then(response => {
-          props.navigation.navigate('PaypalSuccess')
+          setShouldShowWebviewLoading(true)
+          console.log(response)
         })
-        .catch(error => {
-          props.navigation.navigate('PlaceOrder')
+        .catch(err => {
+          setShouldShowWebviewLoading(true)
+          console.log({ ...err })
         })
     }
   }
