@@ -83,10 +83,11 @@ const PayPalView = props => {
           .then(jsonResponse => {
             const { id: paymentId, links } = jsonResponse
             const approvalUrl = links.find(data => data.rel == 'approval_url')
-            setPaypalData({
+            setPaypalData(prevData => ({
+              ...prevData,
               approvalUrl,
               paymentId
-            })
+            }))
           })
           .catch(error => {
             console.log(error)
@@ -97,14 +98,14 @@ const PayPalView = props => {
       })
   }, [])
   const onNavigationStateChange = webViewState => {
-    debugger
     if (webViewState.url.includes('https://example.com/')) {
       console.log(webViewState, 'web')
       setPaypalData(prevData => ({
         ...prevData,
         approvalUrl: null
       }))
-      const { PayerID, paymentId, token } = getParamsFromUrl(webViewState.url)
+      const { PayerID, paymentId } = getParamsFromUrl(webViewState.url)
+      const { token } = paypalData
       fetch(
         `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
         {
