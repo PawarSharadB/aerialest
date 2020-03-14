@@ -26,6 +26,7 @@ import PlaceOrder from '../Containers/PlaceOrder'
 import ChoosePayment from '../Containers/ChoosePayment'
 import PromoCode from '../Containers/PromoCode'
 import PayPalView from '../Containers/PaypalIntegration'
+import PaypalSuccess from '../Containers/PaymentSuccess'
 
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
@@ -142,6 +143,9 @@ const BillingInfoStack = createStackNavigator(
     },
     PayPalView: {
       screen: PayPalView
+    },
+    PaypalSuccess: {
+      screen: PaypalSuccess
     }
   },
   {
@@ -300,8 +304,7 @@ export default createAppContainer(
     {
       Starter: LaunchScreen,
       App: nonAuthNavigator,
-      Auth: authNavigator,
-      PayPalView
+      Auth: authNavigator
     },
     {
       initialRouteName: 'Starter'

@@ -47,7 +47,7 @@ const BillingInfo = props => {
       telephone
     })
     const orderData = {
-      email: profile.email ? email : '',
+      email: profile.email ? profile.email : '',
       price,
       itemOptions: [itemOptions, addressFrom, latitude, longitude],
       currency: 'USD'
@@ -69,7 +69,9 @@ const BillingInfo = props => {
       setIsLoading(false)
       setResponseError('Order successfull')
       setTimeout(() => {
-        navigation.navigate('ChoosePayment')
+        navigation.navigate('ChoosePayment', {
+          price: state.params.itemOptions.price
+        })
       }, 500)
     }
     if (orderError) {

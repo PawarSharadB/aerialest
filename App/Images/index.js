@@ -11,5 +11,6 @@ export default Images = {
   unSelectBlack: require('./Orders/unSelectedBlack.png'),
   selectedBlack: require('./Orders/selectedBlack.png'),
   unSelectedSquareBlack: require('./Orders/unSelectedSquareBlack.png'),
-  selectedSquareBlack: require('./Orders/selectedSquareBlack.png')
+  selectedSquareBlack: require('./Orders/selectedSquareBlack.png'),
+  paypalSuccess: require('./Orders/payPalSuccess.png')
 }

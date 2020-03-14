@@ -2,20 +2,18 @@ import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { UIActivityIndicator } from 'react-native-indicators'
+import { getParamsFromUrl } from '../Utils/decodeURL'
 import axios from 'axios'
 import qs from 'qs'
 
-const PayPalView = () => {
+const PayPalView = props => {
+  const currency = props.navigation.state.params.price
   const [paypalData, setPaypalData] = useState({
     accessToken: null,
     approvalUrl: null,
     paymentId: null,
     token: null
   })
-
-  let currency = '100 USD'
-  currency.replace(' USD', '')
-
   const dataDetail = {
     intent: 'sale',
     payer: {
@@ -24,10 +22,10 @@ const PayPalView = () => {
     transactions: [
       {
         amount: {
-          total: 100,
+          total: currency,
           currency: 'USD',
           details: {
-            subtotal: 100,
+            subtotal: currency,
             tax: '0',
             shipping: '0',
             handling_fee: '0',
@@ -106,25 +104,23 @@ const PayPalView = () => {
         ...prevData,
         approvalUrl: null
       }))
-      const { PayerID, paymentId } = webViewState.url
+      const { PayerID, paymentId, token } = getParamsFromUrl(webViewState.url)
       fetch(
-        `https://api.sandbox.paypal.com/v1/payments/payment/${paypalData.paymentId}/execute`,
+        `https://api.sandbox.paypal.com/v1/payments/payment/${paymentId}/execute`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: paypalData.token
+            Authorization: token
           },
           body: JSON.stringify({ payer_id: PayerID })
         }
       )
         .then(response => {
-          debugger
-          console.log(response)
+          props.navigation.navigate('PaypalSuccess')
         })
         .catch(error => {
-          debugger
-          console.log(error)
+          props.navigation.navigate('PlaceOrder')
         })
     }
   }

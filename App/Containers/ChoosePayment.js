@@ -5,9 +5,11 @@ import { View, StyleSheet } from 'react-native'
 
 const ChoosePayment = props => {
   const [payPal, setPaypal] = useState(false)
+  debugger
+  const { price } = props.navigation.state.params
   const onSelect = () => {
     const { navigation } = props
-    navigation.navigate('PayPalView')
+    navigation.navigate('PayPalView', { price })
     setPaypal(!payPal)
   }
   return (
