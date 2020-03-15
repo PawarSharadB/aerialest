@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+import { View, Text, Button, StyleSheet } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { getParamsFromUrl } from '../Utils/decodeURL'
@@ -16,7 +16,7 @@ const PayPalView = props => {
     paymentId: null,
     token: null
   })
-
+  const [showCartView, setShowCartView] = useState(true)
   const dataDetail = {
     intent: 'sale',
     payer: {
@@ -43,7 +43,7 @@ const PayPalView = props => {
       cancel_url: 'https://example.com'
     }
   }
-  useEffect(() => {
+  const startPaypalIntegration = () => {
     if (!global.btoa) {
       global.btoa = encode
     }
@@ -107,7 +107,7 @@ const PayPalView = props => {
       .catch(error => {
         console.log(error)
       })
-  }, [])
+  }
   const onNavigationStateChange = webViewState => {
     //When the webViewState.title is empty this mean it's in process loading the first paypal page so there is no paypal's loading icon
     //We show our loading icon then. After that we don't want to show our icon we need to set setShouldShowWebviewLoading to limit it
@@ -139,9 +139,10 @@ const PayPalView = props => {
         })
     }
   }
+  const getCurrency = () => `Cart Value $ ${currency}.00`
   return (
     <View style={{ flex: 1 }}>
-      {paypalData.approvalUrl ? (
+      {!showCartView && paypalData.approvalUrl ? (
         <WebView
           style={{ flex: 1 }}
           source={{ uri: paypalData.approvalUrl.href }}
@@ -150,11 +151,41 @@ const PayPalView = props => {
           domStorageEnabled={true}
           startInLoadingState={false}
         />
-      ) : (
-        <UIActivityIndicator />
-      )}
+      ) : null}
+      {showCartView ? (
+        <View style={styles.cartView}>
+          <Text style={styles.text}>{getCurrency()}</Text>
+          <Button
+            style={styles.cartButton}
+            title={'Proceed'}
+            onPress={() => {
+              setShowCartView(false)
+              startPaypalIntegration()
+            }}
+          />
+        </View>
+      ) : null}
     </View>
   )
 }
 
 export default PayPalView
+
+const styles = StyleSheet.create({
+  cartView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: 15,
+    marginBottom: 10
+  },
+  cartButton: {},
+  webViewContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+})

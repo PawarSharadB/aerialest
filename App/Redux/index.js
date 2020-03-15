@@ -15,7 +15,8 @@ export const reducers = combineReducers({
   profileUpdate: require('../Sagas/profile/profileUpdateReducer').reducer,
   forgotPassword: require('../Sagas/password/Reducer').reducer,
   placeOrder: require('../Sagas/PlaceOrder/Reducers').reducer,
-  order: require('../Sagas/order/Reducer').reducer
+  order: require('../Sagas/order/Reducer').reducer,
+  billingInfo: require('../Sagas/BillingInfo/Reducer').reducer
 })
 
 export default () => {
