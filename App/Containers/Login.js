@@ -21,6 +21,7 @@ export const Login = props => {
   const { success, error, isFetching } = props
   useEffect(() => {
     if (success) {
+      setResponseError('')
       const { navigation } = props
       setResponseError(I18n.t('logInMsg'))
       setTimeout(() => {
@@ -33,7 +34,7 @@ export const Login = props => {
         setResponseError('')
       }, 3000)
     }
-  }, [success, error])
+  }, [success, error, isFetching])
 
   const onSubmit = () => {
     const { loginRequest } = props

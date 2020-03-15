@@ -25,7 +25,7 @@ export const ForgotPassword = props => {
     if (passwordError) {
       setResponseError(passwordError)
     }
-  }, [passwordSuccess, passwordError])
+  }, [passwordSuccess, passwordError, isFetching])
 
   const onSubmit = () => {
     const { passwordRequest } = props

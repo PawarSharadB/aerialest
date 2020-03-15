@@ -19,9 +19,12 @@ const reducers = {
     }),
   [GET_PRICES_REQUEST_SUCCESS]: (state, { payload: data }) =>
     Immutable.merge(state, { isLoading: false, updatedTime: Date(), data }),
-  [GET_PRICES_REQUEST_FAILURE]: state =>
+  [GET_PRICES_REQUEST_FAILURE]: (state, { error }) =>
     Immutable.merge({
       isLoading: false,
+      error: error.response
+        ? error.response.data.message
+        : 'Something went wrong!',
       updatedTime: Date()
     })
 }
