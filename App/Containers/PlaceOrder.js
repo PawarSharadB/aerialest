@@ -20,7 +20,6 @@ const PlaceOrder = props => {
     getPricesData()
   }, [])
   const placeOrder = e => {
-    console.log('resident', e)
     const itemOptions = e
     const { navigation } = props
     navigation.navigate('BillingInfo', { itemOptions, latitude, longitude })
