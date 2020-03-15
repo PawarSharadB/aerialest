@@ -27,6 +27,7 @@ import ChoosePayment from '../Containers/ChoosePayment'
 import PromoCode from '../Containers/PromoCode'
 import PayPalView from '../Containers/PaypalIntegration'
 import PaypalSuccess from '../Containers/PaymentSuccess'
+import PaymentSummary from '../Components/PaymentSummary'
 
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
@@ -146,6 +147,9 @@ const BillingInfoStack = createStackNavigator(
     },
     PaypalSuccess: {
       screen: PaypalSuccess
+    },
+    PaymentSummary: {
+      screen: PaymentSummary
     }
   },
   {

@@ -11,6 +11,7 @@ export const getPricesSuccess = payload => ({
   type: GET_PRICES_REQUEST_SUCCESS,
   payload
 })
-export const getPricesFailure = () => ({
-  type: GET_PRICES_REQUEST_FAILURE
+export const getPricesFailure = error => ({
+  type: GET_PRICES_REQUEST_FAILURE,
+  error
 })

@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native'
 import axios from 'axios'
 import { URL } from '../../Assets/Constants'
 import { put } from 'redux-saga/effects'
-import { getPricesFailure, getPricesRequest, getPricesSuccess } from './Actions'
+import { getPricesFailure, getPricesSuccess } from './Actions'
 const getPriceApiCall = token => {
   const url = URL + '/mobileapp/getPrices'
   return axios.get(url, {
