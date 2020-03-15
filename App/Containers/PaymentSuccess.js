@@ -3,8 +3,10 @@ import { View, Text, Image, StyleSheet, BackHandler } from 'react-native'
 import Images from '../Images'
 
 const SuccessScreen = props => {
+  const { response } = props.navigation.state.params
   const navigateToHome = () => props.navigation.navigate('Home')
   useEffect(() => {
+    console.log('response', response)
     setTimeout(() => navigateToHome(), 5000)
     const backhandler = BackHandler.addEventListener(
       'hardwareBackPress',

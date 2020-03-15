@@ -131,7 +131,7 @@ const PayPalView = props => {
           }
         )
         .then(response => {
-          props.navigation.navigate('PaypalSuccess')
+          props.navigation.navigate('PaypalSuccess', { response })
         })
         .catch(err => {
           console.log({ ...err })
