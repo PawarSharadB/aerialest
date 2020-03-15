@@ -8,7 +8,8 @@ import qs from 'qs'
 import { decode, encode } from 'base-64'
 
 const PayPalView = props => {
-  const currency = props.navigation.state.params.price
+  const currency = props.navigation.state.params.orderData.price
+  const { orderData } = props.navigation.state.params
   const [paypalData, setPaypalData] = useState({
     accessToken: null,
     approvalUrl: null,
@@ -131,7 +132,7 @@ const PayPalView = props => {
           }
         )
         .then(response => {
-          props.navigation.navigate('PaypalSuccess', { response })
+          props.navigation.navigate('PaypalSuccess', { response, orderData })
         })
         .catch(err => {
           console.log({ ...err })

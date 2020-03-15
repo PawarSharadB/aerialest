@@ -8,10 +8,10 @@ import {
 import { createReducer } from '../CreateReducer'
 
 const INITIAL_STATE = Immutable({
-  orderData: {},
-  isPlacingOrder: false,
-  orderSuccess: false,
-  orderError: null
+  successData: {},
+  isFetching: false,
+  success: false,
+  error: null
 })
 
 const reducers = {
@@ -20,19 +20,19 @@ const reducers = {
   },
   [PLACE_ORDER_SUCCESS]: (state, action) => {
     return Immutable.merge(state, {
-      isPlacingOrder: false,
-      orderData: action.orderData,
-      orderSuccess: true,
-      orderError: null
+      isFetching: false,
+      successData: action.successData,
+      success: true,
+      error: null
     })
   },
   [PLACE_ORDER_ERROR]: (state, { error }) => {
     return Immutable.merge(state, {
-      orderError: error.response
+      error: error.response
         ? error.response.data.message
         : 'Something went wrong!',
-      isPlacingOrder: false,
-      orderSuccess: false
+      isFetching: false,
+      success: false
     })
   }
 }

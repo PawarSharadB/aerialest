@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ScrollView, Dimensions } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import AsyncStorage from '@react-native-community/async-storage'
 import I18n from '../I18n'
@@ -8,6 +8,7 @@ import AlertCard from '../Components/AlertCard'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { profileRequest } from '../Sagas/profile/Actions'
 import { placeOrderRequest } from '../Sagas/order/Actions'
+
 import { TextField } from 'react-native-material-textfield'
 import { checkPatternWithExpressionAndString } from '../Utils/validateBillingDetails'
 import { getBillingInfoDropDown } from '../Sagas/BillingInfo/Actions'
@@ -17,8 +18,9 @@ import styles from './Styles/BillingInfoStyles'
 const BillingInfo = props => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
-  const [address, setAddress] = useState('')
+  const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
   const [addState, setState] = useState('')
   const [zipCode, setZipCode] = useState('')
@@ -41,16 +43,15 @@ const BillingInfo = props => {
     getDropDownData,
     dropDownData
   } = props
-  const { success, error, profile, orderError, orderSuccess, orderData } = props
+  const { success, error, profile } = props
   const onNext = () => {
-    const { placeOrderRequest } = props
     const { itemOptions, latitude, longitude } = state.params
     const price = state.params.itemOptions.price
-    const addressFrom = `${address},${city},${addState},${zipCode},${country}`
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,
-      address,
+      email,
+      street,
       city,
       addState,
       zipCode,
@@ -58,13 +59,25 @@ const BillingInfo = props => {
       telephone
     })
     const orderData = {
-      email: profile.email ? profile.email : '',
+      email: profile.email ? profile.email : email,
       price,
-      itemOptions: [itemOptions, addressFrom, latitude, longitude],
+      itemOptions: [itemOptions, latitude, longitude],
+      billingAddress: {
+        firstname: firstName,
+        lastname: lastName,
+        street: [street],
+        city,
+        country_id: country,
+        postcode: zipCode,
+        telephone
+      },
       currency: 'USD'
     }
     if (isValidString) {
-      placeOrderRequest(orderData)
+      const { navigation } = props
+      navigation.navigate('ChoosePayment', {
+        orderData
+      })
     } else {
       setInputError('Please fill all the fields')
     }
@@ -74,26 +87,9 @@ const BillingInfo = props => {
     setIsLoading(false)
     getToken()
     getDropDownData()
+    const { getProfile } = props
+    getProfile()
   }, [])
-  useEffect(() => {
-    if (orderSuccess) {
-      const { navigation } = props
-      setIsLoading(false)
-      setResponseError('Order successfull')
-      setTimeout(() => {
-        navigation.navigate('ChoosePayment', {
-          price: state.params.itemOptions.price
-        })
-      }, 500)
-    }
-    if (orderError) {
-      setIsLoading(false)
-      setResponseError(error)
-      setTimeout(() => {
-        setResponseError('')
-      }, 3000)
-    }
-  }, [orderSuccess, orderError])
   useEffect(() => {
     if (error) {
       setResponseError(error)
@@ -102,6 +98,12 @@ const BillingInfo = props => {
       }, 3000)
     }
     if (success) {
+      setFirstName(profile.firstname)
+      setLastName(profile.lastname)
+      setEmail(profile.email)
+      if (profile.addresses.length !== 0) {
+        getToken()
+      }
     }
   }, [success, error])
 
@@ -112,21 +114,23 @@ const BillingInfo = props => {
     return mappedArray
   }
   const getToken = async () => {
-    const { getProfile, placeOrderRequest } = props
     const tokeExits = await AsyncStorage.getItem('token')
     setResponseError('')
-    getProfile()
+
     if (tokeExits) {
+      const { navigation } = props
       const { itemOptions, latitude, longitude } = state.params
       const price = state.params.itemOptions.price
-      const addressFrom = profile.address ? profile.address : ''
       const orderData = {
         email: profile.email ? profile.email : '',
         price,
-        itemOptions: [itemOptions, addressFrom, latitude, longitude],
+        itemOptions: [itemOptions, latitude, longitude],
+        billingAddress: profile.addresses,
         currency: 'USD'
       }
-      placeOrderRequest(orderData)
+      navigation.navigate('ChoosePayment', {
+        orderData
+      })
     }
   }
   return (
@@ -163,7 +167,18 @@ const BillingInfo = props => {
             error={lastName ? '' : inputError}
           />
           <TextField
+            label={I18n.t('email')}
+            ref={ref => (emailField = ref)}
+            value={email}
+            onChangeText={email => {
+              setInputError('')
+              setEmail(email)
+            }}
+            error={email ? '' : inputError}
+          />
+          <TextField
             label={I18n.t('company')}
+            ref={ref => (companyField = ref)}
             value={company}
             onChangeText={company => {
               setInputError('')
@@ -174,12 +189,12 @@ const BillingInfo = props => {
           <TextField
             label={I18n.t('address')}
             ref={ref => (addressField = ref)}
-            value={address}
-            onChangeText={address => {
+            value={street}
+            onChangeText={street => {
               setInputError('')
-              setAddress(address)
+              setStreet(street)
             }}
-            error={address ? '' : inputError}
+            error={street ? '' : inputError}
           />
           <TextField
             label={I18n.t('city')}
@@ -233,6 +248,7 @@ const BillingInfo = props => {
           />
           <TextField
             label={I18n.t('fax')}
+            ref={ref => (faxField = ref)}
             value={fax}
             onChangeText={fax => {
               setInputError('')
