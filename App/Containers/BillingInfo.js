@@ -8,11 +8,12 @@ import AlertCard from '../Components/AlertCard'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { profileRequest } from '../Sagas/profile/Actions'
 import { placeOrderRequest } from '../Sagas/order/Actions'
-
 import { TextField } from 'react-native-material-textfield'
 import { checkPatternWithExpressionAndString } from '../Utils/validateBillingDetails'
-
+import { getBillingInfoDropDown } from '../Sagas/BillingInfo/Actions'
+import { Dropdown } from 'react-native-material-dropdown'
 import styles from './Styles/BillingInfoStyles'
+
 const BillingInfo = props => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -27,8 +28,18 @@ const BillingInfo = props => {
   const [responseError, setResponseError] = useState(null)
   const [inputError, setInputError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  let firstNameField,
+    lastNameField,
+    addressField,
+    cityField,
+    stateField,
+    zipCodeField,
+    countryField,
+    telephoneField = null
   const {
-    navigation: { state }
+    navigation: { state },
+    getDropDownData,
+    dropDownData
   } = props
   const { success, error, profile, orderError, orderSuccess, orderData } = props
   const onNext = () => {
@@ -62,6 +73,7 @@ const BillingInfo = props => {
   useEffect(() => {
     setIsLoading(false)
     getToken()
+    getDropDownData()
   }, [])
   useEffect(() => {
     if (orderSuccess) {
@@ -92,6 +104,13 @@ const BillingInfo = props => {
     if (success) {
     }
   }, [success, error])
+
+  const parseDropDownData = () => {
+    const mappedArray = dropDownData.map(obj => ({
+      value: obj.full_name_english
+    }))
+    return mappedArray
+  }
   const getToken = async () => {
     const { getProfile, placeOrderRequest } = props
     const tokeExits = await AsyncStorage.getItem('token')
@@ -221,6 +240,7 @@ const BillingInfo = props => {
             }}
             error={fax ? '' : inputError}
           />
+          <Dropdown label={'Select Country'} data={parseDropDownData()} />
           <View style={styles.buttonsContainer}>
             <Button
               text={I18n.t('next')}
@@ -236,8 +256,9 @@ const BillingInfo = props => {
   )
 }
 
-const mapStateToProps = ({ profileInfo, order }) => {
+const mapStateToProps = ({ profileInfo, order, billingInfo }) => {
   const { isFetching, profile, success, error } = profileInfo
+  const { data: dropDownData } = billingInfo
   const { isPlacingOrder, orderData, orderSuccess, orderError } = order
 
   return {
@@ -248,7 +269,8 @@ const mapStateToProps = ({ profileInfo, order }) => {
     isPlacingOrder,
     orderData,
     orderSuccess,
-    orderError
+    orderError,
+    dropDownData
   }
 }
 const mapDispatchToProps = dispatch => ({
@@ -257,6 +279,9 @@ const mapDispatchToProps = dispatch => ({
   },
   placeOrderRequest: args => {
     dispatch(placeOrderRequest(args))
+  },
+  getDropDownData: () => {
+    dispatch(getBillingInfoDropDown())
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(BillingInfo)
