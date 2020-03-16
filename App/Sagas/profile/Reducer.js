@@ -1,7 +1,8 @@
 import {
   PROFILE_REQUEST,
   PROFILE_REQUEST_SUCCESS,
-  PROFILE_REQUEST_ERROR
+  PROFILE_REQUEST_ERROR,
+  CLEAR_PROFILE
 } from '../ActionTypes'
 
 import Immutable from 'seamless-immutable'
@@ -31,6 +32,14 @@ const reducers = {
       error: error.response.data.message,
       isFetching: false,
       success: false
+    })
+  },
+  [CLEAR_PROFILE]: state => {
+    return Immutable({
+      profile: {},
+      isFetching: false,
+      success: false,
+      error: null
     })
   }
 }

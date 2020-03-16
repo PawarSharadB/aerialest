@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet, BackHandler } from 'react-native'
 import { placeOrderRequest } from '../Sagas/order/Actions'
-
 import Images from '../Images'
 
 const SuccessScreen = props => {
@@ -19,6 +18,16 @@ const SuccessScreen = props => {
     }
   }, [success, error])
   useEffect(() => {
+    navigateToPaymentDetails()
+    const backhandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        navigateToHome()
+      }
+    )
+    return () => backhandler.remove()
+  }, [])
+  const navigateToPaymentDetails = async () => {
     const dataObj = {
       isGuest: orderData.email === '' ? 0 : 1,
       price: orderData.price,
@@ -32,15 +41,7 @@ const SuccessScreen = props => {
     }
     const { placeOrderRequest } = props
     placeOrderRequest(dataObj)
-    setTimeout(() => navigateToHome(), 5000)
-    const backhandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        navigateToHome()
-      }
-    )
-    return () => backhandler.remove()
-  }, [])
+  }
   return (
     <View style={styleSheet.mainView}>
       <Image source={Images.paypalSuccess} style={styleSheet.image} />
@@ -59,8 +60,8 @@ const mapStateToProps = ({ order }) => {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  placeOrderRequest: args => {
-    dispatch(placeOrderRequest(args))
+  placeOrderRequest: orderData => {
+    dispatch(placeOrderRequest(orderData))
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuccessScreen)

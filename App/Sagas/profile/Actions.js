@@ -4,7 +4,8 @@ import {
   PROFILE_REQUEST_SUCCESS,
   PROFILE_UPDATE_REQUEST,
   PROFILE_UPDATE_SUCCESS,
-  PROFILE_UPDATE_ERROR
+  PROFILE_UPDATE_ERROR,
+  CLEAR_PROFILE
 } from '../ActionTypes'
 
 export const profileRequest = () => ({
@@ -31,4 +32,7 @@ export const profileUpdateSuccess = profileData => ({
 export const profileUpdateError = error => ({
   type: PROFILE_UPDATE_ERROR,
   error
+})
+export const clearProfile = () => ({
+  type: CLEAR_PROFILE
 })
