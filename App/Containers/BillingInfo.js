@@ -16,9 +16,16 @@ import { Dropdown } from 'react-native-material-dropdown'
 import styles from './Styles/BillingInfoStyles'
 
 const BillingInfo = props => {
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
+  const {
+    profile: {
+      firstname: fNameProfile,
+      lastname: lNameProfile,
+      email: emailProfile
+    }
+  } = props
+  const [firstName, setFirstName] = useState(fNameProfile ? fNameProfile : '')
+  const [lastName, setLastName] = useState(lNameProfile ? lNameProfile : '')
+  const [email, setEmail] = useState(emailProfile ? emailProfile : '')
   const [company, setCompany] = useState('')
   const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
@@ -30,23 +37,15 @@ const BillingInfo = props => {
   const [responseError, setResponseError] = useState(null)
   const [inputError, setInputError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  let firstNameField,
-    lastNameField,
-    addressField,
-    cityField,
-    stateField,
-    zipCodeField,
-    countryField,
-    telephoneField = null
   const {
     navigation: { state },
     getDropDownData,
     dropDownData
   } = props
-  const { success, error, profile } = props
   const onNext = () => {
     const { itemOptions, latitude, longitude } = state.params
     const price = state.params.itemOptions.price
+    debugger
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,
@@ -59,12 +58,12 @@ const BillingInfo = props => {
       telephone
     })
     const orderData = {
-      email: profile.email ? profile.email : email,
       price,
       itemOptions: [itemOptions, latitude, longitude],
       billingAddress: {
         firstname: firstName,
         lastname: lastName,
+        email,
         street: [street],
         city,
         country_id: country,
@@ -82,30 +81,10 @@ const BillingInfo = props => {
       setInputError('Please fill all the fields')
     }
   }
-
   useEffect(() => {
     setIsLoading(false)
-    getToken()
     getDropDownData()
-    const { getProfile } = props
-    getProfile()
   }, [])
-  useEffect(() => {
-    if (error) {
-      setResponseError(error)
-      setTimeout(() => {
-        setResponseError('')
-      }, 3000)
-    }
-    if (success) {
-      setFirstName(profile.firstname)
-      setLastName(profile.lastname)
-      setEmail(profile.email)
-      if (profile.addresses.length !== 0) {
-        getToken()
-      }
-    }
-  }, [success, error])
 
   const parseDropDownData = () => {
     const mappedArray = dropDownData.map(obj => ({
@@ -113,26 +92,7 @@ const BillingInfo = props => {
     }))
     return mappedArray
   }
-  const getToken = async () => {
-    const tokeExits = await AsyncStorage.getItem('token')
-    setResponseError('')
 
-    if (tokeExits) {
-      const { navigation } = props
-      const { itemOptions, latitude, longitude } = state.params
-      const price = state.params.itemOptions.price
-      const orderData = {
-        email: profile.email ? profile.email : '',
-        price,
-        itemOptions: [itemOptions, latitude, longitude],
-        billingAddress: profile.addresses,
-        currency: 'USD'
-      }
-      navigation.navigate('ChoosePayment', {
-        orderData
-      })
-    }
-  }
   return (
     <View style={styles.mainView}>
       <ScrollView
@@ -216,6 +176,15 @@ const BillingInfo = props => {
             }}
             error={addState ? '' : inputError}
           />
+          <Dropdown
+            label={'Select Country'}
+            data={parseDropDownData()}
+            onChangeText={(value, index) => {
+              const { id } = dropDownData[index]
+              setCountry(id)
+            }}
+          />
+
           <TextField
             label={I18n.t('zipCode')}
             ref={ref => (zipCodeField = ref)}
@@ -225,16 +194,6 @@ const BillingInfo = props => {
               setZipCode(zipCode)
             }}
             error={zipCode ? '' : inputError}
-          />
-          <TextField
-            label={I18n.t('country')}
-            ref={ref => (countryField = ref)}
-            value={country}
-            onChangeText={country => {
-              setInputError('')
-              setCountry(country)
-            }}
-            error={country ? '' : inputError}
           />
           <TextField
             label={I18n.t('telephone')}
@@ -256,7 +215,6 @@ const BillingInfo = props => {
             }}
             error={fax ? '' : inputError}
           />
-          <Dropdown label={'Select Country'} data={parseDropDownData()} />
           <View style={styles.buttonsContainer}>
             <Button
               text={I18n.t('next')}
@@ -273,12 +231,11 @@ const BillingInfo = props => {
 }
 
 const mapStateToProps = ({ profileInfo, order, billingInfo }) => {
-  const { isFetching, profile, success, error } = profileInfo
+  const { profile, success, error } = profileInfo
   const { data: dropDownData } = billingInfo
   const { isPlacingOrder, orderData, orderSuccess, orderError } = order
 
   return {
-    isFetching,
     profile,
     success,
     error,
@@ -290,9 +247,6 @@ const mapStateToProps = ({ profileInfo, order, billingInfo }) => {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  getProfile: () => {
-    dispatch(profileRequest())
-  },
   placeOrderRequest: args => {
     dispatch(placeOrderRequest(args))
   },

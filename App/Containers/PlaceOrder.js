@@ -6,23 +6,85 @@ import OrderWithTrailReport from '../Components/Orders/MainComponents/OrderWithT
 import OrderWithoutTrailReport from '../Components/Orders/MainComponents/OrderWithoutTrailReport'
 import { getPricesRequest } from '../Sagas/PlaceOrder/Actions'
 import { UIActivityIndicator } from 'react-native-indicators'
-
+import { profileRequest, clearProfile } from '../Sagas/profile/Actions'
 const PlaceOrder = props => {
-  const { isLoading, data } = props
+  const {
+    isLoading,
+    data,
+    profile,
+    isFetchingProfile,
+    success,
+    errorProfile
+  } = props
   const [isTrailReport, toggleTrailReport] = useState(false)
   const {
     navigation: { state }
   } = props
+  const [isGoToOrderScreen, setIsGoToOrderScreen] = useState(null)
   const latitude = state.params.region.latitude
   const longitude = state.params.region.longitude
+
   useEffect(() => {
-    const { getPricesData } = props
+    const { getPricesData, getProfile, clearProfile } = props
     getPricesData()
+    getProfile()
+    return () => {
+      clearProfile()
+    }
   }, [])
+  useEffect(() => {
+    if (errorProfile) {
+      setIsGoToOrderScreen(false)
+    }
+    if (success) {
+      setIsGoToOrderScreen(
+        profile.addresses ? profile.addresses.length > 0 : false
+      )
+    }
+  }, [success, errorProfile])
   const placeOrder = e => {
     const itemOptions = e
     const { navigation } = props
-    navigation.navigate('BillingInfo', { itemOptions, latitude, longitude })
+    // Form Data object
+    if (isGoToOrderScreen !== null) {
+      if (isGoToOrderScreen) {
+        const billingAddress = profile.addresses[0]
+        const {
+          firstname,
+          lastname,
+          street,
+          city,
+          country_id,
+          postcode,
+          telephone
+        } = billingAddress
+        const email = profile.email ? profile.email : ''
+        const orderData = {
+          price: itemOptions.price,
+          itemOptions: [itemOptions, `${latitude}`, `${longitude}`],
+          billingAddress: {
+            email,
+            firstname,
+            lastname,
+            street,
+            city,
+            country_id,
+            postcode,
+            telephone
+          },
+          currency: 'USD'
+        }
+        navigation.navigate('ChoosePayment', {
+          orderData
+        })
+      } else {
+        navigation.navigate('BillingInfo', {
+          itemOptions,
+          latitude: `${latitude}`,
+          longitude: `${longitude}`
+        })
+      }
+    }
   }
 
   return (
@@ -78,13 +140,33 @@ const PlaceOrder = props => {
     </ScrollView>
   )
 }
-const mapStateToProps = ({ placeOrder }) => {
+const mapStateToProps = ({ placeOrder, profileInfo }) => {
   const { isLoading, error, data } = placeOrder
-  return { isLoading, error, data }
+  const {
+    isFetching: isFetchingProfile,
+    profile,
+    success,
+    error: errorProfile
+  } = profileInfo
+  return {
+    isLoading,
+    error,
+    data,
+    isFetchingProfile,
+    profile,
+    success,
+    errorProfile
+  }
 }
 const mapDispatchToProps = dispatch => ({
+  getProfile: () => {
+    dispatch(profileRequest())
+  },
   getPricesData: () => {
     dispatch(getPricesRequest())
+  },
+  clearProfile: () => {
+    dispatch(clearProfile())
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder)

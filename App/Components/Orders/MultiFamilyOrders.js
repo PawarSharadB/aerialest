@@ -105,14 +105,14 @@ const MultiFamilyOrders = props => {
       <Text style={[styles.commonMarginTop, styles.heading]}>File Format</Text>
       <View style={styles.rowFlexStart}>
         <SelectionWithText
-          onSelect={() => setFileFormat('1')}
-          isSelected={fileFormat === '1'}
+          onSelect={() => setFileFormat(1)}
+          isSelected={fileFormat === 1}
           type={'Circle'}
           title="XML"
         />
         <SelectionWithText
-          onSelect={() => setFileFormat('2')}
-          isSelected={fileFormat === '2'}
+          onSelect={() => setFileFormat(2)}
+          isSelected={fileFormat === 2}
           type={'Circle'}
           title="ESX"
         />

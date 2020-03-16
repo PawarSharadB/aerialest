@@ -9,9 +9,9 @@ export const placeOrderRequest = orderData => ({
   orderData
 })
 
-export const placeOrderSuccess = orderData => ({
+export const placeOrderSuccess = successData => ({
   type: PLACE_ORDER_SUCCESS,
-  orderData
+  successData
 })
 
 export const placeOrderError = error => ({
