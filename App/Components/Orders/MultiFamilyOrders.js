@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import { uploadFile } from '../../Utils/UploadFile'
+import { encode } from 'base-64'
 
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -41,7 +42,10 @@ const MultiFamilyOrders = props => {
           buildings,
           fileFormat,
           specialNotes,
-          uploadDetails,
+          uploadDetails: {
+            name: uploadDetails.name,
+            uri: encode(uploadDetails.uri)
+          },
           alternativeEmail,
           pitchValue,
           price: getPriceWithOutText()

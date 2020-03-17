@@ -45,7 +45,6 @@ const BillingInfo = props => {
   const onNext = () => {
     const { itemOptions, latitude, longitude } = state.params
     const price = state.params.itemOptions.price
-    debugger
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,

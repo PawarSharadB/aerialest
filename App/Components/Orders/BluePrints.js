@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import UploadImage from '../UploadImage'
+import { encode } from 'base-64'
+
 import { uploadFile } from '../../Utils/UploadFile'
 import Button from '../Button'
 
@@ -16,7 +18,10 @@ const BluePrints = props => {
     onPress({
       type: 'Blue Prints',
       price: getPriceWithOutText(),
-      uploadDetails,
+      uploadDetails: {
+        name: uploadDetails.name,
+        uri: encode(uploadDetails.uri)
+      },
       alternativeEmail
     })
   }
