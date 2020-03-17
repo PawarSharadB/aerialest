@@ -1,7 +1,8 @@
 import {
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCESS,
-  PLACE_ORDER_ERROR
+  PLACE_ORDER_ERROR,
+  RESET_ORDER
 } from '../ActionTypes'
 
 export const placeOrderRequest = orderData => ({
@@ -17,4 +18,7 @@ export const placeOrderSuccess = successData => ({
 export const placeOrderError = error => ({
   type: PLACE_ORDER_ERROR,
   error
+})
+export const resetOrder = () => ({
+  type: RESET_ORDER
 })

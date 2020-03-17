@@ -29,7 +29,9 @@ const BillingInfo = props => {
   const [company, setCompany] = useState('')
   const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
-  const [addState, setState] = useState('')
+  const [regions, setRegions] = useState([])
+  const [region, setRegion] = useState('')
+  const [region_id, setRegionId] = useState('')
   const [zipCode, setZipCode] = useState('')
   const [country, setCountry] = useState('')
   const [telephone, setTelephone] = useState('')
@@ -42,6 +44,7 @@ const BillingInfo = props => {
     getDropDownData,
     dropDownData
   } = props
+  let stateField = null
   const onNext = () => {
     const { itemOptions, latitude, longitude } = state.params
     const price = state.params.itemOptions.price
@@ -51,10 +54,12 @@ const BillingInfo = props => {
       email,
       street,
       city,
-      addState,
       zipCode,
       country,
-      telephone
+      telephone,
+      region_id: regions.length > 0 ? region_id : 'Dummy',
+      region: regions.length > 0 ? 'Dummy' : region,
+      company
     })
     const orderData = {
       price,
@@ -67,7 +72,10 @@ const BillingInfo = props => {
         city,
         country_id: country,
         postcode: zipCode,
-        telephone
+        telephone,
+        region: regions.length > 0 ? '' : region,
+        region_id: regions.length > 0 ? region_id : '',
+        company
       },
       currency: 'USD'
     }
@@ -91,7 +99,10 @@ const BillingInfo = props => {
     }))
     return mappedArray
   }
-
+  const parseStatesData = () => {
+    const mappedArray = regions.map(obj => ({ value: obj.name }))
+    return mappedArray
+  }
   return (
     <View style={styles.mainView}>
       <ScrollView
@@ -165,25 +176,43 @@ const BillingInfo = props => {
             }}
             error={city ? '' : inputError}
           />
-          <TextField
-            label={I18n.t('state')}
-            ref={ref => (stateField = ref)}
-            value={addState}
-            onChangeText={addState => {
-              setInputError('')
-              setState(addState)
-            }}
-            error={addState ? '' : inputError}
-          />
           <Dropdown
+            pickerStyle={{ height: 500 }}
             label={'Select Country'}
             data={parseDropDownData()}
             onChangeText={(value, index) => {
-              const { id } = dropDownData[index]
+              setInputError('')
+              setRegion('')
+              setRegions([])
+              const { id, available_regions } = dropDownData[index]
               setCountry(id)
+              let region = available_regions ? available_regions : []
+              setRegions(region)
             }}
           />
-
+          {regions.length > 0 ? (
+            <Dropdown
+              error={inputError}
+              label="State"
+              data={parseStatesData()}
+              onChangeText={(value, index) => {
+                const { id } = regions[index]
+                setRegionId(id)
+                setInputError('')
+              }}
+            />
+          ) : (
+            <TextField
+              label={I18n.t('state')}
+              ref={ref => (stateField = ref)}
+              value={region}
+              onChangeText={addState => {
+                setInputError('')
+                setRegion(addState)
+              }}
+              error={region ? '' : inputError}
+            />
+          )}
           <TextField
             label={I18n.t('zipCode')}
             ref={ref => (zipCodeField = ref)}

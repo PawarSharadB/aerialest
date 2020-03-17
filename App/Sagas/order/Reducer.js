@@ -2,7 +2,8 @@ import Immutable from 'seamless-immutable'
 import {
   PLACE_ORDER_REQUEST,
   PLACE_ORDER_SUCCESS,
-  PLACE_ORDER_ERROR
+  PLACE_ORDER_ERROR,
+  RESET_ORDER
 } from '../ActionTypes'
 
 import { createReducer } from '../CreateReducer'
@@ -34,6 +35,9 @@ const reducers = {
       isFetching: false,
       success: false
     })
+  },
+  [RESET_ORDER]: state => {
+    return { ...INITIAL_STATE }
   }
 }
 

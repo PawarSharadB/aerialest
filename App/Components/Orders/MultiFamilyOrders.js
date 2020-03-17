@@ -31,25 +31,25 @@ const MultiFamilyOrders = props => {
     let errorMessage = null
     type
       ? buildings && buildings !== '0'
-        ? onPress()
+        ? onPress({
+            orderType: 'MultiFamily Orders',
+            type,
+            buildings,
+            fileFormat,
+            specialNotes,
+            uploadDetails: {
+              name: uploadDetails.name,
+              uri: encode(uploadDetails.uri)
+            },
+            alternativeEmail,
+            pitchValue,
+            price: getPriceWithOutText()
+          })
         : (errorMessage = 'Please Enter no of buildings')
       : (errorMessage = 'Please select type')
-    errorMessage
-      ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
-      : onPress({
-          orderType: 'MultiFamily Orders',
-          type,
-          buildings,
-          fileFormat,
-          specialNotes,
-          uploadDetails: {
-            name: uploadDetails.name,
-            uri: encode(uploadDetails.uri)
-          },
-          alternativeEmail,
-          pitchValue,
-          price: getPriceWithOutText()
-        })
+    if (errorMessage) {
+      Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+    }
   }
   const getPriceWithOutText = () => {
     const multiFamilyPrice =
