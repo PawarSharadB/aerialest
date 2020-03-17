@@ -48,7 +48,7 @@ const PlaceOrder = props => {
     // Form Data object
     if (isGoToOrderScreen !== null) {
       if (isGoToOrderScreen) {
-        const billingAddress = profile.addresses[0]
+        const billingAddress = profile.addresses[1]
         const {
           firstname,
           lastname,

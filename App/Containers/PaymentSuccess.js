@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet, BackHandler } from 'react-native'
-import { placeOrderRequest } from '../Sagas/order/Actions'
+import { placeOrderRequest, resetOrder } from '../Sagas/order/Actions'
 import Images from '../Images'
 
 const SuccessScreen = props => {
   const { response, orderData } = props.navigation.state.params
   const navigateToHome = () => props.navigation.navigate('Home')
-  const { success, error, successData } = props
+  const { success, error, successData, resetOrder } = props
   useEffect(() => {
     if (success) {
       const { navigation } = props
@@ -22,10 +22,13 @@ const SuccessScreen = props => {
     const backhandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
+        resetOrder()
         navigateToHome()
       }
     )
-    return () => backhandler.remove()
+    return () => {
+      backhandler.remove()
+    }
   }, [])
   const navigateToPaymentDetails = async () => {
     const dataObj = {
@@ -64,7 +67,8 @@ const mapStateToProps = ({ order }) => {
 const mapDispatchToProps = dispatch => ({
   placeOrderRequest: orderData => {
     dispatch(placeOrderRequest(orderData))
-  }
+  },
+  resetOrder: () => dispatch(resetOrder())
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SuccessScreen)
 

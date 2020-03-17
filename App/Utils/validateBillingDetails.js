@@ -8,10 +8,11 @@ export const checkPatternWithExpressionAndString = (
     email,
     street,
     city,
-    addState,
     zipCode,
     country,
-    telephone
+    telephone,
+    region_id,
+    region
   }
 ) => {
   const regex = new RegExp(regexPattern)
@@ -21,7 +22,8 @@ export const checkPatternWithExpressionAndString = (
     email.match(regex) &&
     street.match(regex) &&
     city.match(regex) &&
-    addState.match(regex) &&
+    region_id.match(regex) &&
+    region.match(regex) &&
     zipCode.match(regex) &&
     country.match(regex) &&
     telephone.match(regex)
