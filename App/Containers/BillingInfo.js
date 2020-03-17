@@ -73,8 +73,8 @@ const BillingInfo = props => {
         country_id: country,
         postcode: zipCode,
         telephone,
-        region,
-        region_id,
+        region: regions.length > 0 ? '' : region,
+        region_id: regions.length > 0 ? region_id : '',
         company
       },
       currency: 'USD'

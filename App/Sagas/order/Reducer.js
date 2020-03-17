@@ -36,7 +36,9 @@ const reducers = {
       success: false
     })
   },
-  [RESET_ORDER]: state => Immutable.merge({}, INITIAL_STATE)
+  [RESET_ORDER]: state => {
+    return { ...INITIAL_STATE }
+  }
 }
 
 export const reducer = createReducer(INITIAL_STATE, reducers)

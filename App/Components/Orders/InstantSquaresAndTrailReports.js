@@ -24,27 +24,27 @@ const InstantSquareAndTrailReports = props => {
       let errorMessage = null
       measurements
         ? delivery
-          ? onPress()
+          ? onPress({
+              type,
+              price: getPriceWithoutText(),
+              measurements,
+              deliveryType:
+                delivery === 1
+                  ? 'Delivery - 1 Business day or Less'
+                  : 'Delivery - 2 Business Hours',
+              specialNotes,
+              pitchValue,
+              alternativeEmail,
+              uploadDetails: {
+                name: uploadDetails.name,
+                uri: encode(uploadDetails.uri)
+              }
+            })
           : (errorMessage = 'Please Select Delivery')
         : (errorMessage = 'Please Select Measurements')
-      errorMessage
-        ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
-        : onPress({
-            type,
-            price: getPriceWithoutText(),
-            measurements,
-            deliveryType:
-              delivery === 1
-                ? 'Delivery - 1 Business day or Less'
-                : 'Delivery - 2 Business Hours',
-            specialNotes,
-            pitchValue,
-            alternativeEmail,
-            uploadDetails: {
-              name: uploadDetails.name,
-              uri: encode(uploadDetails.uri)
-            }
-          })
+      if (errorMessage) {
+        Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+      }
     } else {
       delivery
         ? onPress({

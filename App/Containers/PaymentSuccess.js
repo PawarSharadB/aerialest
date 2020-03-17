@@ -27,6 +27,7 @@ const SuccessScreen = props => {
       }
     )
     return () => {
+      resetOrder()
       backhandler.remove()
     }
   }, [])

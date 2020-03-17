@@ -30,35 +30,34 @@ const ResedentialAndCommercialOrders = props => {
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const validate = () => {
     let errorMessage = null
+
     estimationArea
       ? delivery
         ? measurements
-          ? onPress()
+          ? onPress({
+              type,
+              price: priceWithoutText(),
+              estimationArea,
+              measurements,
+              delivery:
+                delivery === 1
+                  ? 'Delivery - 1 Business day or Less'
+                  : 'Delivery - 2 Business Hour',
+              fileFormat: fileFormat === 1 ? 'XML' : 'ESX',
+              specialNotes,
+              uploadDetails: {
+                name: uploadDetails.name,
+                uri: encode(uploadDetails.uri)
+              },
+              pitchValue,
+              alternativeEmail
+            })
           : (errorMessage = 'Please select Measurement structure')
         : (errorMessage = 'Please select Delivery')
       : (errorMessage = 'Please select estimation area')
-    errorMessage
-      ? Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
-      : onPress()
-
-    onPress({
-      type,
-      price: priceWithoutText(),
-      estimationArea,
-      measurements,
-      delivery:
-        delivery === 1
-          ? 'Delivery - 1 Business day or Less'
-          : 'Delivery - 2 Business Hour',
-      fileFormat: fileFormat === 1 ? 'XML' : 'ESX',
-      specialNotes,
-      uploadDetails: {
-        name: uploadDetails.name,
-        uri: encode(uploadDetails.uri)
-      },
-      pitchValue,
-      alternativeEmail
-    })
+    if (errorMessage) {
+      Alert.alert('Alert!', errorMessage, [{ style: 'cancel' }])
+    }
   }
   const priceWithoutText = () => {
     let price = null
