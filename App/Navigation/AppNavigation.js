@@ -147,9 +147,6 @@ const BillingInfoStack = createStackNavigator(
     },
     PaypalSuccess: {
       screen: PaypalSuccess
-    },
-    PaymentSummary: {
-      screen: PaymentSummary
     }
   },
   {
@@ -308,7 +305,8 @@ export default createAppContainer(
     {
       Starter: LaunchScreen,
       App: nonAuthNavigator,
-      Auth: authNavigator
+      Auth: authNavigator,
+      PaymentSummary: PaymentSummary
     },
     {
       initialRouteName: 'Starter'

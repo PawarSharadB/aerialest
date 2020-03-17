@@ -30,6 +30,7 @@ export const Register = props => {
   let confirmPasswordField = null
 
   useEffect(() => {
+    setResponseError('')
     const { reset } = props
     reset()
   }, [])
@@ -49,7 +50,7 @@ export const Register = props => {
         setResponseError('')
       }, 500)
     }
-  }, [success, error])
+  }, [success, error, isFetching])
   const onRegister = () => {
     const { saveUserDataRequest } = props
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {

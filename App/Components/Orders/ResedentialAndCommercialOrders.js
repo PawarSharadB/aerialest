@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
+import { encode } from 'base-64'
+
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -50,7 +52,10 @@ const ResedentialAndCommercialOrders = props => {
           : 'Delivery - 2 Business Hour',
       fileFormat: fileFormat === 1 ? 'XML' : 'ESX',
       specialNotes,
-      uploadDetails,
+      uploadDetails: {
+        name: uploadDetails.name,
+        uri: encode(uploadDetails.uri)
+      },
       pitchValue,
       alternativeEmail
     })

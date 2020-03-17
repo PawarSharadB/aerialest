@@ -4,7 +4,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 import { uploadFile } from '../../Utils/UploadFile'
-import { useIsEmulator } from 'react-native-device-info'
+import { encode } from 'base-64'
 
 const InstantSquareAndTrailReports = props => {
   const { type, onPress, TrailPrice } = props
@@ -40,7 +40,10 @@ const InstantSquareAndTrailReports = props => {
             specialNotes,
             pitchValue,
             alternativeEmail,
-            uploadDetails
+            uploadDetails: {
+              name: uploadDetails.name,
+              uri: encode(uploadDetails.uri)
+            }
           })
     } else {
       delivery

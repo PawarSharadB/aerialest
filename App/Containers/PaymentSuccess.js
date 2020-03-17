@@ -45,7 +45,9 @@ const SuccessScreen = props => {
   return (
     <View style={styleSheet.mainView}>
       <Image source={Images.paypalSuccess} style={styleSheet.image} />
-      <Text style={styleSheet.successText}>Payment Success</Text>
+      <Text style={styleSheet.successText}>
+        Payment Success ,Please wait for Payment Summary
+      </Text>
     </View>
   )
 }
