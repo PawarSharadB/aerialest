@@ -15,7 +15,7 @@ const InstantSquareAndTrailReports = props => {
   const [deliveryType, setDeliveryType] = useState(null)
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    data: ''
+    uri: ''
   })
 
   const validate = () => {
@@ -36,7 +36,7 @@ const InstantSquareAndTrailReports = props => {
               alternativeEmail,
               uploadDetails: {
                 name: uploadDetails.name,
-                data: uploadDetails.data
+                uri: uploadDetails.data
               }
             })
           : (errorMessage = 'Please Select Delivery')

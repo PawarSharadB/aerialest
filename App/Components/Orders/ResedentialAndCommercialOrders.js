@@ -23,7 +23,7 @@ const ResedentialAndCommercialOrders = props => {
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    data: ''
+    uri: ''
   })
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
@@ -46,7 +46,7 @@ const ResedentialAndCommercialOrders = props => {
               specialNotes,
               uploadDetails: {
                 name: uploadDetails.name,
-                data: uploadDetails.data
+                uri: uploadDetails.data
               },
               pitchValue,
               alternativeEmail

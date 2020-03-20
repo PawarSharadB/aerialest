@@ -22,23 +22,25 @@ const MultiFamilyOrders = props => {
   const [pitchValue, setPitchValue] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    data: ''
+    uri: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
+  const getType = () =>
+    type === 1 ? 'Instant Squares' : type === 2 ? 'Resedential' : 'Commercials'
   const validate = () => {
     let errorMessage = null
     type
       ? buildings && buildings !== '0'
         ? onPress({
             orderType: 'MultiFamily Orders',
-            type,
+            type: getType(),
             buildings,
             fileFormat,
             specialNotes,
             uploadDetails: {
               name: uploadDetails.name,
-              data: uploadDetails.data
+              uri: uploadDetails.data
             },
             alternativeEmail,
             pitchValue,

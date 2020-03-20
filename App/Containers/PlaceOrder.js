@@ -23,7 +23,8 @@ const PlaceOrder = props => {
   const [isGoToOrderScreen, setIsGoToOrderScreen] = useState(null)
   const latitude = state.params.region.latitude
   const longitude = state.params.region.longitude
-
+  const geoAddress = state.params.address
+  debugger
   useEffect(() => {
     const { getPricesData, getProfile, clearProfile } = props
     getPricesData()
@@ -62,6 +63,7 @@ const PlaceOrder = props => {
         const orderData = {
           price: itemOptions.price,
           itemOptions: [itemOptions, `${latitude}`, `${longitude}`],
+          geoAddress,
           billingAddress: {
             email,
             firstname,
@@ -80,6 +82,7 @@ const PlaceOrder = props => {
       } else {
         navigation.navigate('BillingInfo', {
           itemOptions,
+          geoAddress,
           latitude: `${latitude}`,
           longitude: `${longitude}`
         })

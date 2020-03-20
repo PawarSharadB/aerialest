@@ -4,7 +4,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
-const MultiFamilyOrders = props => {
+const WallReport = props => {
   const { onPress } = props
   const [type, setType] = useState(null)
   const [uploadDetails, setUploadDetails] = useState({ name: '', data: '' })
@@ -90,7 +90,7 @@ const MultiFamilyOrders = props => {
     </View>
   )
 }
-export default MultiFamilyOrders
+export default WallReport
 
 const styles = StyleSheet.create({
   mainView: {

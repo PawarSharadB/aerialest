@@ -26,7 +26,8 @@ const SearchAddress = props => {
     Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
     Geocoder.from(region.place)
       .then(json => {
-        let location = json.results[0].geometry.location
+        const { formatted_address: address, geometry } = json.results[0]
+        let location = geometry.location
         const { lat: latitude, lng: longitude } = location
         const region = {
           ...region,
@@ -36,7 +37,7 @@ const SearchAddress = props => {
           longitudeDelta: 0.0421
         }
         setRegion(region)
-        navigation.navigate('Orders', { region })
+        navigation.navigate('Orders', { region, address })
       })
       .catch(error => {
         console.log(error)
@@ -58,7 +59,7 @@ const SearchAddress = props => {
       .then(json => {
         let address = json.results[1].formatted_address
         setRegion(region => ({ ...region, place: address }))
-        navigation.navigate('Orders', { region })
+        navigation.navigate('Orders', { region, address })
       })
       .catch(error => {
         console.log(error)

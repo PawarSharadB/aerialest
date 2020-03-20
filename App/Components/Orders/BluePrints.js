@@ -10,7 +10,7 @@ const BluePrints = props => {
   const { onPress, blueprint } = props
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    data: ''
+    uri: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
 
@@ -20,7 +20,7 @@ const BluePrints = props => {
       price: getPriceWithOutText(),
       uploadDetails: {
         name: uploadDetails.name,
-        data: uploadDetails.data
+        uri: uploadDetails.data
       },
       alternativeEmail
     })
