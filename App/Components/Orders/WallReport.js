@@ -7,7 +7,7 @@ import Button from '../Button'
 const MultiFamilyOrders = props => {
   const { onPress } = props
   const [type, setType] = useState(null)
-  const [uploadTitle, setUploadTitle] = useState('No File Chosen')
+  const [uploadDetails, setUploadDetails] = useState({ name: '', data: '' })
   const [specialNotes, setSpecialNotes] = useState('')
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
@@ -52,8 +52,11 @@ const MultiFamilyOrders = props => {
       </View>
       <Text style={[styles.commonMarginTop, styles.heading]}>Upload Logo</Text>
       <UploadImage
-        onPress={() => {
-          console.log('Upload Image Button Pressed')
+        onPress={(response, error) => {
+          if (error === null) {
+            const { data, name } = response
+            setUploadDetails({ data, name })
+          }
         }}
         title={uploadTitle}
         buttonTitle={'Choose File'}

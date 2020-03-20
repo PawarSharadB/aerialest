@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import { uploadFile } from '../../Utils/UploadFile'
-import { encode } from 'base-64'
 
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -23,7 +22,7 @@ const MultiFamilyOrders = props => {
   const [pitchValue, setPitchValue] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    uri: ''
+    data: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
@@ -39,7 +38,7 @@ const MultiFamilyOrders = props => {
             specialNotes,
             uploadDetails: {
               name: uploadDetails.name,
-              uri: encode(uploadDetails.uri)
+              data: uploadDetails.data
             },
             alternativeEmail,
             pitchValue,
@@ -136,8 +135,8 @@ const MultiFamilyOrders = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}

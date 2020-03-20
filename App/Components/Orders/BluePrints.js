@@ -10,7 +10,7 @@ const BluePrints = props => {
   const { onPress, blueprint } = props
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    uri: ''
+    data: ''
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
 
@@ -20,7 +20,7 @@ const BluePrints = props => {
       price: getPriceWithOutText(),
       uploadDetails: {
         name: uploadDetails.name,
-        uri: encode(uploadDetails.uri)
+        data: uploadDetails.data
       },
       alternativeEmail
     })
@@ -39,8 +39,8 @@ const BluePrints = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}

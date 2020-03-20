@@ -4,7 +4,6 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 import { uploadFile } from '../../Utils/UploadFile'
-import { encode } from 'base-64'
 
 const InstantSquareAndTrailReports = props => {
   const { type, onPress, TrailPrice } = props
@@ -16,7 +15,7 @@ const InstantSquareAndTrailReports = props => {
   const [deliveryType, setDeliveryType] = useState(null)
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    uri: ''
+    data: ''
   })
 
   const validate = () => {
@@ -37,7 +36,7 @@ const InstantSquareAndTrailReports = props => {
               alternativeEmail,
               uploadDetails: {
                 name: uploadDetails.name,
-                uri: encode(uploadDetails.uri)
+                data: uploadDetails.data
               }
             })
           : (errorMessage = 'Please Select Delivery')
@@ -145,8 +144,8 @@ const InstantSquareAndTrailReports = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}

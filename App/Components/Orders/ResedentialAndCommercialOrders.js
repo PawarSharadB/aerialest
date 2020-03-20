@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import { encode } from 'base-64'
-
 import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -24,7 +23,7 @@ const ResedentialAndCommercialOrders = props => {
   const [specialNotes, setSpecialNotes] = useState('')
   const [uploadDetails, setUploadDetails] = useState({
     name: 'No File Choosen',
-    uri: ''
+    data: ''
   })
   const [pitchValue, setPitchValue] = useState('')
   const [alternativeEmail, setAlternativeEmail] = useState('')
@@ -47,7 +46,7 @@ const ResedentialAndCommercialOrders = props => {
               specialNotes,
               uploadDetails: {
                 name: uploadDetails.name,
-                uri: encode(uploadDetails.uri)
+                data: uploadDetails.data
               },
               pitchValue,
               alternativeEmail
@@ -185,8 +184,8 @@ const ResedentialAndCommercialOrders = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}
