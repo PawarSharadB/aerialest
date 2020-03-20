@@ -40,11 +40,16 @@ target 'aerialest' do
 
   pod 'RNI18n', :path => '../node_modules/react-native-i18n'
 
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+
   target 'aerialestTests' do
     inherit! :search_paths
     # Pods for testing
   end
-
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'GoogleMaps'
+  pod 'Google-Maps-iOS-Utils'
   use_native_modules!
 end
 

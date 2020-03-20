@@ -5,15 +5,17 @@ import { NavigationActions, StackActions } from 'react-navigation'
 import Button from './Button'
 
 const PaymentSummary = props => {
-  const resetAction = StackActions.reset({
-    index: 0,
-    actions: [NavigationActions.navigate({ routeName: 'HomeScreen' })]
-  })
-
   const { order_id, message } = props.navigation.state.params.successData
   const goBackHome = () => {
-    const { navigation } = props
-    navigation.dispatch(resetAction)
+    props.navigation.dispatch(StackActions.popToTop())
+
+    const dispatcher = NavigationActions.navigate({
+      routeName: 'Home',
+      action: NavigationActions.navigate({
+        routeName: 'HomeScreen'
+      })
+    })
+    props.navigation.dispatch(dispatcher)
   }
   return (
     <CardView
