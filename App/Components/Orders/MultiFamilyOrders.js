@@ -33,7 +33,7 @@ const MultiFamilyOrders = props => {
     type
       ? buildings && buildings !== '0'
         ? onPress({
-            orderType: 'MultiFamily Orders',
+            orderType: 'MultiFamily',
             type: getType(),
             buildings,
             fileFormat,

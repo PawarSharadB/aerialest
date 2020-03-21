@@ -24,7 +24,6 @@ const PlaceOrder = props => {
   const latitude = state.params.region.latitude
   const longitude = state.params.region.longitude
   const geoAddress = state.params.address
-  debugger
   useEffect(() => {
     const { getPricesData, getProfile, clearProfile } = props
     getPricesData()
