@@ -62,7 +62,7 @@ const SelectAddress = props => {
   }
   const onPressNext = () => {
     const { navigation } = props
-    navigation.navigate('PlaceOrder', { region })
+    navigation.navigate('PlaceOrder', { region, address: state.params.address })
   }
   return (
     <View style={styles.container}>

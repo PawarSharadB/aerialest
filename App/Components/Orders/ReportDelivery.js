@@ -35,8 +35,9 @@ const ReportsDelivery = props => {
         <TextInput style={styles.specialNotes} onChangeText={text => {}} />
       </View>
       <UploadImage
-        onPress={() => {
-          console.log('Upload Image Button Pressed')
+        onPress={(response, error) => {
+          if (error === null) {
+          }
         }}
         title={uploadTitle}
         buttonTitle={'Choose File'}

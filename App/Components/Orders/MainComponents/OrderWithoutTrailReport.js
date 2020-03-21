@@ -192,8 +192,8 @@ const OrderWithOutTrailReport = props => {
             onPress={() => {
               uploadFile((response, error) => {
                 if (error === null) {
-                  const { name, uri } = response
-                  setUploadDetails({ name, uri })
+                  const { name, data } = response
+                  setUploadDetails({ name, data })
                 }
               })
             }}

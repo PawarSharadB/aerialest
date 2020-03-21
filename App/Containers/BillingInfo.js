@@ -46,7 +46,7 @@ const BillingInfo = props => {
   } = props
   let stateField = null
   const onNext = () => {
-    const { itemOptions, latitude, longitude } = state.params
+    const { itemOptions, latitude, longitude, geoAddress } = state.params
     const price = state.params.itemOptions.price
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
@@ -64,6 +64,7 @@ const BillingInfo = props => {
     const orderData = {
       price,
       itemOptions: [itemOptions, latitude, longitude],
+      geoAddress,
       billingAddress: {
         firstname: firstName,
         lastname: lastName,

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 import UploadImage from '../UploadImage'
 import { uploadFile } from '../../Utils/UploadFile'
-import { encode } from 'base-64'
 
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
@@ -27,19 +26,21 @@ const MultiFamilyOrders = props => {
   })
   const [alternativeEmail, setAlternativeEmail] = useState('')
   const [deliveryType, setDeliveryType] = useState(null)
+  const getType = () =>
+    type === 1 ? 'Instant Squares' : type === 2 ? 'Resedential' : 'Commercials'
   const validate = () => {
     let errorMessage = null
     type
       ? buildings && buildings !== '0'
         ? onPress({
-            orderType: 'MultiFamily Orders',
-            type,
+            orderType: 'MultiFamily',
+            type: getType(),
             buildings,
             fileFormat,
             specialNotes,
             uploadDetails: {
               name: uploadDetails.name,
-              uri: encode(uploadDetails.uri)
+              uri: uploadDetails.data
             },
             alternativeEmail,
             pitchValue,
@@ -136,8 +137,8 @@ const MultiFamilyOrders = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}

@@ -20,7 +20,7 @@ const BluePrints = props => {
       price: getPriceWithOutText(),
       uploadDetails: {
         name: uploadDetails.name,
-        uri: encode(uploadDetails.uri)
+        uri: uploadDetails.data
       },
       alternativeEmail
     })
@@ -39,8 +39,8 @@ const BluePrints = props => {
         onPress={() => {
           uploadFile((response, error) => {
             if (error === null) {
-              const { name, uri } = response
-              setUploadDetails({ name, uri })
+              const { name, data } = response
+              setUploadDetails({ name, data })
             }
           })
         }}
