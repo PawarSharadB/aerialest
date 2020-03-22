@@ -9,6 +9,8 @@ import { getPasswordData } from './password/Sagas'
 import { getPricesForPlaceOrder } from './PlaceOrder/Sagas'
 import { placeOrder } from './order/Sagas'
 import { getBillingInfo } from './BillingInfo/Saga'
+import { myOrders } from './MyOrders/Sagas'
+
 import * as ActionTypes from './ActionTypes'
 
 /* ------------- Types ------------- */
@@ -41,6 +43,8 @@ export default function* root() {
     takeLatest(ActionTypes.GET_PRICES_REQUEST, getPricesForPlaceOrder),
     takeLatest(ActionTypes.PLACE_ORDER_REQUEST, placeOrder),
     takeLatest(ActionTypes.BILLING_INFO_DROPDOWN_REQUEST, getBillingInfo),
+    takeLatest(ActionTypes.MY_ORDERS_REQUEST, myOrders),
+
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])

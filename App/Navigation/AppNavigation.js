@@ -28,6 +28,7 @@ import PromoCode from '../Containers/PromoCode'
 import PayPalView from '../Containers/PaypalIntegration'
 import PaypalSuccess from '../Containers/PaymentSuccess'
 import PaymentSummary from '../Components/PaymentSummary'
+import MyOrders from '../Containers/MyOrders'
 
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
@@ -130,6 +131,13 @@ const ProfileStack = createStackNavigator({
       getNavigationOptions(navigation, 'Profile')
   }
 })
+const MyOrdersStack = createStackNavigator({
+  MyOrders: {
+    screen: MyOrders,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'MyOrders')
+  }
+})
 const BillingInfoStack = createStackNavigator(
   {
     BillingInfo: {
@@ -203,6 +211,13 @@ const authNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Orders',
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
+      }
+    },
+    MyOrders: {
+      screen: MyOrdersStack,
+      navigationOptions: {
+        drawerLabel: 'My Orders',
+        drawerIcon: <Icon name="trophy" size={20} />
       }
     },
     ContactUs: {
