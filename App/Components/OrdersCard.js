@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { StyleSheet, View, Text, Linking } from 'react-native'
 
 import CardView from 'react-native-cardview'
-const url = 'https://google.com'
 const OrdersCard = props => {
   const { order_id, order_date, amount, status, geo_address, pdf } = props.items
 
