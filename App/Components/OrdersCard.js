@@ -4,10 +4,6 @@ import { StyleSheet, View, Text, Linking } from 'react-native'
 import CardView from 'react-native-cardview'
 const OrdersCard = props => {
   const { order_id, order_date, amount, status, geo_address, pdf } = props.items
-
-  useEffect(() => {
-    console.log('items')
-  })
   return (
     <View style={styles.cardView}>
       <CardView

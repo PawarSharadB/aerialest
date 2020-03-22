@@ -13,7 +13,6 @@ const MyOrders = props => {
   const { orders } = myOrder
   useEffect(() => {
     if (error) {
-      console.log('err', error)
       setResponseError(error)
       setTimeout(() => {
         setResponseError('')
@@ -28,7 +27,6 @@ const MyOrders = props => {
     orders()
   }, [])
   const renderOrders = e => {
-    console.log(e.item)
     return <OrdersCard items={e.item} />
   }
   return (
