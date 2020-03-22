@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Linking } from 'react-native'
 import I18n from '../I18n'
 
 import styles from './Styles/SingleOrderStyles'
@@ -37,9 +37,17 @@ const SingleOrder = props => {
         {FlatListItemSeparator()}
         <Text style={styles.subTitle}>{sub5}</Text>
         {FlatListItemSeparator()}
-        <Text style={styles.subTitle}>{pdftitle}</Text>
-        {FlatListItemSeparator()}
-        <Text style={styles.subTitle}>{pdfURL}</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            {
+              fontWeight: 'bold',
+              fontStyle: 'italic',
+              textDecorationLine: 'underline'
+            }
+          ]}
+          onPress={() => Linking.openURL(pdfURL)}
+        >{`Sample ${title} PDF`}</Text>
         {FlatListItemSeparator()}
         <Button
           text={I18n.t('order')}
