@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Linking } from 'react-native'
+import CardView from 'react-native-cardview'
+
 import I18n from '../I18n'
 
 import styles from './Styles/SingleOrderStyles'
@@ -22,8 +24,13 @@ const SingleOrder = props => {
     return <View style={styles.grayLine} />
   }
   return (
-    <View style={styles.mainView}>
-      <View style={styles.contentView}>
+    <View style={styles.cardView}>
+      <CardView
+        cardElevation={2}
+        cardMaxElevation={2}
+        cornerRadius={5}
+        style={styles.card}
+      >
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subTitle}>{`$${price}`}</Text>
         {FlatListItemSeparator()}
@@ -37,9 +44,17 @@ const SingleOrder = props => {
         {FlatListItemSeparator()}
         <Text style={styles.subTitle}>{sub5}</Text>
         {FlatListItemSeparator()}
-        <Text style={styles.subTitle}>{pdftitle}</Text>
-        {FlatListItemSeparator()}
-        <Text style={styles.subTitle}>{pdfURL}</Text>
+        <Text
+          style={[
+            styles.subTitle,
+            {
+              fontWeight: 'bold',
+              fontStyle: 'italic',
+              textDecorationLine: 'underline'
+            }
+          ]}
+          onPress={() => Linking.openURL(pdfURL)}
+        >{`Sample ${title} PDF`}</Text>
         {FlatListItemSeparator()}
         <Button
           text={I18n.t('order')}
@@ -48,7 +63,7 @@ const SingleOrder = props => {
           style={styles.commonButton}
           addShadow={true}
         />
-      </View>
+      </CardView>
     </View>
   )
 }

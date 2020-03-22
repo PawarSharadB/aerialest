@@ -1,12 +1,17 @@
 import { StyleSheet, Dimensions } from 'react-native'
-import { Fonts, Colors, Metrics } from '../../Themes/'
+import { Fonts } from '../../Themes/'
 const { style: fontStyles } = Fonts
 
 let ScreenHeight = Dimensions.get('window').height
 
 export default StyleSheet.create({
-  mainView: {
-    flex: 1
+  cardView: {
+    marginTop: 5,
+    marginHorizontal: 10
+  },
+  card: {
+    backgroundColor: '#DCDCDC',
+    padding: 10
   },
   contentView: {
     flex: 1,
