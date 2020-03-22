@@ -5,7 +5,7 @@ import { TextField } from 'react-native-material-textfield'
 import I18n from '../I18n'
 import Button from '../Components/Button'
 import AlertCard from '../Components/AlertCard'
-import { UIActivityIndicator } from 'react-native-indicators'
+import { UIActivityIndicator, MaterialIndicator } from 'react-native-indicators'
 import { checkPatternWithExpressionAndString } from '../Utils/validateBillingDetails'
 import {
   getBillingInfoDropDown,
@@ -93,14 +93,18 @@ const BillingInfoSlideMenu = props => {
   }, [])
   useEffect(() => {
     if (successData) {
+      const regionMain = props.getData.region
+      const { region, region_id } = regionMain
+        ? regionMain
+        : { region: '', region_id: '' }
+      const { street } = props.getData
+      const streetUpdated = street ? street[0] : ''
       const {
         firstname,
         lastname,
         email,
-        region: { region, region_id },
         postcode,
         telephone,
-        street,
         country_id,
         company,
         city
@@ -112,7 +116,7 @@ const BillingInfoSlideMenu = props => {
       setRegionId(region_id)
       setZipCode(postcode)
       setTelephone(telephone)
-      setStreet(street[0])
+      setStreet(streetUpdated)
       setCountry(country_id)
       setCompany(company)
       setCity(city)
@@ -121,7 +125,7 @@ const BillingInfoSlideMenu = props => {
       lastNameField.setValue(lastname)
       emailField.setValue(email)
       companyField.setValue(company)
-      addressField.setValue(street[0])
+      addressField.setValue(streetUpdated)
       cityField.setValue(city)
       stateField.setValue(region)
     }
@@ -164,6 +168,7 @@ const BillingInfoSlideMenu = props => {
               error={firstName ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('lastName')}
               ref={ref => (lastNameField = ref)}
               value={lastName}
@@ -174,6 +179,7 @@ const BillingInfoSlideMenu = props => {
               error={lastName ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('email')}
               ref={ref => (emailField = ref)}
               value={email}
@@ -184,6 +190,7 @@ const BillingInfoSlideMenu = props => {
               error={email ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('company')}
               ref={ref => (companyField = ref)}
               value={company}
@@ -194,6 +201,7 @@ const BillingInfoSlideMenu = props => {
               error={company ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('address')}
               ref={ref => (addressField = ref)}
               value={street}
@@ -204,6 +212,7 @@ const BillingInfoSlideMenu = props => {
               error={street ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('city')}
               ref={ref => (cityField = ref)}
               value={city}
@@ -242,6 +251,7 @@ const BillingInfoSlideMenu = props => {
               />
             ) : (
               <TextField
+                editable={false}
                 label={I18n.t('state')}
                 ref={ref => (stateField = ref)}
                 value={region}
@@ -253,6 +263,7 @@ const BillingInfoSlideMenu = props => {
               />
             )}
             <TextField
+              editable={false}
               label={I18n.t('zipCode')}
               ref={ref => (zipCodeField = ref)}
               value={zipCode}
@@ -263,6 +274,7 @@ const BillingInfoSlideMenu = props => {
               error={zipCode ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('telephone')}
               ref={ref => (telephoneField = ref)}
               value={telephone}
@@ -273,6 +285,7 @@ const BillingInfoSlideMenu = props => {
               error={telephone ? '' : inputError}
             />
             <TextField
+              editable={false}
               label={I18n.t('fax')}
               ref={ref => (faxField = ref)}
               value={fax}
@@ -295,11 +308,11 @@ const BillingInfoSlideMenu = props => {
           </View>
         </ScrollView>
       )}
-      {errorGetData && (
+      {isLoadingGetData && (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Text>Please Login to add BillingInfo</Text>
+          <MaterialIndicator animating={true} size={50} color={'#0485B2'} />
         </View>
       )}
     </View>

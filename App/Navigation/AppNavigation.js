@@ -118,32 +118,6 @@ const OrdersStack = createStackNavigator(
       screen: PromoCode,
       navigationOptions: ({ navigation }) =>
         getNavigationOptions(navigation, 'Promocode', (showOrder = false))
-    }
-  },
-  {
-    initialRouteName: 'SearchAddress'
-  }
-)
-const ProfileStack = createStackNavigator({
-  Profile: {
-    screen: Profile,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'Profile')
-  }
-})
-const MyOrdersStack = createStackNavigator({
-  MyOrders: {
-    screen: MyOrders,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'My Orders')
-  }
-})
-const BillingInfoStack = createStackNavigator(
-  {
-    BillingInfoSlideMenu: {
-      screen: BillingInfoSlideMenu,
-      navigationOptions: ({ navigation }) =>
-        getNavigationOptions(navigation, 'Billing Details', (showOrder = false))
     },
     BillingInfo: {
       screen: BillingInfo,
@@ -166,9 +140,23 @@ const BillingInfoStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'BillingInfoSlideMenu'
+    initialRouteName: 'SearchAddress'
   }
 )
+const ProfileStack = createStackNavigator({
+  Profile: {
+    screen: Profile,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'Profile')
+  }
+})
+const MyOrdersStack = createStackNavigator({
+  MyOrders: {
+    screen: MyOrders,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'My Orders')
+  }
+})
 const RegisterStack = createStackNavigator({
   RegisterInfo: {
     screen: Register,
@@ -186,6 +174,13 @@ const LoginStack = createStackNavigator({
     screen: ForgotPassword,
     navigationOptions: ({ navigation }) =>
       getNavigationOptionsWithBackButton(navigation, 'Reset Password')
+  }
+})
+const BillingInfoSlideMenuStack = createStackNavigator({
+  BillingInfoSlideMenu: {
+    screen: BillingInfoSlideMenu,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'Billing Info')
   }
 })
 const authNavigator = createDrawerNavigator(
@@ -218,6 +213,13 @@ const authNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },
+    BilligInfo: {
+      screen: BillingInfoSlideMenuStack,
+      navigationOptions: {
+        drawerLabel: 'Billing Info',
+        drawerIcon: <Icon name="gear" size={20} />
+      }
+    },
     MyOrders: {
       screen: MyOrdersStack,
       navigationOptions: {
@@ -232,18 +234,10 @@ const authNavigator = createDrawerNavigator(
         drawerIcon: <Icon name="envelope" size={20} />
       }
     },
-
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
         drawerLabel: 'Profile',
-        drawerIcon: <Icon name="gear" size={20} />
-      }
-    },
-    BilligInfo: {
-      screen: BillingInfoStack,
-      navigationOptions: {
-        drawerLabel: 'Billing Info',
         drawerIcon: <Icon name="gear" size={20} />
       }
     },
@@ -287,13 +281,6 @@ const nonAuthNavigator = createDrawerNavigator(
       navigationOptions: {
         drawerLabel: 'Orders',
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
-      }
-    },
-    BilligInfo: {
-      screen: BillingInfoStack,
-      navigationOptions: {
-        drawerLabel: 'Billing Info',
-        drawerIcon: <Icon name="gear" size={20} />
       }
     },
     ContactUs: {
