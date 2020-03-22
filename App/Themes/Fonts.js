@@ -2,7 +2,7 @@ const type = {
   base: 'Avenir-Book',
   bold: 'Avenir-Black',
   emphasis: 'HelveticaNeue-Italic',
-  natoSans: 'NotoSans-Regular'
+  natoSans: 'HelveticaNeue'
 }
 const raleWay = {
   regular: 'Raleway-Regular',

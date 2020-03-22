@@ -17,7 +17,8 @@ export const reducers = combineReducers({
   placeOrder: require('../Sagas/PlaceOrder/Reducers').reducer,
   order: require('../Sagas/order/Reducer').reducer,
   billingInfo: require('../Sagas/BillingInfo/Reducer').reducer,
-  myOrders: require('../Sagas/MyOrders/Reducer').reducer
+  myOrders: require('../Sagas/MyOrders/Reducer').reducer,
+  pricing: require('../Sagas/Pricing/Reducer').reducer
 })
 
 export default () => {
