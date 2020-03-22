@@ -1,28 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView, View, FlatList, StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { UIActivityIndicator } from 'react-native-indicators'
+import AlertCard from '../Components/AlertCard'
 import { myOrdersRequest } from '../Sagas/MyOrders/Actions'
 import OrdersCard from '../Components/OrdersCard'
-
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item'
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item'
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item'
-  }
-]
 
 const MyOrders = props => {
   const [responseError, setResponseError] = useState(null)
 
-  const { success, error, myOrder } = props
+  const { isFetching, success, error, myOrder } = props
   const { orders } = myOrder
   useEffect(() => {
     if (error) {
@@ -33,7 +20,7 @@ const MyOrders = props => {
       }, 3000)
     }
     if (success) {
-      console.log('myorder', myOrder)
+      setResponseError('')
     }
   }, [success, error])
   useEffect(() => {
@@ -46,6 +33,12 @@ const MyOrders = props => {
   }
   return (
     <SafeAreaView style={styles.container}>
+      {responseError ? <AlertCard message={responseError} /> : null}
+      {isFetching && (
+        <View>
+          <UIActivityIndicator />
+        </View>
+      )}
       <FlatList
         data={orders}
         renderItem={renderOrders}
@@ -76,7 +69,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(MyOrders)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 10
+    marginTop: 20
   },
   item: {
     backgroundColor: '#f9c2ff',
