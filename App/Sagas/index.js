@@ -8,9 +8,9 @@ import { getProfileData, updateProfileData } from './profile/Sagas'
 import { getPasswordData } from './password/Sagas'
 import { getPricesForPlaceOrder } from './PlaceOrder/Sagas'
 import { placeOrder } from './order/Sagas'
-import { getBillingInfo } from './BillingInfo/Saga'
+import { getBillingInfo, getBillingInfoData } from './BillingInfo/Saga'
 import { myOrders } from './MyOrders/Sagas'
-
+import { getPricing } from './Pricing/Saga'
 import * as ActionTypes from './ActionTypes'
 
 /* ------------- Types ------------- */
@@ -44,7 +44,8 @@ export default function* root() {
     takeLatest(ActionTypes.PLACE_ORDER_REQUEST, placeOrder),
     takeLatest(ActionTypes.BILLING_INFO_DROPDOWN_REQUEST, getBillingInfo),
     takeLatest(ActionTypes.MY_ORDERS_REQUEST, myOrders),
-
+    takeLatest(ActionTypes.BILLING_INFO_DATA_REQUEST, getBillingInfoData),
+    takeLatest(ActionTypes.GET_PRICING_REQUEST, getPricing),
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
   ])

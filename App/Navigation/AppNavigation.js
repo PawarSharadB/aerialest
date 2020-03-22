@@ -29,7 +29,7 @@ import PayPalView from '../Containers/PaypalIntegration'
 import PaypalSuccess from '../Containers/PaymentSuccess'
 import PaymentSummary from '../Components/PaymentSummary'
 import MyOrders from '../Containers/MyOrders'
-
+import BillingInfoSlideMenu from '../Containers/BillingInfoSlideMenu'
 import { View } from 'react-native'
 const getNavigationOptions = (navigation, title, showOrder = true) => ({
   title,
@@ -140,6 +140,11 @@ const MyOrdersStack = createStackNavigator({
 })
 const BillingInfoStack = createStackNavigator(
   {
+    BillingInfoSlideMenu: {
+      screen: BillingInfoSlideMenu,
+      navigationOptions: ({ navigation }) =>
+        getNavigationOptions(navigation, 'Billing Details', (showOrder = false))
+    },
     BillingInfo: {
       screen: BillingInfo,
       navigationOptions: ({ navigation }) =>
@@ -161,7 +166,7 @@ const BillingInfoStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'BillingInfo'
+    initialRouteName: 'BillingInfoSlideMenu'
   }
 )
 const RegisterStack = createStackNavigator({
