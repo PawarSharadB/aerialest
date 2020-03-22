@@ -135,7 +135,7 @@ const MyOrdersStack = createStackNavigator({
   MyOrders: {
     screen: MyOrders,
     navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'MyOrders')
+      getNavigationOptions(navigation, 'My Orders')
   }
 })
 const BillingInfoStack = createStackNavigator(
