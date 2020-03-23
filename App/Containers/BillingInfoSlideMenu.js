@@ -130,6 +130,7 @@ const BillingInfoSlideMenu = props => {
       stateField.setValue(region)
     }
     if (errorGetData) {
+      console.log(error)
     }
   }, [isLoadingGetData, errorGetData])
   const parseDropDownData = () => {
@@ -295,16 +296,16 @@ const BillingInfoSlideMenu = props => {
               }}
               error={fax ? '' : inputError}
             />
-            <View style={styles.buttonsContainer}>
-              <Button
-                disabled={true}
-                text={I18n.t('next')}
-                onPress={onNext}
-                textStyle={styles.commonTextStyle}
-                style={styles.commonButton}
-                addShadow={true}
-              />
-            </View>
+            {/* <View style={styles.buttonsContainer}>
+                <Button
+                  disabled={true}
+                  text={I18n.t('next')}
+                  onPress={onNext}
+                  textStyle={styles.commonTextStyle}
+                  style={styles.commonButton}
+                  addShadow={true}
+                />
+              </View> */}
           </View>
         </ScrollView>
       )}
