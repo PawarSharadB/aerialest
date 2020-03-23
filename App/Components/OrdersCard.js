@@ -34,7 +34,7 @@ const OrdersCard = props => {
           <Text style={styles.text}>{status.value}</Text>
           <Text style={styles.label}>{pdf.label}</Text>
           {pdf.value !== '' ? (
-            <Text onPress={() => Linking.openURL(pdf.value)}>
+            <Text style={styles.pdf} onPress={() => Linking.openURL(pdf.value)}>
               View Orders Pdf
             </Text>
           ) : (
@@ -64,5 +64,10 @@ const styles = StyleSheet.create({
   text: {
     paddingVertical: 2,
     fontSize: 14
+  },
+  pdf: {
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    textDecorationLine: 'underline'
   }
 })
