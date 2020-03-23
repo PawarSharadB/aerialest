@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, ScrollView } from 'react-native'
+import { View, FlatList, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
-import { pricingData } from '../Assets/pricingData'
+import { UIActivityIndicator } from 'react-native-indicators'
+
 import { getPrices } from '../Sagas/Pricing/Actions'
 import SingleOrder from '../Components/SingleOrder'
 import styles from './Styles/PricingStyles'
@@ -65,11 +66,17 @@ const Pricing = props => {
   }
   return (
     <ScrollView style={styles.container}>
+      {isLoading && (
+        <View>
+          <UIActivityIndicator />
+        </View>
+      )}
       <FlatList
         data={listData}
         ItemSeparatorComponent={FlatListItemSeparator}
         renderItem={({ item }) => getOrders(item)}
         keyExtractor={item => item.price}
+        contentContainerStyle={{ paddingBottom: 15 }}
       />
     </ScrollView>
   )
