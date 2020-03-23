@@ -41,6 +41,7 @@ const MyOrders = props => {
         data={orders}
         renderItem={renderOrders}
         keyExtractor={item => item.order_id.value}
+        contentContainerStyle={{ paddingBottom: 15 }}
       />
     </SafeAreaView>
   )

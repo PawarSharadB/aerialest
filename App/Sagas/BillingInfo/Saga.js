@@ -32,7 +32,6 @@ export function* getBillingInfo() {
 export function* getBillingInfoData() {
   try {
     const token = yield AsyncStorage.getItem('token')
-    debugger
     const response = yield billingInfoSevice(JSON.parse(token))
     const jsonData = yield response.json()
     yield put(billingInfoDataSuccess(jsonData))
