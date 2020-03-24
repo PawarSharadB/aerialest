@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Dimensions, PermissionsAndroid } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  PermissionsAndroid,
+  Alert
+} from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from 'react-native-maps'
 import Button from '../Components/Button'
@@ -41,6 +47,7 @@ const SelectAddress = props => {
       const positionCallback = position => {
         const { latitude, longitude } = position.coords
         setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
+        setMarkerRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
         if (mapRef !== null) {
           mapRef.animateCamera({ center: { latitude, longitude } })
         }
@@ -86,16 +93,19 @@ const SelectAddress = props => {
         onMapReady={onMapReady}
         showsUserLocation={true}
         allowScrollGesturesDuringRotateOrZoom={false}
-        onMarkerDragStart={region => setRegion(region)}
-        onRegionChangeComplete={region => {
-          setRegion(prevRegion => ({
-            ...prevRegion,
-            latitude: region.latitude,
-            longitude: region.longitude
-          }))
-        }}
       >
-        <Marker coordinate={region} draggable />
+        <Marker
+          draggable
+          coordinate={region}
+          onDragEnd={e => {
+            const { latitude, longitude } = e.nativeEvent.coordinate
+            setRegion(prevRegion => ({
+              ...prevRegion,
+              latitude,
+              longitude
+            }))
+          }}
+        />
       </MapView>
       <View style={styles.locationButton}>
         <Icon

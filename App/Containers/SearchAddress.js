@@ -36,7 +36,7 @@ const SearchAddress = props => {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421
         }
-        setRegion(region)
+        setRegion(getInitialRegionForMap().region)
         navigation.navigate('Orders', { region, address })
       })
       .catch(error => {
@@ -58,8 +58,8 @@ const SearchAddress = props => {
     Geocoder.from(latitude, longitude)
       .then(json => {
         let address = json.results[1].formatted_address
-        setRegion(region => ({ ...region, place: address }))
         navigation.navigate('Orders', { region, address })
+        setRegion(getInitialRegionForMap().region)
       })
       .catch(error => {
         console.log(error)

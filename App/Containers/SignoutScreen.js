@@ -13,7 +13,7 @@ export const SignoutScreen = props => {
   }, [])
   const clear = async () => {
     await AsyncStorage.clear()
-    props.navigation.navigate('Starter')
+    props.navigation.navigate('App')
   }
   return <View />
 }
