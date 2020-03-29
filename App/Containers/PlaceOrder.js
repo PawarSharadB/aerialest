@@ -48,7 +48,7 @@ const PlaceOrder = props => {
     // Form Data object
     if (isGoToOrderScreen !== null) {
       if (isGoToOrderScreen) {
-        const billingAddress = profile.addresses[1]
+        const billingAddress = profile.addresses[0]
         const {
           firstname,
           lastname,
@@ -56,7 +56,8 @@ const PlaceOrder = props => {
           city,
           country_id,
           postcode,
-          telephone
+          telephone,
+          region_id
         } = billingAddress
         const email = profile.email ? profile.email : ''
         const orderData = {
@@ -71,7 +72,8 @@ const PlaceOrder = props => {
             city,
             country_id,
             postcode,
-            telephone
+            telephone,
+            region_id
           },
           currency: 'USD'
         }
