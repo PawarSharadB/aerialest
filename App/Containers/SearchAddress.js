@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { KeyboardAvoidingView, ScrollView } from 'react-native'
 
 import Geocoder from 'react-native-geocoding'
@@ -13,18 +13,22 @@ import { getInitialRegionForMap } from '../Utils/getInitialRegionForMap'
 const SearchAddress = props => {
   const { navigation } = props
   const [region, setRegion] = useState(getInitialRegionForMap().region)
+  const [place, setPlace] = useState('')
   const [errorSearchPlace, setSearchPlaceError] = useState('')
   const [errorlatitude, setLatitudeError] = useState('')
   const [errorLongitude, setLongitudeError] = useState('')
+  const placeRef = useRef(null)
+  const latRef = useRef(null)
+  const lngRef = useRef(null)
 
   const searchKeyWord = () => {
     const { navigation } = props
-    if (region.place === '') {
+    if (place === '') {
       setSearchPlaceError('Please Enter Valid Place To Search')
       return
     }
     Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
-    Geocoder.from(region.place)
+    Geocoder.from(place)
       .then(json => {
         const { formatted_address: address, geometry } = json.results[0]
         let location = geometry.location
@@ -37,6 +41,8 @@ const SearchAddress = props => {
           longitudeDelta: 0.0421
         }
         setRegion(region)
+        setPlace('')
+        placeRef.current.clear()
         navigation.navigate('Orders', { region, address })
       })
       .catch(error => {
@@ -58,8 +64,11 @@ const SearchAddress = props => {
     Geocoder.from(latitude, longitude)
       .then(json => {
         let address = json.results[1].formatted_address
+        const regionCopy = region
         setRegion(region => ({ ...region, place: address }))
-        navigation.navigate('Orders', { region, address })
+        latRef.current.clear()
+        lngRef.current.clear()
+        navigation.navigate('Orders', { region: regionCopy, address })
       })
       .catch(error => {
         console.log(error)
@@ -86,12 +95,13 @@ const SearchAddress = props => {
         </ParsedText>
         <CardView style={styles.cardView}>
           <TextField
+            ref={placeRef}
             placeholder="Enter a location"
-            onChangeText={text => {
+            onChangeText={place => {
               setSearchPlaceError('')
-              setRegion(region => ({ ...region, place: text }))
+              setPlace(place)
             }}
-            value={region.place}
+            value={place}
             error={errorSearchPlace}
           />
           <Button
@@ -104,6 +114,7 @@ const SearchAddress = props => {
         </CardView>
         <CardView style={styles.cardView}>
           <TextField
+            ref={latRef}
             keyboardType="numbers-and-punctuation"
             placeholder="Latitude"
             value={region.latitude === 0.0 ? '' : `${region.latitude}`}
@@ -117,6 +128,7 @@ const SearchAddress = props => {
             error={errorlatitude}
           />
           <TextField
+            ref={lngRef}
             keyboardType="numbers-and-punctuation"
             placeholder="Longitude"
             value={region.longitude === 0.0 ? '' : `${region.longitude}`}
