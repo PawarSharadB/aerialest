@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, View, Dimensions, PermissionsAndroid } from 'react-native'
 import Geolocation from '@react-native-community/geolocation'
 import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from 'react-native-maps'
@@ -23,6 +23,8 @@ const SelectAddress = props => {
     latitudeDelta: LATITUDE_DELTA,
     longitudeDelta: LONGITUDE_DELTA
   }
+  const map = useRef(null)
+  let mapRefq = null
   const [region, setRegion] = useState(regionData)
   const [marginBottom, setMarginBottom] = useState(1)
   const [mapRef, setMapRef] = useState(null)
@@ -60,6 +62,17 @@ const SelectAddress = props => {
       )
     }
   }
+  const onDragEndHandle = e => {
+    const { latitudeDelta, longitudeDelta } = mapRefq.__lastRegion
+    const { latitude, longitude } = e.nativeEvent.coordinate
+    setRegion(prevRegion => ({
+      ...prevRegion,
+      latitude,
+      longitude,
+      latitudeDelta,
+      longitudeDelta
+    }))
+  }
   const onPressNext = () => {
     const { navigation } = props
     navigation.navigate('PlaceOrder', { region, address: state.params.address })
@@ -67,6 +80,31 @@ const SelectAddress = props => {
   return (
     <View style={styles.container}>
       <MapView
+        ref={ref => (mapRefq = ref)}
+        style={[styles.map, { marginBottom: marginBottom }]}
+        region={region}
+        initialRegion={region}
+        provider={PROVIDER_GOOGLE}
+        mapType={mapType}
+        zoomEnabled={true}
+        rotateEnabled={true}
+        loadingEnabled={true}
+        zoomTapEnabled={true}
+        minZoomLevel={10}
+        onMapReady={onMapReady}
+        zoomControlEnabled={true}
+        allowScrollGesturesDuringRotateOrZoom={true}
+        // onMarkerDragStart={onDragEndHandle}
+      >
+        <Marker
+          key={'i29'}
+          draggable
+          onDragEnd={onDragEndHandle}
+          //title={'You are here'}
+          coordinate={region}
+        />
+      </MapView>
+      {/* <MapView
         ref={ref => {
           setMapRef(ref)
         }}
@@ -96,7 +134,7 @@ const SelectAddress = props => {
         }}
       >
         <Marker coordinate={region} draggable />
-      </MapView>
+      </MapView> */}
       <View style={styles.locationButton}>
         <Icon
           size={30}

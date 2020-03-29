@@ -63,8 +63,7 @@ const BillingInfo = props => {
     })
     const orderData = {
       price,
-      itemOptions: [itemOptions, latitude, longitude],
-      geoAddress,
+      itemOptions: [itemOptions, geoAddress, latitude, longitude],
       billingAddress: {
         firstname: firstName,
         lastname: lastName,
