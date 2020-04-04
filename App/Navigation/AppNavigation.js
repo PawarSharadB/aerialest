@@ -152,7 +152,9 @@ const ProfileStack = createStackNavigator({
 })
 const MyOrdersStack = createStackNavigator({
   MyOrders: {
-    screen: MyOrders
+    screen: MyOrders,
+    navigationOptions: ({ navigation }) =>
+      getNavigationOptions(navigation, 'MyOrders')
   }
 })
 const RegisterStack = createStackNavigator({
