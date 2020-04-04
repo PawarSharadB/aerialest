@@ -13,7 +13,7 @@ const LONGITUDE = -122.4324
 const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
-const SelectAddress = props => {
+const SelectAddress = (props) => {
   const {
     navigation: { state }
   } = props
@@ -29,9 +29,9 @@ const SelectAddress = props => {
   const [marginBottom, setMarginBottom] = useState(1)
   const [mapRef, setMapRef] = useState(null)
   const [mapType, setMapType] = useState(MAP_TYPES.SATELLITE)
-  const onMapPress = e => {
+  const onMapPress = (e) => {
     const { latitude, longitude } = e.nativeEvent.coordinate
-    setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
+    setRegion((prevRegion) => ({ ...prevRegion, latitude, longitude }))
   }
 
   const onMapReady = () => {
@@ -40,14 +40,14 @@ const SelectAddress = props => {
   const onPressMyLocation = async () => {
     const granted = await geoPermissions()
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const positionCallback = position => {
+      const positionCallback = (position) => {
         const { latitude, longitude } = position.coords
-        setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
+        setRegion((prevRegion) => ({ ...prevRegion, latitude, longitude }))
         if (mapRef !== null) {
           mapRef.animateCamera({ center: { latitude, longitude } })
         }
       }
-      const errorCallback = error => {
+      const errorCallback = (error) => {
         console.log(error)
       }
       const extraParams = {
@@ -62,10 +62,10 @@ const SelectAddress = props => {
       )
     }
   }
-  const onDragEndHandle = e => {
+  const onDragEndHandle = (e) => {
     const { latitudeDelta, longitudeDelta } = mapRefq.__lastRegion
     const { latitude, longitude } = e.nativeEvent.coordinate
-    setRegion(prevRegion => ({
+    setRegion((prevRegion) => ({
       ...prevRegion,
       latitude,
       longitude,
@@ -75,12 +75,12 @@ const SelectAddress = props => {
   }
   const onPressNext = () => {
     const { navigation } = props
-    navigation.navigate('PlaceOrder', { region, address: state.params.address })
+    navigation.push('PlaceOrder', { region, address: state.params.address })
   }
   return (
     <View style={styles.container}>
       <MapView
-        ref={ref => (mapRefq = ref)}
+        ref={(ref) => (mapRefq = ref)}
         style={[styles.map, { marginBottom: marginBottom }]}
         region={region}
         initialRegion={region}
@@ -104,37 +104,6 @@ const SelectAddress = props => {
           coordinate={region}
         />
       </MapView>
-      {/* <MapView
-        ref={ref => {
-          setMapRef(ref)
-        }}
-        showsMyLocationButton={false}
-        loadingEnabled={true}
-        style={[styles.map, { marginBottom: marginBottom }]}
-        provider={PROVIDER_GOOGLE}
-        mapType={mapType}
-        initialRegion={region}
-        zoomEnabled={true}
-        minZoomLevel={15}
-        zoomTapEnabled={true}
-        zoomControlEnabled={true}
-        onPress={onMapPress}
-        rotateEnabled={true}
-        scrollEnabled={true}
-        onMapReady={onMapReady}
-        showsUserLocation={true}
-        allowScrollGesturesDuringRotateOrZoom={false}
-        onMarkerDragStart={region => setRegion(region)}
-        onRegionChangeComplete={region => {
-          setRegion(prevRegion => ({
-            ...prevRegion,
-            latitude: region.latitude,
-            longitude: region.longitude
-          }))
-        }}
-      >
-        <Marker coordinate={region} draggable />
-      </MapView> */}
       <View style={styles.locationButton}>
         <Icon
           size={30}

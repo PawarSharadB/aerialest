@@ -5,14 +5,14 @@ import { Title } from '../Components/Home/HeaderAndTitleComponents'
 import { Header } from '../Components/Home/HeaderAndTitleComponents'
 const aboutUsPage = require('../Utils/Resources.json').aboutUsPage
 
-const AboutUs = props => {
+const AboutUs = (props) => {
   const dataSource = [
     {
       title: '',
       sectionIndex: 0,
       data: [
         {
-          image: Images.carouselOne
+          image: Images.aboutUsImage
         }
       ]
     },
@@ -35,14 +35,19 @@ const AboutUs = props => {
       ]
     }
   ]
-  const renderItem = data => {
+  const renderItem = (data) => {
     const {
       item,
       index,
       section: { sectionIndex }
     } = data
     if (sectionIndex == 0) {
-      return <Image style={{ width: '100%' }} source={Images.carouselOne} />
+      return (
+        <Image
+          style={{ width: '100%', resizeMode: 'stretch' }}
+          source={Images.aboutUsImage}
+        />
+      )
     } else {
       const { text } = item
       return <Title title={text} style={{ paddingVertical: 10 }} />
@@ -59,7 +64,7 @@ const AboutUs = props => {
     <SectionList
       sections={dataSource}
       keyExtractor={(item, index) => index}
-      renderItem={data => renderItem(data)}
+      renderItem={(data) => renderItem(data)}
       renderSectionHeader={renderSectionHeader}
     />
   )

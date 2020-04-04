@@ -152,9 +152,7 @@ const ProfileStack = createStackNavigator({
 })
 const MyOrdersStack = createStackNavigator({
   MyOrders: {
-    screen: MyOrders,
-    navigationOptions: ({ navigation }) =>
-      getNavigationOptions(navigation, 'My Orders')
+    screen: MyOrders
   }
 })
 const RegisterStack = createStackNavigator({
@@ -209,7 +207,7 @@ const authNavigator = createDrawerNavigator(
     OrdersStack: {
       screen: OrdersStack,
       navigationOptions: {
-        drawerLabel: 'Orders',
+        drawerLabel: 'Order',
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },
@@ -279,7 +277,7 @@ const nonAuthNavigator = createDrawerNavigator(
     OrdersStack: {
       screen: OrdersStack,
       navigationOptions: {
-        drawerLabel: 'Orders',
+        drawerLabel: 'Order',
         drawerIcon: <Icon name="thumbs-o-up" size={20} />
       }
     },

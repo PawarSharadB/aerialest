@@ -9,6 +9,9 @@ export default NabvBar = props => {
   return (
     <View style={sytles.mainView}>
       <TouchableOpacity
+        style={{
+          width: 40
+        }}
         onPress={() => {
           toggleDrawer()
         }}
