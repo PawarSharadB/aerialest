@@ -6,7 +6,7 @@ import { uploadFile } from '../../Utils/UploadFile'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
-const MultiFamilyOrders = props => {
+const MultiFamilyOrders = (props) => {
   const {
     onPress,
     multifamily_instant_squares,
@@ -62,7 +62,9 @@ const MultiFamilyOrders = props => {
     const filePrice = fileFormat
       ? fileFormat === 1
         ? fileformat_xml
-        : fileformat_esx
+        : fileFormat === 2
+        ? fileformat_esx
+        : 0
       : 0
     return buildings
       ? parseInt(buildings) * (parseInt(multiFamilyPrice) + parseInt(filePrice))
@@ -104,7 +106,7 @@ const MultiFamilyOrders = props => {
       <TextInput
         style={[styles.enterValue, styles.commonMarginTop]}
         value={buildings}
-        onChangeText={value => setBuildings(value)}
+        onChangeText={(value) => setBuildings(value)}
         keyboardType={'number-pad'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>File Format</Text>
@@ -121,13 +123,19 @@ const MultiFamilyOrders = props => {
           type={'Circle'}
           title="ESX"
         />
+        <SelectionWithText
+          onSelect={() => setFileFormat(3)}
+          isSelected={fileFormat === 3}
+          type={'Circle'}
+          title="None"
+        />
       </View>
       <View>
         <Text style={styles.heading}>Special Notes</Text>
         <TextInput
           value={specialNotes}
           style={styles.specialNotes}
-          onChangeText={text => {
+          onChangeText={(text) => {
             setSpecialNotes(text)
           }}
         />
@@ -151,7 +159,7 @@ const MultiFamilyOrders = props => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={pitchValue}
-        onChangeText={value => {
+        onChangeText={(value) => {
           setPitchValue(value)
         }}
       />
@@ -161,7 +169,7 @@ const MultiFamilyOrders = props => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={alternativeEmail}
-        onChangeText={value => {
+        onChangeText={(value) => {
           setAlternativeEmail(value)
         }}
       />

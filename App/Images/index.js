@@ -1,8 +1,9 @@
 export default Images = {
   menu: require('./menu.png'),
-  carouselOne: require('./Home/1.jpeg'),
-  carouselTwo: require('./Home/2.jpeg'),
-  carouselThree: require('./Home/3.jpeg'),
+  carouselOne: require('./Home/1.jpg'),
+  carouselTwo: require('./Home/s2.jpg'),
+  carouselThree: require('./Home/s3.jpg'),
+  aboutUsImage: require('./Home/Aerial_Estimation_18-05.png'),
   sun: require('./Home/sun.png'),
   select: require('./Contact/selected.png'),
   unSelect: require('./Contact/unSelected.png'),

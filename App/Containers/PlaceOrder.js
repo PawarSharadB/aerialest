@@ -7,7 +7,7 @@ import OrderWithoutTrailReport from '../Components/Orders/MainComponents/OrderWi
 import { getPricesRequest } from '../Sagas/PlaceOrder/Actions'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { profileRequest, clearProfile } from '../Sagas/profile/Actions'
-const PlaceOrder = props => {
+const PlaceOrder = (props) => {
   const {
     isLoading,
     data,
@@ -42,7 +42,7 @@ const PlaceOrder = props => {
       )
     }
   }, [success, errorProfile])
-  const placeOrder = e => {
+  const placeOrder = (e) => {
     const itemOptions = e
     const { navigation } = props
     // Form Data object
@@ -77,11 +77,11 @@ const PlaceOrder = props => {
           },
           currency: 'USD'
         }
-        navigation.navigate('ChoosePayment', {
+        navigation.push('ChoosePayment', {
           orderData
         })
       } else {
-        navigation.navigate('BillingInfo', {
+        navigation.push('BillingInfo', {
           itemOptions,
           geoAddress,
           latitude: `${latitude}`,
@@ -125,7 +125,7 @@ const PlaceOrder = props => {
           <SelectionWithText
             isSelected={isTrailReport}
             type="square"
-            onSelect={() => toggleTrailReport(prevResult => !prevResult)}
+            onSelect={() => toggleTrailReport((prevResult) => !prevResult)}
             title={'Trial Report'}
           />
           {isTrailReport && (
@@ -162,7 +162,7 @@ const mapStateToProps = ({ placeOrder, profileInfo }) => {
     errorProfile
   }
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getProfile: () => {
     dispatch(profileRequest())
   },
