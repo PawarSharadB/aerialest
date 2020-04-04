@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { View } from 'react-native'
 import { reset } from '../Sagas/login/Actions'
 
-export const SignoutScreen = props => {
+export const SignoutScreen = (props) => {
   useEffect(() => {
     const { reset } = props
     clear()
@@ -13,11 +13,11 @@ export const SignoutScreen = props => {
   }, [])
   const clear = async () => {
     await AsyncStorage.clear()
-    props.navigation.navigate('Starter')
+    props.navigation.navigate('App')
   }
   return <View />
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   reset: () => {
     dispatch(reset())
   }
