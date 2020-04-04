@@ -5,7 +5,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 import { uploadFile } from '../../Utils/UploadFile'
-const ResedentialAndCommercialOrders = props => {
+const ResedentialAndCommercialOrders = (props) => {
   const {
     type,
     onPress,
@@ -36,12 +36,22 @@ const ResedentialAndCommercialOrders = props => {
           ? onPress({
               type,
               price: priceWithoutText(),
-              estimationArea,
-              measurements,
+              estimationArea:
+                estimationArea === 1
+                  ? type === 'commercial'
+                    ? 'Below 60 Squares'
+                    : 'Below 30 Squares'
+                  : type === 'commercial'
+                  ? 'Above 60 Squares'
+                  : 'Above 30 Squares',
+              measurements:
+                measurements === 1
+                  ? 'Main Structure + Garage'
+                  : 'Main Structure',
               delivery:
                 delivery === 1
                   ? 'Delivery - 1 Business day or Less'
-                  : 'Delivery - 2 Business Hour',
+                  : 'Rush Report Delivey - 4 Hours',
               fileFormat: fileFormat === 1 ? 'XML' : 'ESX',
               specialNotes,
               uploadDetails: {
@@ -69,7 +79,9 @@ const ResedentialAndCommercialOrders = props => {
       const fileFormarPrice = fileFormat
         ? fileFormat === 1
           ? parseInt(fileformat_xml)
-          : parseInt(fileformat_esx)
+          : fileFormat === 2
+          ? parseInt(fileformat_esx)
+          : 0
         : 0
       price = commercialPrice + deliveryPrice + fileFormarPrice
     } else {
@@ -81,7 +93,9 @@ const ResedentialAndCommercialOrders = props => {
       const fileFormarPrice = fileFormat
         ? fileFormat === 1
           ? parseInt(fileformat_xml)
-          : parseInt(fileformat_esx)
+          : fileFormat === 2
+          ? parseInt(fileformat_esx)
+          : 0
         : 0
       price = resedentialPrice + deliveryPrice + fileFormarPrice
     }
@@ -109,13 +123,17 @@ const ResedentialAndCommercialOrders = props => {
           onSelect={() => setEstimationArea(1)}
           isSelected={estimationArea === 1}
           type={'Circle'}
-          title={type === 'Commercial' ? '60 Squares' : '30 Squares'}
+          title={
+            type === 'Commercial' ? 'Below 60 Squares' : 'Below 30 Squares'
+          }
         />
         <SelectionWithText
           onSelect={() => setEstimationArea(2)}
           isSelected={estimationArea === 2}
           type={'Circle'}
-          title={type === 'Commercial' ? '60+ Squares' : '30+ Squares'}
+          title={
+            type === 'Commercial' ? 'Above 60 Squares' : 'Above 30 Squares'
+          }
         />
       </View>
       <Text style={[styles.commonMarginTop, styles.heading]}>Measurements</Text>
@@ -147,7 +165,11 @@ const ResedentialAndCommercialOrders = props => {
               onSelect={() => setDelivery(2)}
               isSelected={delivery === 2}
               type={'Circle'}
-              title="Delivery - 2 Business Hours"
+              title={
+                estimationArea === 2
+                  ? 'Rush Report Delivery - 4 Business Hour'
+                  : 'Rush Report Delivery - 2 Business Hour'
+              }
             />
           </View>
         </View>
@@ -166,6 +188,12 @@ const ResedentialAndCommercialOrders = props => {
           type={'Circle'}
           title="ESX"
         />
+        <SelectionWithText
+          onSelect={() => setFileFormat(3)}
+          isSelected={fileFormat === 3}
+          type={'Circle'}
+          title="None"
+        />
       </View>
       <View>
         <Text style={[styles.heading, styles.commonMarginTop]}>
@@ -174,7 +202,7 @@ const ResedentialAndCommercialOrders = props => {
         <TextInput
           value={specialNotes}
           style={styles.specialNotes}
-          onChangeText={text => {
+          onChangeText={(text) => {
             setSpecialNotes(text)
           }}
         />
@@ -198,7 +226,7 @@ const ResedentialAndCommercialOrders = props => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={pitchValue}
-        onChangeText={value => {
+        onChangeText={(value) => {
           setPitchValue(value)
         }}
       />
@@ -208,7 +236,7 @@ const ResedentialAndCommercialOrders = props => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={alternativeEmail}
-        onChangeText={value => {
+        onChangeText={(value) => {
           setAlternativeEmail(value)
         }}
       />
