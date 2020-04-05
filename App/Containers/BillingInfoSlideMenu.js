@@ -14,11 +14,10 @@ import {
 import { Dropdown } from 'react-native-material-dropdown'
 import styles from './Styles/BillingInfoStyles'
 
-const BillingInfoSlideMenu = props => {
+const BillingInfoSlideMenu = (props) => {
   const { isLoadingGetData, errorGetData } = props
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
   const [company, setCompany] = useState('')
   const [street, setStreet] = useState('')
   const [city, setCity] = useState('')
@@ -41,7 +40,6 @@ const BillingInfoSlideMenu = props => {
   } = props
   let firstNameField,
     lastNameField,
-    emailField,
     companyField,
     addressField,
     cityField,
@@ -54,7 +52,6 @@ const BillingInfoSlideMenu = props => {
     const isValidString = checkPatternWithExpressionAndString(/^[A-Za-z0-9]+/, {
       firstName,
       lastName,
-      email,
       street,
       city,
       zipCode,
@@ -67,7 +64,6 @@ const BillingInfoSlideMenu = props => {
     const billingInfo = {
       firstname: firstName,
       lastname: lastName,
-      email,
       street: [street],
       city,
       country_id: country,
@@ -102,7 +98,6 @@ const BillingInfoSlideMenu = props => {
       const {
         firstname,
         lastname,
-        email,
         postcode,
         telephone,
         country_id,
@@ -111,7 +106,6 @@ const BillingInfoSlideMenu = props => {
       } = props.getData
       setFirstName(firstname)
       setLastName(lastname)
-      setEmail(email ? email : '')
       setRegion(region)
       setRegionId(region_id)
       setZipCode(postcode)
@@ -123,7 +117,6 @@ const BillingInfoSlideMenu = props => {
       zipCodeField.setValue(postcode)
       telephoneField.setValue(telephone), firstNameField.setValue(firstname)
       lastNameField.setValue(lastname)
-      emailField.setValue(email)
       companyField.setValue(company)
       addressField.setValue(streetUpdated)
       cityField.setValue(city)
@@ -134,13 +127,13 @@ const BillingInfoSlideMenu = props => {
     }
   }, [isLoadingGetData, errorGetData])
   const parseDropDownData = () => {
-    const mappedArray = dropDownData.map(obj => ({
+    const mappedArray = dropDownData.map((obj) => ({
       value: obj.full_name_english
     }))
     return mappedArray
   }
   const parseStatesData = () => {
-    const mappedArray = regions.map(obj => ({ value: obj.name }))
+    const mappedArray = regions.map((obj) => ({ value: obj.name }))
     return mappedArray
   }
   return (
@@ -160,9 +153,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('firstName')}
-              ref={ref => (firstNameField = ref)}
+              ref={(ref) => (firstNameField = ref)}
               value={firstName}
-              onChangeText={firstName => {
+              onChangeText={(firstName) => {
                 setInputError('')
                 setFirstName(firstName)
               }}
@@ -171,9 +164,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('lastName')}
-              ref={ref => (lastNameField = ref)}
+              ref={(ref) => (lastNameField = ref)}
               value={lastName}
-              onChangeText={lastName => {
+              onChangeText={(lastName) => {
                 setInputError('')
                 setLastName(lastName)
               }}
@@ -181,21 +174,10 @@ const BillingInfoSlideMenu = props => {
             />
             <TextField
               editable={false}
-              label={I18n.t('email')}
-              ref={ref => (emailField = ref)}
-              value={email}
-              onChangeText={email => {
-                setInputError('')
-                setEmail(email)
-              }}
-              error={email ? '' : inputError}
-            />
-            <TextField
-              editable={false}
               label={I18n.t('company')}
-              ref={ref => (companyField = ref)}
+              ref={(ref) => (companyField = ref)}
               value={company}
-              onChangeText={company => {
+              onChangeText={(company) => {
                 setInputError('')
                 setCompany(company)
               }}
@@ -204,9 +186,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('address')}
-              ref={ref => (addressField = ref)}
+              ref={(ref) => (addressField = ref)}
               value={street}
-              onChangeText={street => {
+              onChangeText={(street) => {
                 setInputError('')
                 setStreet(street)
               }}
@@ -215,16 +197,16 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('city')}
-              ref={ref => (cityField = ref)}
+              ref={(ref) => (cityField = ref)}
               value={city}
-              onChangeText={city => {
+              onChangeText={(city) => {
                 setInputError('')
                 setCity(city)
               }}
               error={city ? '' : inputError}
             />
             <Dropdown
-              ref={ref => (countryRef = ref)}
+              ref={(ref) => (countryRef = ref)}
               pickerStyle={{ height: 500 }}
               label={'Select Country'}
               data={parseDropDownData()}
@@ -254,9 +236,9 @@ const BillingInfoSlideMenu = props => {
               <TextField
                 editable={false}
                 label={I18n.t('state')}
-                ref={ref => (stateField = ref)}
+                ref={(ref) => (stateField = ref)}
                 value={region}
-                onChangeText={addState => {
+                onChangeText={(addState) => {
                   setInputError('')
                   setRegion(addState)
                 }}
@@ -266,9 +248,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('zipCode')}
-              ref={ref => (zipCodeField = ref)}
+              ref={(ref) => (zipCodeField = ref)}
               value={zipCode}
-              onChangeText={zipCode => {
+              onChangeText={(zipCode) => {
                 setInputError('')
                 setZipCode(zipCode)
               }}
@@ -277,9 +259,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('telephone')}
-              ref={ref => (telephoneField = ref)}
+              ref={(ref) => (telephoneField = ref)}
               value={telephone}
-              onChangeText={telephone => {
+              onChangeText={(telephone) => {
                 setInputError('')
                 setTelephone(telephone)
               }}
@@ -288,9 +270,9 @@ const BillingInfoSlideMenu = props => {
             <TextField
               editable={false}
               label={I18n.t('fax')}
-              ref={ref => (faxField = ref)}
+              ref={(ref) => (faxField = ref)}
               value={fax}
-              onChangeText={fax => {
+              onChangeText={(fax) => {
                 setInputError('')
                 setFax(fax)
               }}
@@ -336,7 +318,7 @@ const mapStateToProps = ({ billingInfo }) => {
     successData
   }
 }
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getDropDownData: () => {
     dispatch(getBillingInfoDropDown())
   },

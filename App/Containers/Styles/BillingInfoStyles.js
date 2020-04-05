@@ -27,6 +27,7 @@ export default StyleSheet.create({
     borderRadius: 4
   },
   contentScrollView: {
-    flex: 1
+    flex: 1,
+    paddingBottom: 60
   }
 })
