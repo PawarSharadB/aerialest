@@ -62,8 +62,7 @@ const PlaceOrder = (props) => {
         const email = profile.email ? profile.email : ''
         const orderData = {
           price: itemOptions.price,
-          itemOptions: [itemOptions, `${latitude}`, `${longitude}`],
-          geoAddress,
+          itemOptions: [itemOptions, `${latitude}`, `${longitude}`, geoAddress],
           billingAddress: {
             email,
             firstname,

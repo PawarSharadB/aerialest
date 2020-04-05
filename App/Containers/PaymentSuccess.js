@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, BackHandler } from 'react-native'
 import { placeOrderRequest, resetOrder } from '../Sagas/order/Actions'
 import Images from '../Images'
 
-const SuccessScreen = props => {
+const SuccessScreen = (props) => {
   const { response, orderData } = props.navigation.state.params
   const navigateToHome = () => props.navigation.navigate('Home')
   const { success, error, successData, resetOrder } = props
@@ -65,8 +65,8 @@ const mapStateToProps = ({ order }) => {
     error
   }
 }
-const mapDispatchToProps = dispatch => ({
-  placeOrderRequest: orderData => {
+const mapDispatchToProps = (dispatch) => ({
+  placeOrderRequest: (orderData) => {
     dispatch(placeOrderRequest(orderData))
   },
   resetOrder: () => dispatch(resetOrder())
