@@ -38,7 +38,7 @@ const SuccessScreen = props => {
       billingAddress: orderData.billingAddress,
       itemOptions: [
         orderData.itemOptions,
-        orderData.geoAddress,
+        (geoAddress = orderData.geoAddress),
         orderData.latitude,
         orderData.longitude
       ],
