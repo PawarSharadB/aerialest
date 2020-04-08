@@ -4,7 +4,7 @@ import { View, Text, Image, StyleSheet, BackHandler } from 'react-native'
 import { placeOrderRequest, resetOrder } from '../Sagas/order/Actions'
 import Images from '../Images'
 
-const SuccessScreen = (props) => {
+const SuccessScreen = props => {
   const { response, orderData } = props.navigation.state.params
   const navigateToHome = () => props.navigation.navigate('Home')
   const { success, error, successData, resetOrder } = props
@@ -36,7 +36,12 @@ const SuccessScreen = (props) => {
       isGuest: orderData.email === '' ? 0 : 1,
       price: orderData.price,
       billingAddress: orderData.billingAddress,
-      itemOptions: orderData.itemOptions,
+      itemOptions: [
+        orderData.itemOptions,
+        orderData.geoAddress,
+        orderData.latitude,
+        orderData.longitude
+      ],
       paymentMethod: response.data.payer.payment_method,
       paymentDetails: {
         payer: response.data.payer,
@@ -65,13 +70,16 @@ const mapStateToProps = ({ order }) => {
     error
   }
 }
-const mapDispatchToProps = (dispatch) => ({
-  placeOrderRequest: (orderData) => {
+const mapDispatchToProps = dispatch => ({
+  placeOrderRequest: orderData => {
     dispatch(placeOrderRequest(orderData))
   },
   resetOrder: () => dispatch(resetOrder())
 })
-export default connect(mapStateToProps, mapDispatchToProps)(SuccessScreen)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SuccessScreen)
 
 const styleSheet = StyleSheet.create({
   mainView: {

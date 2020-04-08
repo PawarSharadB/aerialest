@@ -4,6 +4,17 @@ import { StyleSheet, View, Text, Linking } from 'react-native'
 import CardView from 'react-native-cardview'
 const OrdersCard = props => {
   const { order_id, order_date, amount, status, geo_address, pdf } = props.items
+  const getPdfs = item => {
+    let ordersArray = []
+    for (let i = 0; i < item.length; i++) {
+      ordersArray.push(
+        <Text style={styles.pdf} onPress={() => Linking.openURL(item[i])}>
+          View Orders Pdf
+        </Text>
+      )
+    }
+    return ordersArray
+  }
   return (
     <View style={styles.cardView}>
       <CardView
@@ -33,13 +44,7 @@ const OrdersCard = props => {
           <Text style={styles.label}>{status.label}</Text>
           <Text style={styles.text}>{status.value}</Text>
           <Text style={styles.label}>{pdf.label}</Text>
-          {pdf.value !== '' ? (
-            <Text style={styles.pdf} onPress={() => Linking.openURL(pdf.value)}>
-              View Orders Pdf
-            </Text>
-          ) : (
-            <Text>No PDF</Text>
-          )}
+          {pdf.value.length > 0 ? getPdfs(pdf.value) : <Text>No PDF</Text>}
         </View>
       </CardView>
     </View>

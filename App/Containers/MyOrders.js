@@ -37,12 +37,27 @@ const MyOrders = props => {
           <UIActivityIndicator />
         </View>
       )}
-      <FlatList
-        data={orders}
-        renderItem={renderOrders}
-        keyExtractor={item => item.order_id.value}
-        contentContainerStyle={{ paddingBottom: 15 }}
-      />
+      {!isFetching && orders && orders.length === 0 && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            No Orders Available!
+          </Text>
+        </View>
+      )}
+      {orders && (
+        <FlatList
+          data={orders}
+          renderItem={renderOrders}
+          keyExtractor={item => item.order_id.value}
+          contentContainerStyle={{ paddingBottom: 15 }}
+        />
+      )}
     </SafeAreaView>
   )
 }
@@ -63,7 +78,10 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyOrders)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyOrders)
 
 const styles = StyleSheet.create({
   container: {

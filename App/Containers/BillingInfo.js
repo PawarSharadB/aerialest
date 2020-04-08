@@ -63,7 +63,10 @@ const BillingInfo = props => {
     })
     const orderData = {
       price,
-      itemOptions: [itemOptions, geoAddress, latitude, longitude],
+      itemOptions,
+      geoAddress,
+      latitude: `${latitude}`,
+      longitude: `${longitude}`,
       billingAddress: {
         firstname: firstName,
         lastname: lastName,
@@ -282,4 +285,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(getBillingInfoDropDown())
   }
 })
-export default connect(mapStateToProps, mapDispatchToProps)(BillingInfo)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BillingInfo)

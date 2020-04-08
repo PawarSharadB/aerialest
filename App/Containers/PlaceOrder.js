@@ -7,7 +7,7 @@ import OrderWithoutTrailReport from '../Components/Orders/MainComponents/OrderWi
 import { getPricesRequest } from '../Sagas/PlaceOrder/Actions'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { profileRequest, clearProfile } from '../Sagas/profile/Actions'
-const PlaceOrder = (props) => {
+const PlaceOrder = props => {
   const {
     isLoading,
     data,
@@ -42,7 +42,7 @@ const PlaceOrder = (props) => {
       )
     }
   }, [success, errorProfile])
-  const placeOrder = (e) => {
+  const placeOrder = e => {
     const itemOptions = e
     const { navigation } = props
     // Form Data object
@@ -62,7 +62,10 @@ const PlaceOrder = (props) => {
         const email = profile.email ? profile.email : ''
         const orderData = {
           price: itemOptions.price,
-          itemOptions: [itemOptions, `${latitude}`, `${longitude}`, geoAddress],
+          itemOptions,
+          geoAddress,
+          latitude: `${latitude}`,
+          longitude: `${longitude}`,
           billingAddress: {
             email,
             firstname,
@@ -83,8 +86,8 @@ const PlaceOrder = (props) => {
         navigation.push('BillingInfo', {
           itemOptions,
           geoAddress,
-          latitude: `${latitude}`,
-          longitude: `${longitude}`
+          latitude,
+          longitude
         })
       }
     }
@@ -124,7 +127,7 @@ const PlaceOrder = (props) => {
           <SelectionWithText
             isSelected={isTrailReport}
             type="square"
-            onSelect={() => toggleTrailReport((prevResult) => !prevResult)}
+            onSelect={() => toggleTrailReport(prevResult => !prevResult)}
             title={'Trial Report'}
           />
           {isTrailReport && (
@@ -161,7 +164,7 @@ const mapStateToProps = ({ placeOrder, profileInfo }) => {
     errorProfile
   }
 }
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getProfile: () => {
     dispatch(profileRequest())
   },
@@ -172,4 +175,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(clearProfile())
   }
 })
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlaceOrder)
