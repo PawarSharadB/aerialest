@@ -10,7 +10,7 @@ import ParsedText from 'react-native-parsed-text'
 import { styles } from './Styles/SelectAddressStyles'
 import { getInitialRegionForMap } from '../Utils/getInitialRegionForMap'
 
-const SearchAddress = (props) => {
+const SearchAddress = props => {
   const { navigation } = props
   const [region, setRegion] = useState(getInitialRegionForMap().region)
   const [place, setPlace] = useState('')
@@ -29,7 +29,7 @@ const SearchAddress = (props) => {
     }
     Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
     Geocoder.from(place)
-      .then((json) => {
+      .then(json => {
         const { formatted_address: address, geometry } = json.results[0]
         let location = geometry.location
         const { lat: latitude, lng: longitude } = location
@@ -45,7 +45,7 @@ const SearchAddress = (props) => {
         placeRef.current.clear()
         navigation.navigate('Orders', { region, address })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   }
@@ -62,20 +62,20 @@ const SearchAddress = (props) => {
     }
     Geocoder.init('AIzaSyCSiNb2QI4HfoA6c7xBjs3UWf8WIPeCmrw', { language: 'en' })
     Geocoder.from(latitude, longitude)
-      .then((json) => {
+      .then(json => {
         let address = json.results[1].formatted_address
         const regionCopy = region
-        setRegion((region) => ({ ...region, place: address }))
+        setRegion(region => ({ ...region, place: address }))
         latRef.current.clear()
         lngRef.current.clear()
         navigation.push('Orders', { region: regionCopy, address })
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   }
 
-  const onRegionChange = (region) => {
+  const onRegionChange = region => {
     setRegion(region)
   }
   const getRegionLatandLng = () => ({
@@ -97,7 +97,7 @@ const SearchAddress = (props) => {
           <TextField
             ref={placeRef}
             placeholder="Enter a location"
-            onChangeText={(place) => {
+            onChangeText={place => {
               setSearchPlaceError('')
               setPlace(place)
             }}
@@ -118,9 +118,9 @@ const SearchAddress = (props) => {
             keyboardType="numbers-and-punctuation"
             placeholder="Latitude"
             value={region.latitude === 0.0 ? '' : `${region.latitude}`}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setLatitudeError('')
-              setRegion((region) => ({
+              setRegion(region => ({
                 ...region,
                 latitude: parseFloat(text) ? parseFloat(text) : 0
               }))
@@ -132,9 +132,9 @@ const SearchAddress = (props) => {
             keyboardType="numbers-and-punctuation"
             placeholder="Longitude"
             value={region.longitude === 0.0 ? '' : `${region.longitude}`}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setLongitudeError('')
-              setRegion((region) => ({
+              setRegion(region => ({
                 ...region,
                 longitude: parseFloat(text) ? parseFloat(text) : 0
               }))
@@ -152,7 +152,12 @@ const SearchAddress = (props) => {
           />
         </CardView>
         <MapView
-          region={getRegionLatandLng()}
+          region={{
+            latitude: 17.385,
+            longitude: 78.4867,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
           loadingEnabled={true}
           onRegionChangeComplete={onRegionChange}
           style={{ width: '100%', height: 200, marginTop: 20 }}

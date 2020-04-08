@@ -36,7 +36,12 @@ const SuccessScreen = props => {
       isGuest: orderData.email === '' ? 0 : 1,
       price: orderData.price,
       billingAddress: orderData.billingAddress,
-      itemOptions: orderData.itemOptions,
+      itemOptions: [
+        orderData.itemOptions,
+        orderData.geoAddress,
+        orderData.latitude,
+        orderData.longitude
+      ],
       paymentMethod: response.data.payer.payment_method,
       paymentDetails: {
         payer: response.data.payer,
@@ -71,7 +76,10 @@ const mapDispatchToProps = dispatch => ({
   },
   resetOrder: () => dispatch(resetOrder())
 })
-export default connect(mapStateToProps, mapDispatchToProps)(SuccessScreen)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SuccessScreen)
 
 const styleSheet = StyleSheet.create({
   mainView: {

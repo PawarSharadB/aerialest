@@ -26,7 +26,10 @@ const InstantSquareAndTrailReports = props => {
           ? onPress({
               type,
               price: getPriceWithoutText(),
-              measurements,
+              measurements:
+                measurements === 1
+                  ? 'Main Structure + Garage'
+                  : 'Main Structure',
               deliveryType:
                 delivery === 1
                   ? 'Delivery - 1 Business day or Less'
