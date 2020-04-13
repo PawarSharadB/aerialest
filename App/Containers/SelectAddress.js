@@ -13,7 +13,7 @@ const LONGITUDE = -122.4324
 const LATITUDE_DELTA = 0.0922
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO
 
-const SelectAddress = (props) => {
+const SelectAddress = props => {
   const {
     navigation: { state }
   } = props
@@ -29,9 +29,9 @@ const SelectAddress = (props) => {
   const [marginBottom, setMarginBottom] = useState(1)
   const [mapRef, setMapRef] = useState(null)
   const [mapType, setMapType] = useState(MAP_TYPES.SATELLITE)
-  const onMapPress = (e) => {
+  const onMapPress = e => {
     const { latitude, longitude } = e.nativeEvent.coordinate
-    setRegion((prevRegion) => ({ ...prevRegion, latitude, longitude }))
+    setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
   }
 
   const onMapReady = () => {
@@ -40,14 +40,14 @@ const SelectAddress = (props) => {
   const onPressMyLocation = async () => {
     const granted = await geoPermissions()
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      const positionCallback = (position) => {
+      const positionCallback = position => {
         const { latitude, longitude } = position.coords
-        setRegion((prevRegion) => ({ ...prevRegion, latitude, longitude }))
+        setRegion(prevRegion => ({ ...prevRegion, latitude, longitude }))
         if (mapRef !== null) {
           mapRef.animateCamera({ center: { latitude, longitude } })
         }
       }
-      const errorCallback = (error) => {
+      const errorCallback = error => {
         console.log(error)
       }
       const extraParams = {
@@ -62,10 +62,10 @@ const SelectAddress = (props) => {
       )
     }
   }
-  const onDragEndHandle = (e) => {
+  const onDragEndHandle = e => {
     const { latitudeDelta, longitudeDelta } = mapRefq.__lastRegion
     const { latitude, longitude } = e.nativeEvent.coordinate
-    setRegion((prevRegion) => ({
+    setRegion(prevRegion => ({
       ...prevRegion,
       latitude,
       longitude,
@@ -77,10 +77,14 @@ const SelectAddress = (props) => {
     const { navigation } = props
     navigation.push('PlaceOrder', { region, address: state.params.address })
   }
+  const onBackBtnPress = () => {
+    const { navigation } = props
+    navigation.push('SearchAddress')
+  }
   return (
     <View style={styles.container}>
       <MapView
-        ref={(ref) => (mapRefq = ref)}
+        ref={ref => (mapRefq = ref)}
         style={[styles.map, { marginBottom: marginBottom }]}
         region={region}
         initialRegion={region}
@@ -138,12 +142,27 @@ const SelectAddress = (props) => {
           }}
         />
       </View>
-      <Button
-        style={styles.button}
-        onPress={onPressNext}
-        text={'Next'}
-        textStyle={styles.buttonTitle}
-      />
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          style={[
+            styles.button,
+            {
+              backgroundColor: '#ffffff',
+              borderWidth: 1,
+              borderColor: '#D3D3D3'
+            }
+          ]}
+          onPress={onBackBtnPress}
+          text={'Back'}
+          textStyle={[styles.buttonTitle, { color: '#000000' }]}
+        />
+        <Button
+          style={styles.button}
+          onPress={onPressNext}
+          text={'Next'}
+          textStyle={styles.buttonTitle}
+        />
+      </View>
     </View>
   )
 }
@@ -166,6 +185,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   button: {
+    flex: 1,
     justifyContent: 'center',
     backgroundColor: '#0485B2'
   },

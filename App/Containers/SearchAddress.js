@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { KeyboardAvoidingView, ScrollView } from 'react-native'
+import { KeyboardAvoidingView, View, ScrollView } from 'react-native'
 
 import Geocoder from 'react-native-geocoding'
 import CardView from 'react-native-cardview'
@@ -78,6 +78,10 @@ const SearchAddress = props => {
   const onRegionChange = region => {
     setRegion(region)
   }
+  const onBackBtnPress = () => {
+    const { navigation } = props
+    navigation.push('HomeScreen')
+  }
   const getRegionLatandLng = () => ({
     latitude: region.latitude,
     longitude: region.longitude,
@@ -152,16 +156,32 @@ const SearchAddress = props => {
           />
         </CardView>
         <MapView
-          region={{
-            latitude: 17.385,
-            longitude: 78.4867,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-          }}
+          region={
+            region.latitude === 0.0
+              ? {
+                  latitude: 29.6916115,
+                  longitude: -95.5545889,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421
+                }
+              : region
+          }
           loadingEnabled={true}
           onRegionChangeComplete={onRegionChange}
           style={{ width: '100%', height: 200, marginTop: 20 }}
         />
+        <View style={{ marginTop: 10 }}>
+          <Button
+            onPress={onBackBtnPress}
+            textStyle={{ color: '#000000' }}
+            style={{
+              borderWidth: 1,
+              borderColor: '#DCDCDC',
+              backgroundColor: '#ffffff'
+            }}
+            text="Back"
+          />
+        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   )

@@ -6,7 +6,7 @@ import { uploadFile } from '../../Utils/UploadFile'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 
-const MultiFamilyOrders = (props) => {
+const MultiFamilyOrders = props => {
   const {
     onPress,
     multifamily_instant_squares,
@@ -106,7 +106,7 @@ const MultiFamilyOrders = (props) => {
       <TextInput
         style={[styles.enterValue, styles.commonMarginTop]}
         value={buildings}
-        onChangeText={(value) => setBuildings(value)}
+        onChangeText={value => setBuildings(value)}
         keyboardType={'number-pad'}
       />
       <Text style={[styles.commonMarginTop, styles.heading]}>File Format</Text>
@@ -135,7 +135,7 @@ const MultiFamilyOrders = (props) => {
         <TextInput
           value={specialNotes}
           style={styles.specialNotes}
-          onChangeText={(text) => {
+          onChangeText={text => {
             setSpecialNotes(text)
           }}
         />
@@ -159,7 +159,7 @@ const MultiFamilyOrders = (props) => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={pitchValue}
-        onChangeText={(value) => {
+        onChangeText={value => {
           setPitchValue(value)
         }}
       />
@@ -169,7 +169,7 @@ const MultiFamilyOrders = (props) => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={alternativeEmail}
-        onChangeText={(value) => {
+        onChangeText={value => {
           setAlternativeEmail(value)
         }}
       />
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20
+    marginBottom: 5
   },
   heading: {
     fontWeight: 'bold',

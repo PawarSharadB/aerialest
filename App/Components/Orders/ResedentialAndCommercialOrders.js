@@ -5,7 +5,7 @@ import UploadImage from '../UploadImage'
 import SelectionWithText from '../SelectionWithText'
 import Button from '../Button'
 import { uploadFile } from '../../Utils/UploadFile'
-const ResedentialAndCommercialOrders = (props) => {
+const ResedentialAndCommercialOrders = props => {
   const {
     type,
     onPress,
@@ -202,7 +202,7 @@ const ResedentialAndCommercialOrders = (props) => {
         <TextInput
           value={specialNotes}
           style={styles.specialNotes}
-          onChangeText={(text) => {
+          onChangeText={text => {
             setSpecialNotes(text)
           }}
         />
@@ -226,7 +226,7 @@ const ResedentialAndCommercialOrders = (props) => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={pitchValue}
-        onChangeText={(value) => {
+        onChangeText={value => {
           setPitchValue(value)
         }}
       />
@@ -236,7 +236,7 @@ const ResedentialAndCommercialOrders = (props) => {
       <TextInput
         style={[styles.commonMarginTop, styles.enterValue]}
         value={alternativeEmail}
-        onChangeText={(value) => {
+        onChangeText={value => {
           setAlternativeEmail(value)
         }}
       />
@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20
+    marginBottom: 5
   },
   heading: {
     fontWeight: 'bold',
