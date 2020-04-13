@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { CheckBox } from 'react-native-elements'
 
 import { View, StyleSheet } from 'react-native'
+import Button from '../Components/Button'
 
 const ChoosePayment = props => {
   const [payPal, setPaypal] = useState(false)
@@ -10,6 +11,10 @@ const ChoosePayment = props => {
     const { navigation } = props
     navigation.navigate('PayPalView', { orderData })
     setPaypal(!payPal)
+  }
+  const onBackBtnPress = () => {
+    const { navigation } = props
+    navigation.navigate('PlaceOrder')
   }
   return (
     <View
@@ -46,6 +51,18 @@ const ChoosePayment = props => {
           borderBottomColor: '#000000'
         }}
       />
+      <View style={{ marginTop: 10 }}>
+        <Button
+          onPress={onBackBtnPress}
+          textStyle={{ color: '#000000' }}
+          style={{
+            borderWidth: 1,
+            borderColor: '#DCDCDC',
+            backgroundColor: '#ffffff'
+          }}
+          text="Back"
+        />
+      </View>
     </View>
   )
 }

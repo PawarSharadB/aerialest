@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   mainView: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    marginBottom: 20
+    marginBottom: 5
   },
   heading: {
     fontWeight: 'bold',

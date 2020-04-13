@@ -7,6 +7,7 @@ import OrderWithoutTrailReport from '../Components/Orders/MainComponents/OrderWi
 import { getPricesRequest } from '../Sagas/PlaceOrder/Actions'
 import { UIActivityIndicator } from 'react-native-indicators'
 import { profileRequest, clearProfile } from '../Sagas/profile/Actions'
+import Button from '../Components/Button'
 const PlaceOrder = props => {
   const {
     isLoading,
@@ -92,7 +93,10 @@ const PlaceOrder = props => {
       }
     }
   }
-
+  const onBackBtnPress = () => {
+    const { navigation } = props
+    navigation.navigate('Orders')
+  }
   return (
     <ScrollView style={{ padding: 10, flex: 1 }}>
       {isLoading && (
@@ -136,6 +140,18 @@ const PlaceOrder = props => {
           {!isTrailReport && (
             <OrderWithoutTrailReport onPress={placeOrder} data={data} />
           )}
+          <View style={{ marginBottom: 20 }}>
+            <Button
+              onPress={onBackBtnPress}
+              textStyle={{ color: '#000000' }}
+              style={{
+                borderWidth: 1,
+                borderColor: '#DCDCDC',
+                backgroundColor: '#ffffff'
+              }}
+              text="Back"
+            />
+          </View>
           {isLoading && (
             <View>
               <UIActivityIndicator />
