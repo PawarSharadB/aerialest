@@ -34,7 +34,7 @@
     "identity-obj-proxy": "^3.0.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.1",
+    "qs": "^6.9.7",
     "querystringify": "^2.1.1",
     "ramda": "^0.26.1",
     "ramdasauce": "^2.1.3",
